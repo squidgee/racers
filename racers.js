@@ -1381,7 +1381,8 @@ matchesinStrIMG = [
     "60fdfd6925bb6dd0b0fecd1d",
     "60ae4f0a5d3fdae583146082",
     "623c29a61aeb248de8494e7c",
-    "64c0ace7a5d8bb8469765144"
+    "64c0ace7a5d8bb8469765144",
+		"61a2dde815b3ff4a5bb80da2"
 ];
 matchesinStrNAME = [
     "pepeJAM",
@@ -1833,5 +1834,6 @@ matchesinStrNAME = [
     "peepoSnow",
     "catJam",
     "angy",
-    "MeAndTheBoysWatchingFF9SpaceScene"
+    "MeAndTheBoysWatchingFF9SpaceScene",
+		"spinofdog"
 ];
