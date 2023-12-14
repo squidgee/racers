@@ -355,7 +355,6 @@ client.on('message', (channel, tags, message, self) => {
 	if (channel == hiddenChannel){
 
 		if(superUsers.includes(nameofPlayer)  || adminUsers.includes(nameofPlayer)){
-			if(debugon){console.log(bypassMessage);}
 			if(message == '!reloadracers'){
 				if(debugon){console.log('RELOADING');}
 				location.reload();
