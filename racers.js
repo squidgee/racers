@@ -355,6 +355,13 @@ client.on('message', (channel, tags, message, self) => {
 	if (channel == hiddenChannel){
 
 		if(superUsers.includes(nameofPlayer)  || adminUsers.includes(nameofPlayer)){
+			if(debugon){console.log(bypassMessage);}
+			if(bypassMessage == '!reloadracers'){
+				if(debugon){console.log('RELOADING');}
+				location.reload();
+			}
+
+
 			if(debugon){console.log('superuser/admin detected');}
 			getEmotePosition = htmlMessagePls.split(' ');
 			if(getEmotePosition.length == 2 || getEmotePosition.length  == 3){
@@ -434,11 +441,11 @@ client.on('message', (channel, tags, message, self) => {
 				}else{
 					timeOutVidCHECK = 20000;
 				}
-				spitaVideo('aVideo','aVideoID','./im_losing_my_mind.mp4', 0.8, timeOutVidCHECK, 'videoTL');
+				spitaVideo('aVideo','aVideoID','https://rawcdn.githack.com/SquidgeyBusiness/racers/tree/98d81c2aa0369ed084c764dc49c50dca9bab7b93/im_losing_my_mind.mp4', 0.8, timeOutVidCHECK, 'videoTL');
 			}
 
 			if(message.includes("!gun")){
-				spitaVideo('aVideo','aVideoID','./ivegotagun.webm', 0.4, 2700, 'videoBR');
+				spitaVideo('aVideo','aVideoID','https://rawcdn.githack.com/SquidgeyBusiness/racers/tree/98d81c2aa0369ed084c764dc49c50dca9bab7b93/ivegotagun.webm', 0.4, 2700, 'videoBR');
 			}
 
 		}
