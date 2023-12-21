@@ -31,7 +31,7 @@ raceOrganiser = 'thebotdles'; // this is the user that sends the messages about 
 hiddenChannel = '#thebotdles'; // for admins to post emotes and stuff to screen
 adminUsers = ['squidgepls','thebroodles']; // admin user can post twitch, 7tv and custom pictures
 superUsers = ['','']; // super users can post twitch and 7tv emotes
-racersCommandUsers = ['squidgepls','thebroodles','salty__sal','killerubberducky','hamfuritcake','amigofunk','hamfruitcake','khaegar','morningcraft_','thechefpmt','peteswanson','thegreatjecht','awesomewaves','elliotornitier','dylwingo','steth427']; // these users can use !racers which posts an amount of racers in race on screen
+racersCommandUsers = ['squidgepls','thebroodles','salty__sal','killerubberducky','hamfuritcake','amigofunk','khaegar','morningcraft_','thechefpmt','peteswanson','thegreatjecht','awesomewaves','elliotornitier','dylwingo','steth427']; // these users can use !racers which posts an amount of racers in race on screen
 
 // debug shit
 racerOnMessageTest = false; // outputs a racer for every message in chat. Set to false to set to a limited amount of animations - needs work
@@ -351,15 +351,27 @@ client.on('message', (channel, tags, message, self) => {
 			console.log('htmlMessagePls: '+htmlMessagePls);
 	}
 
+
+
+
 	// post stuff on screen! <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+	if(superUsers.includes(nameofPlayer)  || adminUsers.includes(nameofPlayer)){
+
 	if (channel == hiddenChannel){
 
-		if(superUsers.includes(nameofPlayer)  || adminUsers.includes(nameofPlayer)){
+			//reloads the web page
 			if(message == '!reloadracers'){
 				if(debugon){console.log('RELOADING');}
 				location.reload();
 			}
-
+			// display gamba if seen
+			if (message == '!gamba'){
+				animateSomething('customOnScreen', 'custom', 'custom', 'https://cdn.7tv.app/emote/652b059124565c1d0e386928/4x.webp', nameofPlayer, 120000, 'static', 100, '100px', 0, 0);
+				animateSomething('customOnScreen', 'custom', 'custom', 'https://cdn.7tv.app/emote/652b059124565c1d0e386928/4x.webp', nameofPlayer, 120000, 'static', 100, '100px', 95, 91);
+				animateSomething('customOnScreen', 'custom', 'custom', 'https://cdn.7tv.app/emote/652b059124565c1d0e386928/4x.webp', nameofPlayer, 120000, 'static', 100, '100px', 95, 0);
+				animateSomething('customOnScreen', 'custom', 'custom', 'https://cdn.7tv.app/emote/652b059124565c1d0e386928/4x.webp', nameofPlayer, 120000, 'static', 100, '100px', 0, 91);
+				animateSomething('customOnScreen', 'custom', 'custom', './gamba.png', nameofPlayer, 120000, 'gamba', 100, '500px', 0, 0);
+			}
 
 			if(debugon){console.log('superuser/admin detected');}
 			getEmotePosition = htmlMessagePls.split(' ');
@@ -454,6 +466,8 @@ client.on('message', (channel, tags, message, self) => {
 		if(adminUsers.includes(nameofPlayer)){
 			if(debugon){console.log('adminUser detected');}
 			getEmotePosition = message.split(' ');
+
+
 			if(getEmotePosition.length >= 3){
 
 				getEmoteY = getEmotePosition[6];
@@ -546,6 +560,7 @@ client.on('message', (channel, tags, message, self) => {
 				console.log("Race hasn't start yet: "+raceStarted);
 		}
 	}
+
 
 
 	if (nameofPlayer != raceOrganiser){
