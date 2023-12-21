@@ -351,14 +351,8 @@ client.on('message', (channel, tags, message, self) => {
 			console.log('htmlMessagePls: '+htmlMessagePls);
 	}
 
-	// display gamba if seen
-	if (message == '!gamba' && superUsers.includes(nameofPlayer)  || adminUsers.includes(nameofPlayer)){
-		animateSomething('customOnScreen', 'custom', 'custom', 'https://cdn.7tv.app/emote/652b059124565c1d0e386928/4x.webp', nameofPlayer, 120000, 'static', 100, '100px', 0, 0);
-		animateSomething('customOnScreen', 'custom', 'custom', 'https://cdn.7tv.app/emote/652b059124565c1d0e386928/4x.webp', nameofPlayer, 120000, 'static', 100, '100px', 95, 91);
-		animateSomething('customOnScreen', 'custom', 'custom', 'https://cdn.7tv.app/emote/652b059124565c1d0e386928/4x.webp', nameofPlayer, 120000, 'static', 100, '100px', 95, 0);
-		animateSomething('customOnScreen', 'custom', 'custom', 'https://cdn.7tv.app/emote/652b059124565c1d0e386928/4x.webp', nameofPlayer, 120000, 'static', 100, '100px', 0, 91);
-		animateSomething('customOnScreen', 'custom', 'custom', './gamba.png', nameofPlayer, 120000, 'gamba', 100, '500px', 0, 0);
-	}
+
+
 
 	// post stuff on screen! <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 	if(superUsers.includes(nameofPlayer)  || adminUsers.includes(nameofPlayer)){
@@ -370,8 +364,14 @@ client.on('message', (channel, tags, message, self) => {
 				if(debugon){console.log('RELOADING');}
 				location.reload();
 			}
-
-
+			// display gamba if seen
+			if (message == '!gamba'){
+				animateSomething('customOnScreen', 'custom', 'custom', 'https://cdn.7tv.app/emote/652b059124565c1d0e386928/4x.webp', nameofPlayer, 120000, 'static', 100, '100px', 0, 0);
+				animateSomething('customOnScreen', 'custom', 'custom', 'https://cdn.7tv.app/emote/652b059124565c1d0e386928/4x.webp', nameofPlayer, 120000, 'static', 100, '100px', 95, 91);
+				animateSomething('customOnScreen', 'custom', 'custom', 'https://cdn.7tv.app/emote/652b059124565c1d0e386928/4x.webp', nameofPlayer, 120000, 'static', 100, '100px', 95, 0);
+				animateSomething('customOnScreen', 'custom', 'custom', 'https://cdn.7tv.app/emote/652b059124565c1d0e386928/4x.webp', nameofPlayer, 120000, 'static', 100, '100px', 0, 91);
+				animateSomething('customOnScreen', 'custom', 'custom', './gamba.png', nameofPlayer, 120000, 'gamba', 100, '500px', 0, 0);
+			}
 
 			if(debugon){console.log('superuser/admin detected');}
 			getEmotePosition = htmlMessagePls.split(' ');
