@@ -452,14 +452,14 @@ CUSTOMS
    100% {top:1200px; Left: 700px; opacity: 0;}
  }
  .caught {
-   animation: KF_caught 2s;
+   animation: KF_caught 3s;
    animation-timing-function: ease-in;
  }
  @keyframes KF_caught{
    0%   {top:1200px; Left: 700px; opacity: 0;}
    5%  {top:600px; Left: 700px; opacity: 1;}
-   50%  {top:600px; Left: 700px; opacity: 1;}
-   55% {top:1200px; Left: 700px; opacity: 1;}
+   300%  {top:600px; Left: 700px; opacity: 1;}
+   35% {top:1200px; Left: 700px; opacity: 1;}
    100% {top:1200px; Left: 700px; opacity: 0;}
  }
  .bounce-7 {
@@ -499,12 +499,19 @@ CUSTOMS
     100%  {top:1300px; left:700px; opacity:0;}
   }
 
+  .testfont {
+  	font-family: "Press Start 2P", sans-serif;
+    width: 100%; height: 100%;
+  }
 
-
-svg {
-	font-family: "Press Start 2P", sans-serif;
-  width: 100%; height: 100%;
-}
+  svg {
+  	font-family: "Press Start 2P", sans-serif;
+    width: 100%; height: 100%;
+  }
+  svg {
+  	font-family: "Press Start 2P", sans-serif;
+    width: 100%; height: 100%;
+  }
 svg text {
 
 	animation: KF_RStroke 3s alternate;
@@ -539,7 +546,24 @@ svg text {
 .c2 {
 
 }
-
+@font-face {
+    font-family: 'Highwind';
+    src: url('./fonts/hinted-Highwind.woff2') format('woff2'),
+        url('./fonts/hinted-Highwind.woff') format('woff'),
+        url('./fonts/hinted-Highwind.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+body {
+  font-family: 'Highwind';
+  src: url('./fonts/hinted-Highwind.woff2') format('woff2'),
+      url('./fonts/hinted-Highwind.woff') format('woff'),
+      url('./fonts/hinted-Highwind.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 
     </style>
   </head>
