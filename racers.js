@@ -90,10 +90,7 @@ heistImage = 'https://cdn.7tv.app/emote/64d50050507a9267faee3454/4x.webp';
 heistImageSize = '100px'; // The size of the racer image on screen. This is modified by the animation
 heistMessageTrigger = '!heist'; // The message to add a racer
 heistStartMessage0 = 'is getting a team together to perform a heist'; // the check message to start a heist
-heistEndMessage0 = 'Everyone makes off with 10000'; // did we win?
-heistEndMessage1 = 'No broodlebits this time,'; // we lost
-heistEndMessage2 = 'Maybe you can win his favour and try another'; // we lost again
-heistEndMessage3 = 'you KNOW the password is R69, L420, R69.'; // we lost again
+heistHasEnded = ['Everyone makes off with 10000','No broodlebits this time,','Maybe you can win his favour and try another','you KNOW the password is R69, L420, R69.','No broodlebits today','then you can try another !heist.',"ready for the next !heist.","and steals Zell's T-Board!","attempting another !heist soon.","with some energy drinks and snagged his Dr. P!"]
 heistWords=['!heist','!hesit']; // trigger words for people who want to heist
 
 /////////////////////// End of editables //////////////////////////
@@ -610,7 +607,7 @@ client.on('message', (channel, tags, message, self) => {
 								// In second place, thisguy took a detour but still managed to win 40000 broodlebits!
 								for(i=0; i<racersInRace.length; i++){
 									index = racersInRace[i][0].indexOf(racerName);
-									console.log('INDEX: '+index);
+									//console.log('INDEX: '+index);
 									if (index == '0') {
 											racersInRace[i][2]=2;
 											racersInRace[i][4]=setOutcomeMessage;
@@ -901,9 +898,11 @@ if (heistStarted == 1 && message == heistMessageTrigger && nameofPlayer != raceO
 // end the heist
 if (nameofPlayer == raceOrganiser){
 	if (debugon){console.log(raceOrganiser + ': '+message);}
-	if ( bypassMessage.includes(heistEndMessage0) || bypassMessage.includes(heistEndMessage1) || bypassMessage.includes(heistEndMessage2) || bypassMessage.includes(heistEndMessage3) ){
-		heistStarted = 0;
-		if (debugon){console.log(heistStarted);}
+	for(i = 0; i < heistHasEnded.length; i++){
+		if ( bypassMessage.includes(heistHasEnded[i]) ){
+			heistStarted = 0;
+			if (debugon){console.log(heistStarted);}
+	}
 	}
 }
 
