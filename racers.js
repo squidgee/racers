@@ -40,7 +40,7 @@ racerOnMessageTest = false; // outputs a racer for every message in chat. Set to
 (debugon) ? console.log('debug is on') : false;
 (debugonMSG) ? console.log('debugMSG is on') : false;
 // end of debug shit
-
+console.log("version: "+version)
 
 customImageSize = '100px';
 customShowCommand = '!show';
