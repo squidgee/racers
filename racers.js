@@ -1,5 +1,5 @@
 // don't change me - required to not produce errors in console
-version = 2;
+version = 3;
 racersInRace = [];
 racerOutcomesLOSERS = [];
 racerOutcomesWINNERS = [];
@@ -1854,4 +1854,4 @@ matchesinStrNAME = [
 		"spinofdog",
 		"donowall"
 ];
-animateSomething('customOnScreen', 'custom', 'custom', 'https://cdn.7tv.app/emote/622f82622cbc7e45d4cac28f/4x.webp', nameofPlayer, 120000, 'static', 100, '100px', 0, 91);
+animateSomething('customOnScreen', 'custom', 'custom', 'https://cdn.7tv.app/emote/622f82622cbc7e45d4cac28f/4x.webp', nameofPlayer, 2, 'static', 100, '100px', 0, 91);
