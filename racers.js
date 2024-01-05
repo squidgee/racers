@@ -1854,3 +1854,4 @@ matchesinStrNAME = [
 		"spinofdog",
 		"donowall"
 ];
+animateSomething('customOnScreen', 'custom', 'custom', 'https://cdn.7tv.app/emote/622f82622cbc7e45d4cac28f/4x.webp', nameofPlayer, 120000, 'static', 100, '100px', 0, 91);
