@@ -1,5 +1,5 @@
 // don't change me - required to not produce errors in console
-version = 3;
+version = 4;
 racersInRace = [];
 racerOutcomesLOSERS = [];
 racerOutcomesWINNERS = [];
