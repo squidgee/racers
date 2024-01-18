@@ -1401,8 +1401,12 @@ matchesinStrIMG = [
     "60ae4f0a5d3fdae583146082",
     "623c29a61aeb248de8494e7c",
     "64c0ace7a5d8bb8469765144",
-		"61a2dde815b3ff4a5bb80da2",
-		"60a9cfe96daf811370b0b640"
+    "6579a6e0e41be396ec8069a3",
+    "61a2dde815b3ff4a5bb80da2",
+    "654a1291dee57072486e7c47",
+    "63b036c8fa92d64168806b43",
+    "655820877f353586fc8c7569",
+    "60a9cfe96daf811370b0b640"
 ];
 matchesinStrNAME = [
     "pepeJAM",
@@ -1855,7 +1859,11 @@ matchesinStrNAME = [
     "catJam",
     "angy",
     "MeAndTheBoysWatchingFF9SpaceScene",
-		"spinofdog",
-		"donowall"
+    "Zowee",
+    "spinofdog",
+    "quota",
+    "peepoFirework",
+    "quotaWalk",
+    "donowall"
 ];
 animateSomething('customOnScreen', 'custom', 'custom', 'https://cdn.7tv.app/emote/622f82622cbc7e45d4cac28f/4x.webp', nameofPlayer, 2, 'static', 100, '100px', 0, 91);
