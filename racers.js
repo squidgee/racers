@@ -368,7 +368,7 @@ client.on('message', (channel, tags, message, self) => {
 			}
 
 			getEmotePosition = htmlMessagePls.split(' ');
-			console.log(getEmotePosition);
+
 			// display gamba if seen
 			if (message == '!gamba'){
 				animateSomething('customOnScreen', 'custom', 'custom', 'https://cdn.7tv.app/emote/652b059124565c1d0e386928/4x.webp', nameofPlayer, 120000, 'static', 100, '100px', 0, 0);
@@ -388,6 +388,10 @@ client.on('message', (channel, tags, message, self) => {
 			if (getEmotePosition[0] == '!rinoainspace' || testit == 1 && getEmotePosition[0] == '!testrionainspace'){
 				if (getEmotePosition.length == 2){setImage = getEmotePosition[1];}else{setImage = 'https://cdn.7tv.app/emote/63c51e5ed98b878bc84c4766/4x.webp';}
 				animateSomething('customOnScreen', 'custom', 'custom', setImage, nameofPlayer, 44000, 'rinoainspace', 100, '300px', 0, 0);
+			}
+			if (getEmotePosition[0] == '!caught' || testit == 1 && getEmotePosition[0] == '!testcaught'){
+				if (getEmotePosition.length == 2){setImage = getEmotePosition[1];}else{setImage = 'https://cdn.7tv.app/emote/64674a7358d599a0419f49d7/4x.webp';}
+				animateSomething('customOnScreen', 'custom', 'custom', setImage, nameofPlayer, 1.2, 'caught', 100, '300px', 0, 0);
 			}
 
 			if(debugon){console.log('superuser/admin detected');}
