@@ -3,7 +3,7 @@
 */
 
 // don't change me - required to not produce errors in console
-version = 5;
+version = 6;
 racersInRace = [];
 racerOutcomesLOSERS = [];
 racerOutcomesWINNERS = [];
@@ -366,6 +366,9 @@ client.on('message', (channel, tags, message, self) => {
 				if(debugon){console.log('RELOADING');}
 				location.reload();
 			}
+
+			getEmotePosition = htmlMessagePls.split(' ');
+			console.log(getEmotePosition);
 			// display gamba if seen
 			if (message == '!gamba'){
 				animateSomething('customOnScreen', 'custom', 'custom', 'https://cdn.7tv.app/emote/652b059124565c1d0e386928/4x.webp', nameofPlayer, 120000, 'static', 100, '100px', 0, 0);
@@ -374,9 +377,21 @@ client.on('message', (channel, tags, message, self) => {
 				animateSomething('customOnScreen', 'custom', 'custom', 'https://cdn.7tv.app/emote/652b059124565c1d0e386928/4x.webp', nameofPlayer, 120000, 'static', 100, '100px', 0, 91);
 				animateSomething('customOnScreen', 'custom', 'custom', './gamba.png', nameofPlayer, 120000, 'gamba', 100, '500px', 0, 0);
 			}
+			if (getEmotePosition[0] == '!looking' || testit == 1 && getEmotePosition[0] == '!testlooking'){
+				if (getEmotePosition.length == 2){setImage = getEmotePosition[1];}else{setImage = 'https://cdn.7tv.app/emote/619fffbbffa9aba101bb1bfc/4x.webp';}
+				animateSomething('customOnScreen', 'custom', 'custom', setImage, nameofPlayer, 15000, 'looking', 100, '300px', 0, 0);
+			}
+			if (getEmotePosition[0] == '!falling' || testit == 1 && getEmotePosition[0] == '!testfalling'){
+				if (getEmotePosition.length == 2){setImage = getEmotePosition[1];}else{setImage = 'https://cdn.7tv.app/emote/621694c7aff1c45709b482fc/4x.webp';}
+				animateSomething('customOnScreen', 'custom', 'custom', setImage, nameofPlayer, 3000, 'falling', 100, '300px', 0, 0);
+			}
+			if (getEmotePosition[0] == '!rinoainspace' || testit == 1 && getEmotePosition[0] == '!testrionainspace'){
+				if (getEmotePosition.length == 2){setImage = getEmotePosition[1];}else{setImage = 'https://cdn.7tv.app/emote/63c51e5ed98b878bc84c4766/4x.webp';}
+				animateSomething('customOnScreen', 'custom', 'custom', setImage, nameofPlayer, 44000, 'rinoainspace', 100, '300px', 0, 0);
+			}
 
 			if(debugon){console.log('superuser/admin detected');}
-			getEmotePosition = htmlMessagePls.split(' ');
+
 			if(getEmotePosition.length == 2 || getEmotePosition.length  == 3){
 				getEmotePositionLC = getEmotePosition[1];
 				getEmotePositionURL = getEmotePosition[0];
@@ -855,7 +870,7 @@ client.on('message', (channel, tags, message, self) => {
 				}
 			}, 3000);
 		}
-		testit = 0;
+
 
 		// END RACE <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
