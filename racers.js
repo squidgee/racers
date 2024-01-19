@@ -391,7 +391,7 @@ client.on('message', (channel, tags, message, self) => {
 			}
 			if (getEmotePosition[0] == '!caught' || testit == 1 && getEmotePosition[0] == '!testcaught'){
 				if (getEmotePosition.length == 2){setImage = getEmotePosition[1];}else{setImage = 'https://cdn.7tv.app/emote/64674a7358d599a0419f49d7/4x.webp';}
-				animateSomething('customOnScreen', 'custom', 'custom', setImage, nameofPlayer, 1.2, 'caught', 100, '300px', 0, 0);
+				animateSomething('customOnScreen', 'custom', 'custom', setImage, nameofPlayer, 1200, 'caught', 100, '300px', 0, 0);
 			}
 
 			if(debugon){console.log('superuser/admin detected');}
