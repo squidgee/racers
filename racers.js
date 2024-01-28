@@ -3,7 +3,7 @@
 */
 
 // don't change me - required to not produce errors in console
-version = 6;
+version = 7;
 racersInRace = [];
 racerOutcomesLOSERS = [];
 racerOutcomesWINNERS = [];
@@ -375,7 +375,7 @@ client.on('message', (channel, tags, message, self) => {
 				animateSomething('customOnScreen', 'custom', 'custom', 'https://cdn.7tv.app/emote/652b059124565c1d0e386928/4x.webp', nameofPlayer, 120000, 'static', 100, '100px', 95, 91);
 				animateSomething('customOnScreen', 'custom', 'custom', 'https://cdn.7tv.app/emote/652b059124565c1d0e386928/4x.webp', nameofPlayer, 120000, 'static', 100, '100px', 95, 0);
 				animateSomething('customOnScreen', 'custom', 'custom', 'https://cdn.7tv.app/emote/652b059124565c1d0e386928/4x.webp', nameofPlayer, 120000, 'static', 100, '100px', 0, 91);
-				animateSomething('customOnScreen', 'custom', 'custom', './gamba.png', nameofPlayer, 120000, 'gamba', 100, '500px', 0, 0);
+				animateSomething('customOnScreen', 'custom', 'custom', './gambaactive.png', nameofPlayer, 120000, 'gamba', 100, '1920px', 0, 0);
 			}
 			if (getEmotePosition[0] == '!looking' || testit == 1 && getEmotePosition[0] == '!testlooking'){
 				if (getEmotePosition.length == 2){setImage = getEmotePosition[1];}else{setImage = 'https://cdn.7tv.app/emote/619fffbbffa9aba101bb1bfc/4x.webp';}
