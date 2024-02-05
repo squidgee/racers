@@ -3,7 +3,7 @@
 */
 
 // don't change me - required to not produce errors in console
-version = 7;
+version = 8;
 racersInRace = [];
 racerOutcomesLOSERS = [];
 racerOutcomesWINNERS = [];
