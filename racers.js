@@ -34,7 +34,7 @@ debugwinlose = false;
 CHANNEL = ['thebroodles','thebotdles']; // The channel to listen to chat
 raceOrganiser = 'thebotdles'; // this is the user that sends the messages about the race starting and ending - we monitor this to start and end the race etc
 hiddenChannel = '#thebotdles'; // for admins to post emotes and stuff to screen
-adminUsers = ['squidgepls','thebroodles', 'killerubberducky', 'elliotornitier']; // admin user can post twitch, 7tv and custom pictures
+adminUsers = ['squidgeebusiness','thebroodles', 'killerubberducky', 'elliotornitier']; // admin user can post twitch, 7tv and custom pictures
 superUsers = ['','']; // super users can post twitch and 7tv emotes
 racersCommandUsers = ['squidgepls','thebroodles','salty__sal','killerubberducky','hamfuritcake','amigofunk','khaegar','morningcraft_','thechefpmt','peteswanson','thegreatjecht','awesomewaves','elliotornitier','dylwingo','steth427']; // these users can use !racers which posts an amount of racers in race on screen
 
@@ -176,6 +176,10 @@ function animateSomething(duhCommandis, duhimgDiv, duhimgID, duhimgLocation, him
 		duhimgDiv.innerHTML = '<div class="'+duhAnimation+'" style="z-index: '+counter+'; position:fixed; box-sizing: border-box;"><img height="auto" width="'+customImageSize+'" src="'+duhimgLocation+'"></div>';
 	}else if(duhCommandis == 'customOnScreen'){
 		if(duhAnimation == 'static'){animChosen='none'; setXY='top:'+yLoc+'%; left:'+xLoc+'%;'}else{animChosen = duhAnimation; setXY='';}
+		if(debugon){console.log("duhimgLocation: "+duhimgLocation);}
+		duhimgDiv.innerHTML = '<div class="'+animChosen+'" style="z-index: '+counter+'; position:fixed; box-sizing: border-box; '+setXY+';"><img height="auto" width="'+duhimgSize+'" src="'+duhimgLocation+'"></div>';
+	}else if(duhCommandis == 'ezsend'){
+		if(duhAnimation == 'static'){animChosen='none'; setXY='top:'+yLoc+'px; left:'+xLoc+'px;'}else{animChosen = duhAnimation; setXY='';}
 		if(debugon){console.log("duhimgLocation: "+duhimgLocation);}
 		duhimgDiv.innerHTML = '<div class="'+animChosen+'" style="z-index: '+counter+'; position:fixed; box-sizing: border-box; '+setXY+';"><img height="auto" width="'+duhimgSize+'" src="'+duhimgLocation+'"></div>';
 	}else if(duhCommandis == '!racers'){
@@ -550,9 +554,14 @@ client.on('message', (channel, tags, message, self) => {
 								break;
 								case 'custom':
 									if(getEmotePosition.length == 7){
-										animateSomething('customOnScreen', 'custom', 'custom', getEmotePositionURL, nameofPlayer, defaultETO, 'static', 100, getEmoteSize+'px', getEmoteX, getEmoteY);
+										animateSomething('custom', 'custom', 'custom', getEmotePositionURL, nameofPlayer, defaultETO, 'static', 100, getEmoteSize+'px', getEmoteX, getEmoteY);
 										if(debugon){console.log('emote  custom:'+getEmotePositionURL);}
 									}
+									case 'ezsend':
+										if(getEmotePosition.length == 7){
+											animateSomething('ezsend', 'custom', 'custom', getEmotePositionURL, nameofPlayer, defaultETO, 'static', 100, getEmoteSize+'px', getEmoteX, getEmoteY);
+											if(debugon){console.log('emote  custom:'+getEmotePositionURL);}
+										}
 								break;
 
 							}
