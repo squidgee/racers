@@ -1,0 +1,45 @@
+body {
+    margin: 0;
+    overflow: hidden;
+    background-color: #123; /* Set the background color to #123 */
+}
+
+#canvas-container {
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    border: 2px solid #fff; /* Add a white border with a thickness of 2px */
+    background-image: url('stream.png');
+    background-size: cover; /* Adjust as needed */
+    z-index: 1;
+}
+
+#movable-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: grab;
+}
+
+#info-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    padding: 10px;
+    z-index: 2;
+}
+
+#change-image {
+    position: absolute;
+    top: 400px;
+    left: 50px;
+    padding: 8px;
+    background-color: #fff;
+    color: #000;
+    border: none;
+    cursor: pointer;
+    z-index: 3;
+}

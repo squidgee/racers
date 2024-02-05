@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Mover</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="info-container">
+    <p id="show-command">!show command</p>
+      <p id="x-position">X: 0</p>
+      <p id="y-position">Y: 0</p>
+      <p id="width">Width: 0</p>
+      <p id="height">Height: Auto</p>
+      <p id="image-url">Image URL: your-image.jpg</p>
+      <label for="resize-width">(Don't use atm!)Width:</label>
+      <input type="number" id="resize-width" value="0" />
+      <button id="resize-image">Resize Image</button> <br /><br />
+      <label for="resize-width">Time:</label>
+      <input type="number" id="time-onscreen" value="8" />
+
+  </div>
+    <div id="canvas-container">
+        <img id="movable-image" src="duh-image.png" alt="Movable Image">
+    </div>
+
+    <button id="change-image">Change Image</button>
+    <script src="script.js"></script>
+</body>
+</html>
