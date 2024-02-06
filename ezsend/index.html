@@ -9,36 +9,45 @@
 <body>
 
   <div id="info-container">
+    <button onclick="copyToClipboard()">Copy !show command to Clipboard</button><br /><br />
+
+    <label for="re-time">Time:</label>
+    <input type="number" id="time-onscreen" value="8" /> <button id="change-image">Change Image</button><br /><br />
+
+
+  </div>
+  <div id="info-containerB">
     <p id="show-command">!show command</p>
-    <button onclick="copyToClipboard()">Copy to Clipboard</button>
-      <p id="x-position">X: 0</p>
-      <p id="y-position">Y: 0</p>
-      <p id="width">Width: 0</p>
-      <p id="height">Height: Auto</p>
-      <p id="image-url">Image URL: your-image.jpg</p>
-      <label for="resize-width">(Broken - but you can use your own X Y values (0-1920x0-1080))</label><br />
-      <label for="resize-width">Width:</label>
-      <input type="number" id="resize-width" value="0" />
-      <button id="resize-image">Resize Image</button> <br /><br />
-      <label for="resize-width">Time:</label>
-      <input type="number" id="time-onscreen" value="8" /> <br /><br />
-      <button id="change-image">Change Image</button>
+    <p id="x-position">X: 0</p>
+    <p id="y-position">Y: 0</p>
+    <p id="width">SIZE: 0</p>
+    <p id="height">HEIGHT: Auto</p>
+    <p id="image-url">Image URL: your-image.jpg</p>
+    <label for="resize-width">(Broken - but you can use your own X Y values (0-1920x0-1080))</label><br />
+    <label for="width">Width:</label>
+    <input type="number" id="resize-width" value="0" />
+    <button id="resize-image">Resize Image</button><br /><br />
+
 
   </div>
     <div id="canvas-container">
         <img id="movable-image" src="duh-image.png" alt="Movable Image">
     </div>
     <div id="rectangle" class="rectangle">
-      <iframe
-    src="https://player.twitch.tv/?channel=thebroodles&parent=raw.githack.com"
-    height="1080px"
-    width="1920px"
-    frameborder="0"
-    scrolling="no"
-    allowfullscreen>
-</iframe>
-      <!--<iframe src="https://player.twitch.tv/?channel=thebroodles&parent=https://raw.githack.com" height="1080px" width="1920px" frameborder="0" scrolling="no" allowfullscreen="true"></iframe>
-    --></div>
+      <script src= "https://player.twitch.tv/js/embed/v1.js"></script>
+      <div id="<player div ID>"></div>
+      <script type="text/javascript">
+        var options = {
+          width: 1920,
+          height: 1080,
+          channel: "thebroodles",
+          // only needed if your site is also embedded on embed.example.com and othersite.example.com
+          parent: ["https://raw.githack.com"]
+        };
+        var player = new Twitch.Player("rectangle", options);
+        player.setVolume(0.5);
+      </script>
+</div>
 
     <script>
       function copyToClipboard() {

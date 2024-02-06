@@ -33,15 +33,22 @@ body {
     z-index: 2;
     z-index: 999;
 }
+#info-containerB {
+    position: fixed;
+    top: 1070px;
+    left: 0;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    padding: 10px;
+    z-index: 2;
+    z-index: 3;
+}
 
 #change-image {
 
-    padding: 8px;
-    background-color: #fff;
-    color: #000;
-    border: none;
-    cursor: pointer;
-    z-index: 999;
+
+      cursor: pointer;
+      z-index: 999;
 }
 .rectangle {
     width: 1920px;
