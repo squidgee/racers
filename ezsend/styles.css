@@ -5,11 +5,11 @@ body {
 }
 
 #canvas-container {
-    position: relative;
+    position: fixed;
     width: 1920px;
     height: 1080px;
     border: 2px solid #fff; /* Add a white border with a thickness of 2px */
-    background-image: url('stream.png');
+    /*background-image: url('stream.png');
     background-size: cover; /* Adjust as needed */
     z-index: 1;
 }
@@ -42,4 +42,13 @@ body {
     border: none;
     cursor: pointer;
     z-index: 999;
+}
+.rectangle {
+    width: 1920px;
+    height: 1080px;
+    border: 0px solid #000;
+    position: fixed;
+    top: 0;
+    left: 0;
+
 }

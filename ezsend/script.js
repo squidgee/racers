@@ -107,9 +107,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (!isNaN(newWidth) && newWidth > 0) {
             resizeImage(newWidth, newHeight);
+            updatePositionDisplays(x, y, movableImage.src, widthDisplay.textContent, timeDisplay);
         } else {
             alert("Please enter valid width value.");
         }
+
+
     });
 
 
