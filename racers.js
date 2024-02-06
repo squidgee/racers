@@ -3,7 +3,7 @@
 */
 
 // don't change me - required to not produce errors in console
-version = 8;
+version = 9;
 racersInRace = [];
 racerOutcomesLOSERS = [];
 racerOutcomesWINNERS = [];
@@ -174,7 +174,7 @@ function animateSomething(duhCommandis, duhimgDiv, duhimgID, duhimgLocation, him
 	}else if(duhCommandis == 'twitchemote'){
 		if(debugon){console.log("duhimgLocation: "+duhimgLocation);}
 		duhimgDiv.innerHTML = '<div class="'+duhAnimation+'" style="z-index: '+counter+'; position:fixed; box-sizing: border-box;"><img height="auto" width="'+customImageSize+'" src="'+duhimgLocation+'"></div>';
-	}else if(duhCommandis == 'customOnScreen'){
+	}else if(duhCommandis == 'custom'){
 		if(duhAnimation == 'static'){animChosen='none'; setXY='top:'+yLoc+'%; left:'+xLoc+'%;'}else{animChosen = duhAnimation; setXY='';}
 		if(debugon){console.log("duhimgLocation: "+duhimgLocation);}
 		duhimgDiv.innerHTML = '<div class="'+animChosen+'" style="z-index: '+counter+'; position:fixed; box-sizing: border-box; '+setXY+';"><img height="auto" width="'+duhimgSize+'" src="'+duhimgLocation+'"></div>';
@@ -375,27 +375,27 @@ client.on('message', (channel, tags, message, self) => {
 
 			// display gamba if seen
 			if (message == '!gamba'){
-				animateSomething('customOnScreen', 'custom', 'custom', 'https://cdn.7tv.app/emote/652b059124565c1d0e386928/4x.webp', nameofPlayer, 120000, 'static', 100, '100px', 0, 0);
-				animateSomething('customOnScreen', 'custom', 'custom', 'https://cdn.7tv.app/emote/652b059124565c1d0e386928/4x.webp', nameofPlayer, 120000, 'static', 100, '100px', 95, 91);
-				animateSomething('customOnScreen', 'custom', 'custom', 'https://cdn.7tv.app/emote/652b059124565c1d0e386928/4x.webp', nameofPlayer, 120000, 'static', 100, '100px', 95, 0);
-				animateSomething('customOnScreen', 'custom', 'custom', 'https://cdn.7tv.app/emote/652b059124565c1d0e386928/4x.webp', nameofPlayer, 120000, 'static', 100, '100px', 0, 91);
-				animateSomething('customOnScreen', 'custom', 'custom', './gambaactive.png', nameofPlayer, 120000, 'gamba', 100, '1920px', 0, 0);
+				animateSomething('custom', 'custom', 'custom', 'https://cdn.7tv.app/emote/652b059124565c1d0e386928/4x.webp', nameofPlayer, 120000, 'static', 100, '100px', 0, 0);
+				animateSomething('custom', 'custom', 'custom', 'https://cdn.7tv.app/emote/652b059124565c1d0e386928/4x.webp', nameofPlayer, 120000, 'static', 100, '100px', 95, 91);
+				animateSomething('custom', 'custom', 'custom', 'https://cdn.7tv.app/emote/652b059124565c1d0e386928/4x.webp', nameofPlayer, 120000, 'static', 100, '100px', 95, 0);
+				animateSomething('custom', 'custom', 'custom', 'https://cdn.7tv.app/emote/652b059124565c1d0e386928/4x.webp', nameofPlayer, 120000, 'static', 100, '100px', 0, 91);
+				animateSomething('custom', 'custom', 'custom', './gambaactive.png', nameofPlayer, 120000, 'gamba', 100, '1920px', 0, 0);
 			}
 			if (getEmotePosition[0] == '!looking' || testit == 1 && getEmotePosition[0] == '!testlooking'){
 				if (getEmotePosition.length == 2){setImage = getEmotePosition[1];}else{setImage = 'https://cdn.7tv.app/emote/619fffbbffa9aba101bb1bfc/4x.webp';}
-				animateSomething('customOnScreen', 'custom', 'custom', setImage, nameofPlayer, 15000, 'looking', 100, '300px', 0, 0);
+				animateSomething('custom', 'custom', 'custom', setImage, nameofPlayer, 15000, 'looking', 100, '300px', 0, 0);
 			}
 			if (getEmotePosition[0] == '!falling' || testit == 1 && getEmotePosition[0] == '!testfalling'){
 				if (getEmotePosition.length == 2){setImage = getEmotePosition[1];}else{setImage = 'https://cdn.7tv.app/emote/621694c7aff1c45709b482fc/4x.webp';}
-				animateSomething('customOnScreen', 'custom', 'custom', setImage, nameofPlayer, 3000, 'falling', 100, '300px', 0, 0);
+				animateSomething('custom', 'custom', 'custom', setImage, nameofPlayer, 3000, 'falling', 100, '300px', 0, 0);
 			}
 			if (getEmotePosition[0] == '!rinoainspace' || testit == 1 && getEmotePosition[0] == '!testrionainspace'){
 				if (getEmotePosition.length == 2){setImage = getEmotePosition[1];}else{setImage = 'https://cdn.7tv.app/emote/63c51e5ed98b878bc84c4766/4x.webp';}
-				animateSomething('customOnScreen', 'custom', 'custom', setImage, nameofPlayer, 44000, 'rinoainspace', 100, '300px', 0, 0);
+				animateSomething('custom', 'custom', 'custom', setImage, nameofPlayer, 44000, 'rinoainspace', 100, '300px', 0, 0);
 			}
 			if (getEmotePosition[0] == '!caught' || testit == 1 && getEmotePosition[0] == '!testcaught'){
 				if (getEmotePosition.length == 2){setImage = getEmotePosition[1];}else{setImage = 'https://cdn.7tv.app/emote/64674a7358d599a0419f49d7/4x.webp';}
-				animateSomething('customOnScreen', 'custom', 'custom', setImage, nameofPlayer, 1200, 'caught', 100, '300px', 0, 0);
+				animateSomething('custom', 'custom', 'custom', setImage, nameofPlayer, 1200, 'caught', 100, '300px', 0, 0);
 			}
 
 			if(debugon){console.log('superuser/admin detected');}
@@ -557,16 +557,17 @@ client.on('message', (channel, tags, message, self) => {
 										animateSomething('custom', 'custom', 'custom', getEmotePositionURL, nameofPlayer, defaultETO, 'static', 100, getEmoteSize+'px', getEmoteX, getEmoteY);
 										if(debugon){console.log('emote  custom:'+getEmotePositionURL);}
 									}
-									case 'ezsend':
-										if(getEmotePosition.length == 7){
-											animateSomething('ezsend', 'custom', 'custom', getEmotePositionURL, nameofPlayer, defaultETO, 'static', 100, getEmoteSize+'px', getEmoteX, getEmoteY);
-											if(debugon){console.log('emote  custom:'+getEmotePositionURL);}
-										}
 								break;
+								case 'ezsend':
+									if(getEmotePosition.length == 7){
+										animateSomething('ezsend', 'ezsend', 'ezsend', getEmotePositionURL, nameofPlayer, defaultETO, 'static', 100, getEmoteSize+'px', getEmoteX, getEmoteY);
+										if(debugon){console.log('emote  custom:'+getEmotePositionURL);}
+									}
+									break;
 
 							}
 							if(getEmotePosition.length == 5 && getEmotePositionLC != 'custom'){
-												animateSomething('customOnScreen', 'custom', 'custom', getEmotePositionURL, nameofPlayer, defaultETO, getEmoteAnim, 100, getEmoteSize+'px', 0, 0);
+												animateSomething('custom', 'custom', 'custom', getEmotePositionURL, nameofPlayer, defaultETO, getEmoteAnim, 100, getEmoteSize+'px', 0, 0);
 												if(debugon){console.log('emote  custom:'+getEmotePositionURL);}
 												getEmoteAnim = '';
 							}
@@ -791,7 +792,7 @@ client.on('message', (channel, tags, message, self) => {
 	// END RACE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 
-	  if (nameofPlayer == raceOrganiser && message == raceFinishedMessage0 || testit == 1){
+	  if (nameofPlayer == raceOrganiser && message == raceFinishedMessage0){
 			setTimeout(function(){
 		//	setTimeout(function(){}, 3000);
 					if(debugon){console.log("racersInRace: "+racersInRace);}
@@ -1894,4 +1895,4 @@ matchesinStrNAME = [
     "quotaWalk",
     "donowall"
 ];
-animateSomething('customOnScreen', 'custom', 'custom', 'https://cdn.7tv.app/emote/622f82622cbc7e45d4cac28f/4x.webp', nameofPlayer, 2, 'static', 100, '100px', 0, 91);
+animateSomething('custom', 'custom', 'custom', 'https://cdn.7tv.app/emote/622f82622cbc7e45d4cac28f/4x.webp', nameofPlayer, 2, 'static', 100, '100px', 0, 91);
