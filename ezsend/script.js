@@ -111,4 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
             alert("Please enter valid width value.");
         }
     });
+
+
+
 });

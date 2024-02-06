@@ -20,6 +20,7 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     cursor: grab;
+    z-index: 999;
 }
 
 #info-container {
@@ -30,16 +31,15 @@ body {
     font-family: Arial, sans-serif;
     padding: 10px;
     z-index: 2;
+    z-index: 999;
 }
 
 #change-image {
-    position: absolute;
-    top: 400px;
-    left: 50px;
+
     padding: 8px;
     background-color: #fff;
     color: #000;
     border: none;
     cursor: pointer;
-    z-index: 3;
+    z-index: 999;
 }

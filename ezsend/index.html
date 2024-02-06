@@ -7,25 +7,36 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
   <div id="info-container">
     <p id="show-command">!show command</p>
+    <button onclick="copyToClipboard()">Copy to Clipboard</button>
       <p id="x-position">X: 0</p>
       <p id="y-position">Y: 0</p>
       <p id="width">Width: 0</p>
       <p id="height">Height: Auto</p>
       <p id="image-url">Image URL: your-image.jpg</p>
-      <label for="resize-width">(Don't use atm!)Width:</label>
+      <label for="resize-width">(Broken - but you can use your own X Y values (0-1920x0-1080))</label><br />
+      <label for="resize-width">Width:</label>
       <input type="number" id="resize-width" value="0" />
       <button id="resize-image">Resize Image</button> <br /><br />
       <label for="resize-width">Time:</label>
-      <input type="number" id="time-onscreen" value="8" />
+      <input type="number" id="time-onscreen" value="8" /> <br /><br />
+      <button id="change-image">Change Image</button>
 
   </div>
     <div id="canvas-container">
         <img id="movable-image" src="duh-image.png" alt="Movable Image">
     </div>
 
-    <button id="change-image">Change Image</button>
+    <script>
+      function copyToClipboard() {
+        var copyText = document.getElementById("show-command").textContent;
+        navigator.clipboard.writeText(copyText);
+        //console.log("Copied to clipboard: " + copyText);
+      }
+    </script>
+
     <script src="script.js"></script>
 </body>
 </html>
