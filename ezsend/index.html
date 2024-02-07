@@ -35,14 +35,13 @@
     </div>
     <div id="rectangle" class="rectangle">
       <script src= "https://player.twitch.tv/js/embed/v1.js"></script>
-      <div id="<player div ID>"></div>
       <script type="text/javascript">
         var options = {
           width: 1920,
           height: 1080,
           channel: "thebroodles",
           // only needed if your site is also embedded on embed.example.com and othersite.example.com
-          parent: ["https://raw.githack.com"]
+          parent: ["raw.githack.com"]
         };
         var player = new Twitch.Player("rectangle", options);
         player.setVolume(0.5);
