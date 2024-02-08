@@ -3,7 +3,7 @@
 */
 
 // don't change me - required to not produce errors in console
-version = 9;
+version = 10;
 racersInRace = [];
 racerOutcomesLOSERS = [];
 racerOutcomesWINNERS = [];
@@ -34,7 +34,7 @@ debugwinlose = false;
 CHANNEL = ['thebroodles','thebotdles']; // The channel to listen to chat
 raceOrganiser = 'thebotdles'; // this is the user that sends the messages about the race starting and ending - we monitor this to start and end the race etc
 hiddenChannel = '#thebotdles'; // for admins to post emotes and stuff to screen
-adminUsers = ['squidgeebusiness','thebroodles', 'killerubberducky', 'elliotornitier']; // admin user can post twitch, 7tv and custom pictures
+adminUsers = ['squidgeebusiness','thebroodles', 'killerubberducky', 'elliotornitier', 'abbi']; // admin user can post twitch, 7tv and custom pictures
 superUsers = ['','']; // super users can post twitch and 7tv emotes
 racersCommandUsers = ['squidgepls','thebroodles','salty__sal','killerubberducky','hamfuritcake','amigofunk','khaegar','morningcraft_','thechefpmt','peteswanson','thegreatjecht','awesomewaves','elliotornitier','dylwingo','steth427']; // these users can use !racers which posts an amount of racers in race on screen
 
