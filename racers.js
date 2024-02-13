@@ -1435,7 +1435,19 @@ matchesinStrIMG = [
     "654a1291dee57072486e7c47",
     "63b036c8fa92d64168806b43",
     "655820877f353586fc8c7569",
-    "60a9cfe96daf811370b0b640"
+    "60a9cfe96daf811370b0b640",
+    "6133eef7f1ff750fb9b4f437",
+    "62322ff7fe73af690d6596d5",
+    "6129bcaffd97806f9d73495d",
+    "658a8ea783833b99670ec30e",
+    "60aef3e4b74ea8ff797ae5ac",
+    "60b3df8ba8c16167460992ca",
+    "645921edd3b4256e12d8339a",
+    "6154c7d620eaf897465ae2dc",
+    "60a5c7bec2ca47c7d5da99e1",
+    "65c3744b54a4fa5773d26644",
+    "62477a2efb18d86dec72ad34",
+    "63531cca7a11ab5453112169"
 ];
 matchesinStrNAME = [
     "pepeJAM",
@@ -1893,6 +1905,18 @@ matchesinStrNAME = [
     "quota",
     "peepoFirework",
     "quotaWalk",
-    "donowall"
+    "donowall",
+    "peepoSitHey",
+    "PatFight",
+    "Pringles",
+    "Toothless",
+    "monkaW",
+    "Crungo",
+    "PausersHype",
+    "DRAINED",
+    "BLANKIES",
+    "iKneel",
+    "Barry63",
+    "OhGodItsMoonMoonChasingYouThroughTheBorealWinterPLEASERUNQUICKLYANDFINDCOVERHEHASBADINTENTIONS"
 ];
 animateSomething('custom', 'custom', 'custom', 'https://cdn.7tv.app/emote/622f82622cbc7e45d4cac28f/4x.webp', nameofPlayer, 2, 'static', 100, '100px', 0, 91);
