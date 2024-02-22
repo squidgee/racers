@@ -296,6 +296,17 @@
       animation: KF_videoBR 2.8s;
       animation-timing-function: ease-in-out;
     }
+    @keyframes KF_bananapeel {
+      0%   {top:-300px; Right: 1200px; opacity: 0;}
+      2%  {top:1050px; Right: 1200px; opacity: 1;}
+      95%  {top:1050px; Right: 1200px; opacity: 1;}
+      98% {top:1050px; Right: 1200px; opacity: 0;}
+      100% {top:1050px; Right: 1200px; opacity: 0;}
+    }
+    .bananapeel{
+      animation: KF_bananapeel 20s;
+      animation-timing-function: ease-in-out;
+    }
     .heister {
       animation: KF_heister 3s;
       animation-timing-function: ease-in-out;
@@ -341,6 +352,18 @@
     .runRightInjury {
       animation: KFRunRightInjury 21s;
       animation-timing-function: ease-in;
+    }
+    .runRightBanana {
+      animation: KFRunRightBanana 21s;
+      animation-timing-function: ease-in;
+    }
+    @keyframes KFRunRightBanana {
+      0%   {top:990px; left:-200px; opacity:100%; transform: scaleX(1);}
+      20%  {top:990px; left:700px; opacity:100%; transform: scaleX(1);}
+      21%  {top:940px; left:750px; opacity:100%; transform: scaleX(1) rotate(180deg);}
+      22%  {top:1200px; left:800px; opacity:100%; transform: scaleX(1) rotate(360deg);}
+      23%  {top:1200px; left:850px; opacity:100%; transform: scaleX(1) rotate(360deg);}
+      100%  {top:1200px; left:900px; opacity:100%; transform: scaleX(1) rotate(360deg);}
     }
 
 

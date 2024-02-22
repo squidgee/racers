@@ -3,7 +3,7 @@
 */
 
 // don't change me - required to not produce errors in console
-version = 10;
+version = 11;
 racersInRace = [];
 racerOutcomesLOSERS = [];
 racerOutcomesWINNERS = [];
@@ -77,6 +77,8 @@ raceFinishedMessage0 = 'Thank you to all racers! The race will return soon...';
 raceOutcomeMessage_CHEERSIDELINES = 'decided to cheer on the sidelines instead of racing...?'; // message.includes('raceOutcomeMessage_CHEERSIDELINES');
 raceOutcomeMessage_EXHAUSTED = 'raced too hard and exhausted their chocobo!'; // message.includes('raceOutcomeMessage_EXHAUSTED');
 raceOutcomeMessage_INJURY = "had to pull out of the race due to their chocobo's injury!"; // message.includes('raceOutcomeMessage_INJURY');
+raceOutcomeMessage_BANANA = "threw a banana";
+
 
 // tiggers for first second and third to check against
 raceOutcomeMessage_FIRST = "In first place we have";
@@ -405,6 +407,11 @@ client.on('message', (channel, tags, message, self) => {
 				getEmotePositionURL = getEmotePosition[0];
 				getEmoteTimeout = Number(getEmotePosition[2]);
 
+  
+        if(Number(getEmoteTimeout) >= 10){
+          getEmoteTimeout = 10;
+        }
+
 				// if 7tv, change to 7tv emote finder
 				if(matchesinStrNAME.includes(getEmotePositionURL)){
 					indexOfEmote = matchesinStrNAME.indexOf(getEmotePositionURL);
@@ -477,11 +484,11 @@ client.on('message', (channel, tags, message, self) => {
 				}else{
 					timeOutVidCHECK = 20000;
 				}
-				spitaVideo('aVideo','aVideoID','./im_losing_my_mind.mp4', 0.8, timeOutVidCHECK, 'videoTL');
+			//	spitaVideo('aVideo','aVideoID','./im_losing_my_mind.mp4', 0.8, timeOutVidCHECK, 'videoTL');
 			}
 
 			if(message.includes("!gun")){
-				spitaVideo('aVideo','aVideoID','./ivegotagun.webm', 0.4, 2700, 'videoBR');
+			//	spitaVideo('aVideo','aVideoID','./ivegotagun.webm', 0.4, 2700, 'videoBR');
 			}
 
 		}
@@ -505,6 +512,14 @@ client.on('message', (channel, tags, message, self) => {
 				getEmoteAnim=getEmotePositionLC;
 				if(debugon){console.log(getEmotePosition);}
 			}
+
+      if(Number(getEmoteSize) >= 600){
+        getEmoteSize = 600;
+      }
+
+      if(Number(getEmoteTimeout) >= 10){
+        getEmoteTimeout = 10;
+      }
 
 			if(getEmoteTimeout > 1){
 				defaultETO = getEmoteTimeout*1000;
@@ -690,13 +705,18 @@ client.on('message', (channel, tags, message, self) => {
 										}
 									}else if(bypassMessage.includes(raceOutcomeMessage_INJURY)){
 										setOutcomeMessage = raceOutcomeMessage_INJURY;
-										setOutcomeAnim = 103;if(debugwinlose){
-											if(debugwinlose){
+										setOutcomeAnim = 103;
+										if(debugwinlose){
 												console.log(103);
-											}
+										}
+									}else if(bypassMessage.includes(raceOutcomeMessage_BANANA)){
+										setOutcomeMessage = raceOutcomeMessage_BANANA;
+										setOutcomeAnim = 104;
+										if(debugwinlose){
+												console.log(104);
 										}
 									}else{
-										setOutcomeMessage = 'idkwtfhappened HELP';
+										setOutcomeMessage = 'idkwtfhappened. HELP!';
 										setOutcomeAnim = 102;
 									}
 									if(debugon){console.log(racersInRace);}
@@ -868,6 +888,13 @@ client.on('message', (channel, tags, message, self) => {
 								if(debugwinlose){console.log("Adding loser racer raceOutcomeMessage_INJURY");}
 								racerOutcomesCustom(racersInRace[j][0], 'runRightInjury', 103, racersInRace[j][3],'',50);
 
+							break;
+							case 104:
+								if(debugwinlose){console.log("Adding fallenRacer racer raceOutcomeMessage_BANANA");}
+								racerOutcomesCustom(racersInRace[j][0], 'runRightBanana', 103, racersInRace[j][3],'',50);
+								animateSomething('custom', 'custom', 'custom', 'https://cdn.7tv.app/emote/63f6b4d617478c0c59fc20a6/4x.webp', nameofPlayer, 20000, 'bananapeel', 100, '30px', 0, 0);
+								//animateSomething('custom', 'custom', 'custom', 'https://cdn.7tv.app/emote/63f6b4d617478c0c59fc20a6/4x.webp', nameofPlayer, 20500, 'runRightBanana', 100, '100px', 0, 0);
+								//raceOutcomeMessage_BANANA
 							break;
 
 						};
