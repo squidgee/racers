@@ -1,9 +1,9 @@
 /* Changes:
-05/01/2024 - Added killerubberducky as an admin user
+
 */
 
 // don't change me - required to not produce errors in console
-version = 11;
+version = 12;
 racersInRace = [];
 racerOutcomesLOSERS = [];
 racerOutcomesWINNERS = [];
@@ -419,11 +419,11 @@ client.on('message', (channel, tags, message, self) => {
 				}else{}
 
 				if(getEmoteTimeout > 1){
-					defaultETO = getEmoteTimeout*1000;
-				}else{
-					defaultETO = 8000;
-					if(debugon){console.log('default 8 seconds');}
-				}
+          defaultETO = getEmoteTimeout*1000;
+          if (defaultETO >= 10000){defaultETO = 8000;}
+        }else{
+          defaultETO = 8000;
+        }
 
 				// set up custom on screen images
 				if(getEmotePosition[0].includes('https://') || indexOfEmote != null){
@@ -478,11 +478,11 @@ client.on('message', (channel, tags, message, self) => {
 				if(timeOutCHECK.length == 2){
 					timeOutVidCHECK = timeOutCHECK[1];
 					timeOutVidCHECK = (timeOutVidCHECK*1000);
-					if(timeOutVidCHECK >= 25000){
-						timeOutVidCHECK = 25000;
+					if(timeOutVidCHECK >= 10001){
+						timeOutVidCHECK = 10000;
 					}
 				}else{
-					timeOutVidCHECK = 20000;
+					timeOutVidCHECK = 10000;
 				}
 			//	spitaVideo('aVideo','aVideoID','./im_losing_my_mind.mp4', 0.8, timeOutVidCHECK, 'videoTL');
 			}
@@ -523,11 +523,12 @@ client.on('message', (channel, tags, message, self) => {
 
 			if(getEmoteTimeout > 1){
 				defaultETO = getEmoteTimeout*1000;
+        if (defaultETO >= 10000){defaultETO = 8000;}
 			}else{
 				defaultETO = 8000;
 			}
 
-
+//!show https://cdn.7tv.app/emote/63da116254caa117064ebcd3/3x.webp custom 5 1800 0 0
 
 			if(getEmotePosition.length >= 3){
 				if(getEmotePositionC == customShowCommand || getEmotePositionC == customTestShowCommand && debugon){
