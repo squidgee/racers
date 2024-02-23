@@ -471,7 +471,7 @@ client.on('message', (channel, tags, message, self) => {
 				}
 			}
 			indexOfEmote = null;
-
+      //
 			// admin only commands
 			if(message.includes("!losingmymind")){
 				timeOutCHECK = message.split(' ');
