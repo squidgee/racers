@@ -31,7 +31,7 @@ debugonMSG = false;
 debugwinlose = false;
 /////////////////////////// Editables from here ////////////////////
 
-CHANNEL = ['thebroodles','thebotdles']; // The channel to listen to chat
+CHANNEL = ['thebroodles','brdlbot']; // The channel to listen to chat
 raceOrganiser = 'thebotdles'; // this is the user that sends the messages about the race starting and ending - we monitor this to start and end the race etc
 hiddenChannel = '#thebotdles'; // for admins to post emotes and stuff to screen
 adminUsers = ['squidgeebusiness','thebroodles', 'killerubberducky', 'elliotornitier', 'abbi']; // admin user can post twitch, 7tv and custom pictures
