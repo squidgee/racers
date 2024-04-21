@@ -3,7 +3,7 @@
   <head>
 
     <script src="tmi.js"></script>
-    <!--<script src="emotedata.js"></script>-->
+    <script src="emotedata/emotedata.js"></script>
 
     <style>
      @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
@@ -591,9 +591,13 @@ body {
     </style>
   </head>
   <body>
-
-    <!--<script type="text/javascript" src="processor.js"></script>-->
-     <script type="text/javascript" src="racers.js"></script>
+    <script>
+      const matchesinStrIMG = emotedataFile.match(/(?<=<a href="\/emotes\/\s*).*?(?=\s*" class="unstyled-link".)/gs);
+      const matchesinStrNAME = emotedataFile.match(/(?<=<div class="title-banner" data-v-952f9cbc=""><span data-v-952f9cbc="">\s*).*?(?=\s*<\/span>)/gs);
+      console.log (matchesinStrIMG);
+      console.log (matchesinStrNAME);
+    </script>
+    <script type="text/javascript" src="racers.js"></script>
 
   </body>
 

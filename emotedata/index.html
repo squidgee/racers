@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<script src="tmi.js"></script>
+<script src="emotedata.js"></script>
+
+</head>
+
+<body>
+
+<script>
+
+  //const matchesinStrIMG = emotedataFile.match(/(?<=<div class="img-wrapper" censor=".*" data-v-952f9cbc=""><img src="\/\/cdn.7tv.app\/emote\/\s*).*?(?=\s*2x.)/gs);
+                                                      //615710a2dc267a344181264c"
+  const matchesinStrIMG = emotedataFile.match(/(?<=<a href="\/emotes\/\s*).*?(?=\s*" class="unstyled-link".)/gs);
+
+  const matchesinStrNAME = emotedataFile.match(/(?<=<div class="title-banner" data-v-952f9cbc=""><span data-v-952f9cbc="">\s*).*?(?=\s*<\/span>)/gs);
+  console.log (matchesinStrIMG);
+  console.log (matchesinStrNAME);
+  
+</script>
+
+</body>
+
+</html>
