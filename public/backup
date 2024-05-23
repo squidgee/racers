@@ -1,0 +1,1725 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOCKET THIS</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <div class="pageContainer">
+
+          <div class="rectangle">
+            <script>
+              ifrm='';
+              streamIS = "OFF";
+              var rectangleDivs = document.getElementsByClassName("rectangle");
+              if (rectangleDivs.length > 0) {
+                ifrm.id = "duhStream";
+                streamIS = "OFF";
+              }
+              function streamSwitch() {
+                var streamonoff = document.getElementById("duhStream");
+                if (streamIS === "OFF") {
+                  var div = rectangleDivs[0];
+                  var ifrm = document.createElement("iframe");
+                  ifrm.setAttribute("src", "https://player.twitch.tv/?channel=thebroodles&parent=localhost");
+                  ifrm.style.width = "1920px";
+                  ifrm.style.height = "1080px";
+                  ifrm.style.frameborder = "0px";
+                  ifrm.style.scrolling = "no";
+                  ifrm.style.allowfullscreen = "true";
+                  div.appendChild(ifrm);
+                  streamIS = "ON";
+                } else if(streamIS === "ON") {
+                  document.querySelectorAll('iframe').forEach(
+                  function(elem){
+                      elem.parentNode.removeChild(elem);
+                  });
+                  streamIS = "OFF";
+                }
+              } 
+            </script>
+          </div>
+        
+
+
+          <button class="showhidemenu" onclick="showhide('inputContainer')" style="position: fixed;">Show/Hide Manipulate Objects</button>
+          <button class="showhidemenudelete" onclick="showhide('volatileCommands')" style="position: fixed; top: 30px;">Show/Hide Volatile commands</button>
+
+        <div id="inputContainer" class="inputContainer">
+
+            <!--<button class="refreshThis" onclick="refreshThis()">Refresh Page</button>-->
+            
+
+            <input type="text" class="inputField" id="imageUrls" placeholder="Enter image URLs separated by commas">
+            <!--<input type="checkbox" id="textCheck" class="textCheck" onclick="textSelected()" name="textCheck"><div class="textCheckLabel">isText?</div>-->
+            <button class="createObjectButton" onclick="createMovableObjects()">Create Objects</button>
+            
+            <button id="saveObjectstoDB" class="saveObjectstoDB" onclick="saveObjectstoDB()" style="display: none;">Save Objects to DB</button>
+            <!-- change the text div -->
+            <input type="text" class="textInput" id="textInput1" placeholder="Text Text Text Text" onkeypress="updatesaturateElement_TextBox()">
+
+            <input type="text" class="changeimageinputField" id="newImageUrl" placeholder="Replacement image URL" >
+            <button class="changeImageButton" onclick="changeImage()" >Change Image</button>
+
+            <button class="duplicateImageButton" onclick="duplicateImage()" >Duplicate Image</button>
+
+            <button id="deleteObjectButton" class="deleteObjectButton" onclick="deleteLastSelectedObject()" style="display: none;">Delete Selected Object</button>
+            <button id="deleteEveryObjectButton" class="deleteEveryObjectButton" onclick="deleteEverything()" style="display: none;">Delete Every Object</button>
+
+            <!-- SIZE -->
+            <div class="changeSizeLabel"> Size <br />
+              <input type="range" class="sizeSlider" id="sizeSlider" min="20" max="2000" step="10" value="200" onchange="resizeObject()" onpointermove="resizeObject()">
+            </div>
+            <!-- ROTATE -->
+            <div class="changeRotationLabel"> Rotate <br />
+              <input type="range" class="rotationSlider" id="rotationSlider" min="-360" max="360" step="2" value="0" onchange="setRotation()" onpointermove="setRotation()">
+            </div>
+            <!-- OPACITY -->
+            <div class="opacityLabel"> Opacity <br />
+              <input type="range" class="opacitySlider" id="opacitySlider" min="0" max="1" step="0.1" value="1" onchange="setOpacity()" onpointermove="setOpacity()">
+            </div>
+            <!-- BLUR -->
+            <div class="blurLabel"> Blur <br />
+              <input type="range" class="blurSlider" id="blurSlider" min="0" max="100" step="2" value="0" onchange="blurObject()" onpointermove="blurObject()">
+            </div>
+            <!-- BRIGHTNESS -->
+            <div class="brightnessLabel"> Brightness (Fade to Black) <br />
+              <input type="range" class="brightnessSlider" id="brightnessSlider" min="0" max="100" step="2" value="100" onchange="brightnessObject()" onpointermove="brightnessObject()">
+            </div>
+            <!-- GRAYSCALE -->
+            <div class="grayscaleLabel"> Grayscale <br />
+              <input type="range" class="grayscaleSlider" id="grayscaleSlider" min="0" max="100" step="5" value="0" onchange="grayscaleObject()" onpointermove="grayscaleObject()">
+            </div>
+            <!-- HUE -->
+            <div class="hueLabel"> Hue <br />
+              <input type="range" class="hueSlider" id="hueSlider" min="0" max="360" step="2" value="0" onchange="hueObject()" onpointermove="hueObject()">
+            </div>
+            <!-- SEPIA -->
+            <div class="sepiaLabel"> Sepia <br />
+              <input type="range" class="sepiaSlider" id="sepiaSlider" min="0" max="100" step="5" value="0" onchange="sepiaObject()" onpointermove="sepiaObject()">
+            </div>
+            <!-- INVERT -->
+            <div class="invertLabel"> Invert <br />
+              <input type="range" class="invertSlider" id="invertSlider" min="0" max="100" step="5" value="0" onchange="invertObject()" onpointermove="invertObject()">
+            </div>
+            <!-- SATURATE -->
+            <div class="saturateLabel"> Saturate <br />
+              <input type="range" class="saturateSlider" id="saturateSlider" min="100" max="2000" step="25" value="100" onchange="saturateObject()" onpointermove="saturateObject()">
+            </div>
+            <!-- contrast -->
+            <div class="contrastLabel"> Contrast <br />
+              <input type="range" class="contrastSlider" id="contrastSlider" min="0" max="100" step="2" value="100" onchange="contrastObject()" onpointermove="contrastObject()">
+            </div>
+
+
+            <button id="bringtoFront" class="bringtoFront" onclick="bringtoFrontObject()" ><img src="doublearrowup.png" style="margin-top: 5px;" width="25px"></button>
+            <button id="sendtoBack" class="sendtoBack" onclick="sendtoBackObject()" ><img src="doublearrowup.png" style="transform: scaleY(-1); margin-top: 5px;" width="25px"></button>
+            <button id="flipObjectButton" class="flipObjectButton" onclick="flipObject()" ><img src="flip.png" style="margin-top: 5px;" width="25px"></button>
+
+            <div class="zIndexLabel" id="zIndexLabel"> ZIndex <br />
+            </div>
+            <div class="flipLabel" id="flipLabel"> Flip <br />
+            </div>
+            
+            <button id="playButton" class="playButton" onclick="playvideoObject()" ><img src="play.png" style="margin-top: 5px;" width="25px"></button>
+            <button id="pauseButton" class="pauseButton" onclick="pausevideoObject()" ><img src="pause.png" style="margin-top: 5px;" width="25px"></button>
+            <button id="stopButton" class="stopButton" onclick="stopvideoObject()" ><img src="stop.webp" style="margin-top: 5px;" width="25px"></button>
+            <div class="volumeLabel"> Video Volume <br/>
+              <input type="range" class="volumeSlider" id="volumeSlider" min="0" max="1" step="0.1" value="1" onmouseup="volumevideoObject()" onmousedown="volumevideoObject()">
+            </div>
+            <button id="showTwitchStream" class="showTwitchStream" onclick="streamSwitch()" style="display: none;">Show/Hide Stream</button>
+            <button id="manipulatorBoundary" class="manipulatorBoundary" onclick="manipulatorBoundary()" style="display: none;">Show Boundary</button>
+
+            <button id="quickObjects" class="quickObjects" onclick="quickObjects()" style="display: none;">Create Quick Objects</button>
+            <select id="quickObjectsp2" class="quickObjectsp2" style="display: none;">
+                <option value="broodlesE">Broodles Emotes</option>
+                <option value="danceE">Dance Emotes</option>
+                <option value="lookingsE">Looking Emotes</option>
+                <option value="randomE">Random Emotes</option>
+                <option value="campfireE">Campfire Emotes</option>
+                <option value="ryuE">Ryu Emotes</option>
+                <option value="whosthatffE">Who's That FF</option>
+            </select>
+            <button id="createDBObjects" class="createDBObjects" onclick="createDBObjects()" style="display: none;">Create Saved Objects</button>
+
+        </div>
+
+
+        <div class="saturate" id="saturateElement" style="left: 2163px; top: 208px;">Text Text Text Text</div>
+
+
+          <script src="https://cdn.socket.io/4.7.5/socket.io.min.js" integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO" crossorigin="anonymous"></script>
+          <script>
+
+
+            const socket = io();
+
+
+
+            volatileButtons = ['deleteObjectButton','deleteEveryObjectButton','saveObjectstoDB','showTwitchStream','manipulatorBoundary','quickObjects','quickObjectsp2','createDBObjects'];
+            
+            function showhide(thisPls) {
+
+              if(thisPls == "volatileCommands"){
+                for(i = 0; i <= volatileButtons.length; i++){
+                  var x = document.getElementById(volatileButtons[i]);
+                  console.log(volatileButtons[i]);
+                  if (x.style.display === "none") {
+                    x.style.display = "block";
+                  } else {
+                    x.style.display = "none";
+                  }
+                }
+              }else{
+                var x = document.getElementById(thisPls);
+                if (x.style.display === "none") {
+                  x.style.display = "block";
+                } else {
+                  x.style.display = "none";
+                }
+              }
+            }
+
+
+
+
+            function updatesaturateElement_TextBox(){
+              saturateElement_text = document.getElementById("textInput1").value;
+              saturateElement_base = document.getElementById("saturateElement");
+              duhTop = saturateElement_base.style.top;
+              duhLeft = saturateElement_base.style.left;
+              socket.emit('updatesaturateElement_TextBox_TONODE', { roomName, duhText: saturateElement_text, top: duhTop, left: duhLeft});
+            }
+            socket.on('updatesaturateElement_TextBox_FROMNODE', (data) => {
+                if(logs){
+                  console.log('update saturate text box:', data);
+                  console.log(data);
+                }
+                document.getElementById("saturateElement").textContent = data.duhText;
+                document.getElementById("saturateElement").style.top = data.top;
+                document.getElementById("saturateElement").style.left = data.left;
+
+            });
+
+
+
+
+            // get duh text for duh text box and set it
+            
+
+          // <iframe src="https://clips.twitch.tv/embed?clip=FragileBlueSharkKeepo--UVyrK9U0IAyLGib&parent=localhost" height="540" width="720" autoplay="true" muted="true" allowfullscreen="no" videoResolution="720x540">
+          // </iframe>
+          // ^^ This works if put in directly, needs testing if appended - you have to accept the things that are on screen though
+          // Function to be triggered when the button is clicked
+
+          //function textSelected(){
+            //textCheckBoxIs = document.getElementById("textCheck").checked;
+            //if(logs){console.log(textCheckBoxIs);}
+            
+          //}
+
+
+            function saveObjectstoDB(){
+              
+              socket.emit('deleteSqlObjects', {});
+
+              for (i=0; i<=movableObjects.length; i++){
+                //[0].attributes[3].nodeValue
+                //[0].attributes[4].nodeValue
+                //[0].nextElementSibling.lastElementChild.currentSrc
+                //firstElementChild.currentSrc
+                if (movableObjects[i].firstElementChild.currentSrc != null){
+                  sql = "INSERT INTO objects (url, x, y, zindex, opacity, rotate, flip, volume, objectgroupname, objectname, width, height) ";
+                  sql += "VALUES ('"+movableObjects[i].firstElementChild.currentSrc+"', '"+movableObjects[i].dataset.x+"', '"+movableObjects[i].dataset.y+"', '"+movableObjects[i].style.zIndex+"' , '"+movableObjects[i].style.opacity+"', '"+movableObjects[i].style.rotate+"', '"+movableObjects[i].style.scaleX+"', '0', '0', '"+movableObjects[i].id+"', '"+movableObjects[i].offsetWidth+"', '"+movableObjects[i].offsetHeight+"')";
+                }
+                socket.emit('saveObjectstoDBtoNODEJS', { sql: sql });
+                
+              }
+            }
+
+          function quickObjects() {
+              var ddEChoice = document.getElementById("quickObjectsp2").value;
+              //console.log("Selected value: " + ddEChoice);
+
+              if(ddEChoice == "broodlesE"){duhE = broodlesE;}
+              else if(ddEChoice == "danceE"){duhE = danceE;}
+              else if(ddEChoice == "lookingsE"){duhE = lookingsE;}
+              else if(ddEChoice == "randomE"){duhE = randomE;}
+              else if(ddEChoice == "campfireE"){duhE = campfireE;}
+              else if(ddEChoice == "ryuE"){duhE = ryuE;}
+              else if(ddEChoice == "whosthatffE"){duhE = whosthatffE;}
+
+                              makequickObjects(duhE);
+
+          }
+
+          document.getElementById("quickObjectsp2").addEventListener("change", quickObjectsp2);
+
+          //for colourful reminders that shit is on screen
+          manipulatorEnd = false;
+          // for logs
+          logs = false;
+          logskeys = false;
+          // reset key press indicator
+          doit = false;
+          //i'm dumb - this keeps everything quiet
+          opacityStatus = 1;
+          opacityCurrently = 1;
+          opacityIS = 1;
+          rotateStatus = 0;
+          transformCheck = false;
+          zindexcount = 2;
+          flipStatus = 1;
+          dosize = false;
+          dorotate = false;
+          doopacityup = false;
+          doopacitydown = false;
+          dozindex = false;
+          doflip = false;
+          newRotate = 1;
+          newOpacity = 1;
+          newSize = 1;
+          newZindex = 2;
+          objCreateNum = 0;
+          moveOneRow = 0;
+          duhfileIs = '';
+          textCheckBoxIs = false;
+          duhDiv='';
+
+          function get_url_extension( url ) {
+            if(!textCheckBoxIs){
+              duhfileIs = url.split(/[#?]/)[0].split('.').pop().trim();
+            }
+          }
+          let picTypes = ['webp','jpg','jpeg','gif','gifv','bmp','png', '0'];
+          let vidTypes = ['webm','mp4','mp5'];
+
+            function manipulatorBoundary() {
+              if (manipulatorEnd){manipulatorEnd = false;}else if(manipulatorEnd == false){manipulatorEnd = true;}
+            }
+
+              
+
+
+              
+              movableObjects = [];
+              createdObjects = {};
+              const roomName = 'duhMagicRoom';
+              let lastSelectedObject = null;
+              const newObject = document.createElement('div');
+
+
+
+              //url, objectId, index, 1, 0, true, true, x, y, width, height
+              function createObject(imageUrl, objectId, index, flipStatus, rotateStatus, objCreateNum, moveOneRow, setX, setY, setWidth, setHeight) {
+                  
+                
+                if (createdObjects[objectId]) {
+                  if(logs){
+                    console.log('Object with this identifier already exists.');
+                  }
+                    return;
+                  }
+                  //document.getElementById('sizeSlider').value = 200; // or any default value you prefer
+                  const newObject = document.createElement('div');
+                  newObject.classList.add('movableObject');
+                  newObject.style.cursor = 'grab';
+                  newObject.id = objectId;
+                  newObject.style.scaleX = 1;
+                  
+                  //newObject.width = "200px";
+                  //newObject.height = "";
+                  if(objCreateNum == 'DB'){
+                    if(setX == 'NaN' || setX == '' || setX == null){
+                      return;
+                    }
+                    //console.log(setWidth);
+                    //console.log(setHeight);
+                    //newObject.offsetWidth = setWidth+"px";
+                    //newObject.offsetHeight = setHeight+"px";
+                    //newObject.width = setWidth+"px";
+                    //newObject.geight = setHeight+"px";
+                  }else{
+                    if(moveOneRow >= 100 & moveOneRow <= 400){duhX = moveOneRow + 2600;}
+                    else if(moveOneRow >= 2000){duhX = 2600;}else{duhX = 2600;}
+                    duhY = newObject.style.scaleY = objCreateNum + 100;
+                  }
+                  
+                  newObject.style.opacity = 1;
+                  newObject.style.zIndex = 100;
+
+                  document.querySelector('.pageContainer').appendChild(newObject);
+
+                  const newIndex = movableObjects.length;
+                  newObject.dataset.index = newIndex;
+                  if(objCreateNum == 'DB' || objCreateNum == 'DUP'){
+                    //console.log(setX);
+                    //console.log(setY);
+
+                    newObject.dataset.x = Number(setX);
+                    newObject.dataset.y = Number(setY);
+                  }else{
+                    newObject.dataset.x = 0;
+                    newObject.dataset.y = 0;
+                  }
+                  newObject.dataset.rotate = "0deg";
+                  //newObject.dataset.width = "100px";
+                  if(objCreateNum == 'DB' || objCreateNum == 'DUP'){
+                    newObject.style.transform = `translate(${Number(setX)}px, ${Number(setY)}px) scaleX(1)`;
+                  }else{
+                    newObject.style.transform = `translate(${Number(duhX)}px, ${Number(duhY)}px) scaleX(1)`;
+                  }
+                  //textCheckBoxIs = document.getElementById("textCheck").checked;
+                  get_url_extension(imageUrl);
+
+                  if(textCheckBoxIs){
+                      const newText = document.createElement('div');
+                      newText.innerHTML = imageUrl.value;
+                      newObject.appendChild(newText);
+                      console.log(`adding text box, textIs: ${imageUrl} and newText: ${newText}`);
+                  }else{
+                      if (picTypes.includes(duhfileIs)) {
+                          //console.log('IMAGE');
+                          const newImage = document.createElement('img');
+                          newImage.src = imageUrl;
+                          if(objCreateNum == 'DB'){
+                              if(setWidth == 'NaN' || setWidth == '' || setWidth == null ){
+                                return;
+                              }
+                              newImage.width = setWidth;
+                           }
+                          newObject.appendChild(newImage);
+                          
+                      }
+                      if (vidTypes.includes(duhfileIs)) {
+                          const newVideo = document.createElement('video');
+                          //console.log('VIDEO');
+                          newVideo.src = imageUrl;
+                          newVideo.controls = false; // Add controls for video playback
+                          newVideo.autoplay = false;
+                          newVideo.volume = 0;
+                          newVideo.loop = true;
+                          newVideo.src.width = "200px";
+                          if(objCreateNum == 'DB'){
+                              if(setWidth == 'NaN' || setWidth == '' || setWidth == null ){
+                                return;
+                              }
+                              newImage.width = setWidth;
+                           }
+                          newObject.appendChild(newVideo);
+                      }
+                  }
+                  
+                  movableObjects.push(newObject);
+                  createdObjects[objectId] = true;
+                  
+                  socket.emit('createObject', { index: newIndex, imageUrl, objectId, roomName, flipStatus: flipStatus, rotateStatus: rotateStatus, objCreateNum: objCreateNum, moveOneRow: moveOneRow, setX: setX, setY: setY, setWidth: setWidth, setHeight: setHeight});
+
+
+                  newObject.addEventListener('mousedown', (event) => {
+                      event.preventDefault();
+                      if(logs){
+                        console.log(event.srcElement);
+                      }
+                      const rect = newObject.getBoundingClientRect();
+                      const offsetX = event.clientX - rect.left;
+                      const offsetY = event.clientY - rect.top;
+                      //read the Transform of the currently selected object
+                      checkthisTransform = event.srcElement.offsetParent.style.transform;
+                      
+                      
+                      if(checkthisTransform.includes('scaleX(1)')){
+                        duhflip = 1;
+                      }else{
+                        duhflip = -1;
+                      }//setWidth
+                      document.getElementById('flipLabel').innerHTML = "Flip: "+duhflip;
+                      if (checkthisTransform.includes("rotate(")){
+                        duhRotateA = checkthisTransform.match(/rotate(.*deg)/g);
+                        duhRotateA[0] = duhRotateA[0].replace("rotate(", "");
+                        newsliderRotate = duhRotateA[0];
+                        newsliderRotate = newsliderRotate.replace("deg", "");
+                        document.getElementById('rotationSlider').value = Number(newsliderRotate);
+                      } else {
+                        duhRotateA = "0deg";
+                        document.getElementById('rotationSlider').value = "0";
+                        newsliderRotate = "0";
+                      }
+
+
+
+                      checkthisFilter = event.srcElement.offsetParent.style.filter;
+                      //console.log(event);
+                      //console.log(event.srcElement.offsetParent.dataset);
+                      if(logs){
+                        console.log(`checkthisFilter: ${checkthisFilter}`);
+                      }
+
+
+                      //////////////////// BRIGHTNESS
+                      newsliderbrightness = event.srcElement.offsetParent.dataset.brightness;
+                      if (checkthisFilter.includes("brightness") && newsliderbrightness != undefined){
+
+                          if(logs){
+                            console.log(`newsliderbrightness: ${newsliderbrightness}`);
+                          }
+                          document.getElementById('brightnessSlider').value = Number(newsliderbrightness);
+                      }else{
+                          document.getElementById('brightnessSlider').value = 100;
+                      }
+
+                      //////////////////// BLUR
+                      newsliderblur = event.srcElement.offsetParent.dataset.blur;
+                      if (checkthisFilter.includes("blur") && newsliderblur != undefined){
+
+                          if(logs){
+                            console.log(`newsliderblur: ${newsliderblur}`);
+                          }
+                          document.getElementById('blurSlider').value = Number(newsliderblur);
+                      }else{
+                          document.getElementById('blurSlider').value = 0;
+                      }
+
+                      /////////////////// GRAYSCALE
+                      newslidergrayscale = event.srcElement.offsetParent.dataset.grayscale;
+                      if (checkthisFilter.includes("grayscale") && newslidergrayscale != undefined){
+
+                          if(logs){
+                            console.log(`newslidergrayscale: ${newslidergrayscale}`);
+                          }
+                          document.getElementById('grayscaleSlider').value = Number(newslidergrayscale);
+                      }else{
+                          document.getElementById('grayscaleSlider').value = 0;
+                      }
+
+                      /////////////////// HUE
+                      newsliderhue = event.srcElement.offsetParent.dataset.hue;
+                      if (checkthisFilter.includes("hue") && newsliderhue != undefined){
+
+                          if(logs){
+                            console.log(`newsliderhue: ${newsliderhue}`);
+                          }
+                          document.getElementById('hueSlider').value = Number(newsliderhue);
+                      }else{
+                          document.getElementById('hueSlider').value = 0;
+                      }
+
+                      /////////////////// sepia
+                      newslidersepia = event.srcElement.offsetParent.dataset.sepia;
+                      if (checkthisFilter.includes("sepia") && newslidersepia != undefined){
+
+                          if(logs){
+                            console.log(`newslidersepia: ${newslidersepia}`);
+                          }
+                          document.getElementById('sepiaSlider').value = Number(newslidersepia);
+                      }else{
+                          document.getElementById('sepiaSlider').value = 0;
+                      }
+
+                      /////////////////// invert
+                      newsliderinvert = event.srcElement.offsetParent.dataset.invert;
+                      if (checkthisFilter.includes("invert") && newsliderinvert != undefined){
+
+                          if(logs){
+                            console.log(`newsliderinvert: ${newsliderinvert}`);
+                          }
+                          document.getElementById('invertSlider').value = Number(newsliderinvert);
+                      }else{
+                          document.getElementById('invertSlider').value = 0;
+                      }
+
+                      /////////////////// saturate
+                      newslidersaturate = event.srcElement.offsetParent.dataset.saturate;
+                      if (checkthisFilter.includes("saturate") && newslidersaturate != undefined){
+
+                          if(logs){
+                            console.log(`newslidersaturate: ${newslidersaturate}`);
+                          }
+                          document.getElementById('saturateSlider').value = Number(newslidersaturate);
+                      }else{
+                          document.getElementById('saturateSlider').value = 0;
+                      }
+
+                      /////////////////// contrast
+                      newslidercontrast = event.srcElement.offsetParent.dataset.contrast;
+                      if (checkthisFilter.includes("contrast") && newslidercontrast != undefined){
+
+                          if(logs){
+                            console.log(`newslidercontrast: ${newslidercontrast}`);
+                          }
+                          document.getElementById('contrastSlider').value = Number(newslidercontrast);
+                      }else{
+                          document.getElementById('contrastSlider').value = 100;
+                      }
+
+
+
+
+
+
+
+                      if(!(newObject.style.filter.includes("opacity"))){
+                        document.getElementById('opacitySlider').value = 1;
+                      }else{
+                        document.getElementById('opacitySlider').value = newObject.style.opacity; //null
+                      }
+
+                      duhOpacity = event.srcElement.offsetParent.style.opacity;
+                      document.getElementById('opacitySlider').value = 1;
+                      document.getElementById('sizeSlider').value = newObject.firstElementChild.width;
+                      if(newObject.style.opacity == null || newObject.style.opacity == ""){
+                        document.getElementById('opacitySlider').value = 1;
+                      }else{
+                        document.getElementById('opacitySlider').value = newObject.style.opacity; //null
+                      }
+                      if(newObject.style.zIndex == null){}else{
+                        document.getElementById('zIndexLabel').innerHTML = "Z: "+newObject.style.zIndex;
+                      }
+                      
+
+
+                      //console.log(newObject.style.opacity);
+                      //const newSize = document.getElementById('sizeSlider').value;
+                      if(logs){
+                        console.log("mouse DOWN");
+                        console.log(event);
+                      }
+                      newObject.style.cursor = 'grabbing';
+
+                      function handleMouseMove(event) {
+                          const x = event.clientX - offsetX;
+                          const y = event.clientY - offsetY;
+
+                          socket.emit('moveObject', { index: newObject.dataset.index, x, y, flipStatus: duhflip, roomName, opacityStatus: duhOpacity, duhRotate: duhRotateA});
+
+                          newObject.dataset.x = x;
+                          newObject.dataset.y = y;
+                          if(logs){
+                            console.log("handleMouseMove");
+                            //console.log("opacityStatus: "+duhOpacity);
+                          }
+                      }
+
+                      function handleMouseUp() {
+                          newObject.style.cursor = 'grab';
+
+                          lastSelectedObject = newObject;
+                          //textSelected();
+                          //read the innerHTML of the currently selected object
+                          if(textCheckBoxIs){
+                            console.log(`Selected object: ${lastSelectedObject}`);
+                            checkThisinnerHTML = lastSelectedObject.innerHTML;
+                            if(checkThisinnerHTML.includes("<img src ") || checkThisinnerHTML.includes("<video src")){
+                              document.getElementById('textInput').value = '';
+                              console.log(`lastSelectedObject includes img/video: ${lastSelectedObject}`);
+                            }else{
+                              //document.getElementById('textInput').value = lastSelectedObject.innerHTML;
+                              document.getElementById('textInput').innerText = lastSelectedObject.innerHTML;
+                              console.log(`lastSelectedObject includes text: ${lastSelectedObject}`);
+                            }
+                          }
+
+                          document.removeEventListener('mousemove', handleMouseMove);
+                          document.removeEventListener('mouseup', handleMouseUp);
+                          if(logs){
+                            console.log("MOUSEUP");
+                            console.log("opacityStatus: "+opacityStatus);
+                          }
+                      }
+
+                      document.addEventListener('mousemove', handleMouseMove);
+                      document.addEventListener('mouseup', handleMouseUp);
+                  });
+              }
+
+              socket.on('objectCreated', (data) => {
+                if(logs){
+                  console.log('Object created event received:', data);
+                }
+                indexy = data.index;
+                createObject(data.imageUrl, data.objectId, data.index, data.flipStatus, data.rotateStatus, data.objCreateNum, data.moveOneRow);
+                get_url_extension(data.imageUrl);
+                //if (picTypes.includes(duhfileIs)) {}
+                if (vidTypes.includes(duhfileIs)) {
+                  movableObjects[indexy].firstElementChild.id = `${indexy}_video`;
+                }
+                console.log(data.objectId);
+
+              });
+
+              function createMovableObjects() {
+                  const imageUrlsInput = document.getElementById('imageUrls');
+                  const urls = imageUrlsInput.value.split(',');
+                  //index = movableObjects.length;
+                  //if(textCheckBoxIs){
+                  //  console.log(imageUrlsInput.value);
+                  //    const objectId = `object_${index}`;
+                  //    createObject(imageUrlsInput, objectId, index, flipStatus, rotateStatus, objCreateNum, moveOneRow);
+                  //    objCreateNum = 0; 
+                  //    moveOneRow = 0;
+                  //}else{
+                    urls.forEach((imageUrl, index) => {
+                        imageUrl = imageUrl.trim();
+                        if (imageUrl !== '') {
+                            objCreateNum = objCreateNum+100;
+                            const objectId = `object_${Date.now()}_${index}`;
+                            //const objectId = `object_${index}`;
+                            createObject(imageUrl, objectId, index, flipStatus, rotateStatus, objCreateNum, moveOneRow);
+                            if (objCreateNum >= 1500){
+                              objCreateNum = 0; 
+                             // moveOneRow = moveOneRow + 100;
+                            }
+                            if (moveOneRow >= 1000){
+                             moveOneRow = 0;
+                            }
+                            //console.log(objCreateNum);
+                            //console.log(moveOneRow);
+                        }
+                    });
+                  //}
+                  objCreateNum = 0; 
+                  //moveOneRow = 0;
+                  imageUrlsInput.value = '';
+              }
+
+              function duplicateImage() {
+                  
+                  if(lastSelectedObject){
+                    index = movableObjects.length;
+                    objectId = `object_${Date.now()}_${index}`;
+                    theImage = lastSelectedObject.firstElementChild.src
+                    width = lastSelectedObject.offsetWidth;
+                    height = lastSelectedObject.offsetHeight;
+                    x = lastSelectedObject.dataset.x;
+                    y = lastSelectedObject.dataset.y;
+                    //console.log(`${x},${y}`);
+                    //url, objectId, index, 1, 0, true, true, x, y, width, height
+                    createObject(theImage, objectId, index, 1, 0, 'DUP', 'DUP', x, y, width, height);
+                    //newImageUrl
+                  }
+              }
+
+              function makequickObjects(imageUrlsInput) {
+                  const urls = imageUrlsInput.split(',');
+
+                  urls.forEach((imageUrl, index) => {
+                      imageUrl = imageUrl.trim();
+                      if (imageUrl !== '') {
+                          objCreateNum = objCreateNum+100;
+                          //console.log(objCreateNum);
+                          const objectId = `object_${Date.now()}_${index}`;
+                          //const objectId = `object_${index}`;
+                          createObject(imageUrl, objectId, index, 1, 0, objCreateNum, moveOneRow);
+                          if (objCreateNum >= 1500){
+                            objCreateNum = 0; 
+                            moveOneRow = moveOneRow + 100;
+                          }
+                          if (moveOneRow >= 1000){
+                            moveOneRow = 0;
+                          }
+                          //console.log(objCreateNum);
+                          //console.log(moveOneRow);
+                      }
+
+                  });
+                  objCreateNum = 0; 
+                  //moveOneRow = 0;
+                  imageUrlsInput.value = '';
+              }
+              function createDBObjects() {
+                index = movableObjects.length;
+                socket.emit('createDBObjectsTONODE', { roomName });
+              }
+              
+              socket.on('createDBObjectsFROMNODE', (data) => {
+    for (let i = 0; i < data.length; i++) {
+        setTimeout((index) => {
+            const url = data[index].url;
+            const x = data[index].x;
+            const y = data[index].y;
+            const width = data[index].width;
+            const height = data[index].height;
+            if (url !== '' && !isNaN(x)) {
+                const objectId = `object_${Date.now()}_${index}`;
+                createObject(url, objectId, index, 1, 0, 'DB', 'DB', x, y, width, height);
+            }
+        }, i * 50, i); // Pass 'i' as an argument to the setTimeout function to capture its value
+    }
+});
+                 
+              
+
+
+              
+
+
+
+              socket.on('objectMoved', (data) => {
+                const { index, x, y, flipStatus, opacityStatus, duhRotate } = data;
+                if(logs){
+                  console.log("objectMoved opacityStatus: "+opacityStatus);
+                  console.log(movableObjects[index].style.opacity);
+                }
+                rotaOffset = duhRotate[0].replace("deg", "");
+                rotaOffset = Number(rotaOffset);
+                //offset for rotation... idk why it moves... upside down.. it's fine, but anything between, it jumps
+                if (duhRotate != "0deg"){
+                  if(rotaOffset >= 1 && rotaOffset <= 360){
+                    xN = x+(rotaOffset/10);
+                    yN = y+(rotaOffset/10);
+                  }else{
+                    xN = x-(rotaOffset/10);
+                    yN = y-(rotaOffset/10);
+                  }
+                }else{
+                  xN = x;
+                  yN = y;
+                }
+                movableObjects[index].style.transform = `translate(${xN}px, ${yN}px) scaleX(${flipStatus}) rotate(${duhRotate})`;
+                //console.log(duhRotate);
+                movableObjects[index].dataset.x = x;
+                movableObjects[index].dataset.y = y;
+                if(manipulatorEnd){
+                  checkOverlap();
+                }
+              });
+
+
+              function deleteLastSelectedObject(delobject) {
+                  if (lastSelectedObject) {
+                      delobject = lastSelectedObject.id;
+                      socket.emit('deleteObject', { delobject, roomName, deleteAll: 0 });
+                      //lastSelectedObject.remove();
+                      lastSelectedObject = null;
+                  }
+              }
+
+              function deleteEverything() {
+                //for(i=0; i<=movableObjects.length; i++){
+                //  delayInMilliseconds = i+300;
+                  
+                    //setTimeout(() => { 
+                      
+                      //delobject = movableObjects[i].id;
+                      //console.log(movableObjects[i].id);
+                      
+                      socket.emit('deleteObject', { roomName, deleteAll: 1 });
+                      //delobject.remove();what
+                      lastSelectedObject = null;
+
+                     //}, delayInMilliseconds);
+                    
+                  
+                //}
+                 /* movableObjects.forEach((delobject) =>{
+                    const objectId = delobject.id;
+                      socket.emit('deleteObject', { objectId, roomName, deleteAll: 1 });
+                      delobject.remove();
+                      lastSelectedObject = null;
+                  });*/
+
+              }
+
+
+              socket.on('objectDeleted', (data) => {
+                  const { delobject, deleteAll } = data;
+                  console.log("DELETING OBJECT");
+                  if(data.deleteAll == 1){
+                    //for(i = -1; i < movableObjects.length; i++){
+                      deletedObject = document.getElementById(delobject);
+                      //console.log("pop");
+                      try{
+                        //movableObjects.splice(0, 0);
+                        //movableObjects.splice(delobject, 0);
+                        
+                        //deletedObject.remove();
+
+                        // Specify the prefix of the IDs you want to delete
+                        var idPrefix = 'object_'; // Replace 'object_' with the appropriate prefix
+
+                        // Select all elements whose IDs start with the specified prefix
+                        var elementsToDelete = document.querySelectorAll('[id^="' + idPrefix + '"]');
+
+                        // Loop through the selected elements and delete them
+                        elementsToDelete.forEach(function(element) {
+                            element.parentNode.removeChild(element);
+                        });
+
+                        
+
+                      }catch{
+                        //console.log("f");
+                      }
+                    //}
+                    movableObjects=[];
+                  }else{
+                    
+                    console.log(`Deleting: ${delobject}`);
+                    splitIt = delobject.split('_');
+                    duhID = splitIt[2];
+                    element = document.getElementById(delobject);
+                    element.remove();
+
+                    movableObjects.splice(duhID, 1);
+
+                  }
+
+              });
+
+              function changeImage() {
+                  if (lastSelectedObject) {
+                      const newImageUrl = document.getElementById('newImageUrl').value.trim();
+                      if (newImageUrl) {
+                          const index = lastSelectedObject.dataset.index;
+                          lastSelectedObject.querySelector('img').src = newImageUrl;
+
+                          socket.emit('changeImage', { index, newImageUrl, roomName });
+                          //newImageUrl
+                          newImageUrl.value = '';
+                      }
+                  }
+              }
+
+
+
+              
+
+
+              
+
+              socket.on('reloadPage', () => {
+              if(logs){
+                console.log('Reloading the page...');
+              }
+                  location.reload(true);
+              });
+
+              socket.on('imageChanged', (data) => {
+                  const { index, newImageUrl } = data;
+                  movableObjects[index].querySelector('img').src = newImageUrl;
+              });
+
+              function changeSizeButton() {
+                  if (lastSelectedObject) {
+                          const index = lastSelectedObject.dataset.index;
+                          const imageUrl = movableObjects[index].firstElementChild.currentSrc;
+                          // VIDEO SIZE OPTIONS
+                          get_url_extension(imageUrl);
+                          // Get the slider value
+                          const newSize = document.getElementById('sizeSlider').value;
+
+                          if(picTypes.includes(duhfileIs)){
+                            // Calculate the new width and height based on the slider value
+                            const newWidth = newSize;
+                            const newHeight = 'auto';
+                          }
+                          else if(vidTypes.includes(duhfileIs)){
+                            getVidSize = movableObjects[index].innerHTML;
+                            newSize = getVidSize.match(/\width=".+?px"/g);
+                            const newWidth = newSize;
+                            const newHeight = 'auto';
+                          }
+                          socket.emit('changeSize', { index, width: newWidth, height: newHeight, roomName });
+                      }
+                }
+
+              // Function to resize the object and update server (1)
+              function resizeObject(index, newSize, buttoned) {
+                  //console.log(newSize);
+                  if (lastSelectedObject) {
+                    const index = lastSelectedObject.dataset.index;
+                    const imageUrl = lastSelectedObject.firstElementChild.currentSrc;
+                    const flipStatus = lastSelectedObject.dataset.flipStatus;
+                    const duhRotate = lastSelectedObject.dataset.duhRotate;
+                    const x = lastSelectedObject.dataset.x;
+                    const y = lastSelectedObject.dataset.y;
+                    // VIDEO SIZE OPTIONS
+                    get_url_extension(imageUrl);
+                    if(buttoned){}else{
+                      // Get the slider value
+                      newSize = document.getElementById('sizeSlider').value;
+                    }
+                    if(picTypes.includes(duhfileIs)){
+                      // Calculate the new width and height based on the slider value
+                      newWidth = newSize;
+                      newHeight = "auto";
+                      duhtypeIS = 'pic';
+                    }
+                    else if(vidTypes.includes(duhfileIs)){
+                      newWidth = newSize;
+                      newHeight = 'auto';
+                      duhtypeIS = 'vid';
+                    }
+                      socket.emit('changeSize', { index, x: x, y: y, width: newWidth, height: newHeight, flipStatus: flipStatus, duhRotate: duhRotate, roomName });
+                  }
+                }
+              // (3)
+              socket.on('sizeChanged', (data) => {
+                  const { index, x, y, width, height, flipStatus, duhRotate } = data;
+                  const imageUrl = movableObjects[index].firstElementChild.currentSrc;
+                  // VIDEO SIZE OPTIONS
+                  get_url_extension(imageUrl);
+
+                  if(picTypes.includes(duhfileIs)){
+                    movableObjects[index].querySelector('img').width = data.width;
+                    movableObjects[index].style.transform = `translate(${x}px, ${y}px) scaleX(${flipStatus}) rotate(${duhRotate})`;
+                  }else if(vidTypes.includes(duhfileIs)){
+                    movableObjects[index].firstElementChild.width = data.width;
+                    movableObjects[index].style.transform = `translate(${x}px, ${y}px) scaleX(${flipStatus}) rotate(${duhRotate})`;
+                  }
+                  movableObjects[index].dataset.x = x;
+                  movableObjects[index].dataset.y = y;
+                  document.getElementById('flipLabel').innerHTML = "Flip: "+flipStatus;
+                });
+
+
+
+
+
+
+              // Function to rotate the object and update server (1)
+              function setRotation(index, newRotate, buttoned) {
+                  if (lastSelectedObject) {
+                      const index = lastSelectedObject.dataset.index;
+                      const x = lastSelectedObject.dataset.x;
+                      const y = lastSelectedObject.dataset.y;
+                      const slideRotation = document.getElementById('rotationSlider');
+                      
+                      newRotation = parseInt(rotationSlider.value);
+                      if(logs){
+                        console.log("newRotation is below:");
+                        console.log(newRotation);
+                      }
+
+                      if(buttoned){
+                        socket.emit('rotateObject', { index, x: x, y: y, rotate: newRotate, roomName });
+                      }else{
+                        socket.emit('rotateObject', { index, x: x, y: y, rotate: newRotation, roomName });
+                      }
+                    }
+                }
+
+              //rotate (3)
+              socket.on('changeRotate', (data) => {
+                  const { index, rotate, x, y } = data;
+                  if(logs){
+                    console.log("rotateStatus is below:");
+                    console.log(rotate);
+                    console.log("movableObject is below:");
+                    console.log(movableObjects[index]);
+                  }
+
+                  //(A) this works:
+                  //movableObjects[index].firstElementChild.style.rotate = rotate+"deg";
+                  //getthis = movableObjects[index].firstElementChild.style.transform.match(/scaleX(.*)/g);
+                  checkthisTransform = movableObjects[index].style.transform;
+                  if (checkthisTransform.includes("rotate(")){
+                    setthisTransform = movableObjects[index].style.transform.replace(/rotate(.*deg)/g, `rotate(${rotate}deg`);
+                  } else {
+                    setthisTransform = movableObjects[index].style.transform+` rotate(${rotate}deg`;
+                  }
+                  
+                  //console.log(setthisTransform);
+                  movableObjects[index].style.transform = setthisTransform;
+                  movableObjects[index].dataset.duhRotate = `${rotate}deg`;
+
+              });
+
+
+
+              
+
+
+
+
+
+
+              // EXAMPLE STEP 1 - NEXT STEP ON SERVER
+              function flipObject() {
+                  if (lastSelectedObject) {
+                    const index = lastSelectedObject.dataset.index;
+
+                    getduhFlip = lastSelectedObject.style.transform.match(/scaleX(.*)/g);
+                        if (getduhFlip[0].includes("scaleX(1)")){flipStatusIS = -1;}else if(getduhFlip[0].includes("scaleX(-1)")){flipStatusIS = 1;}
+
+                      getduhRotate = lastSelectedObject.style.transform.match(/rotate(.*deg)/g);
+                        getduhRotate[0] = getduhRotate[0].replace("rotate(", "");
+                          rotateStatusIS = getduhRotate[0];
+                    if(logs){
+                      console.log("flipObject flipStatusIS: "+flipStatusIS);
+                      console.log(getduhFlip[0]);
+                    }
+                    socket.emit('flipChanged', { index, flipStatus: flipStatusIS, rotateStatus: rotateStatusIS, roomName });
+                    
+                  }
+              }
+
+              // EXAMPLE STEP 3
+              socket.on('changeFlip', (data) => {
+                if(logs){
+                  console.log('Object created event received:', data);
+                }
+                    const index = data.index;
+                    flipStatus = data.flipStatus;
+                    rotateStatus = data.rotateStatus;
+                    
+                    movableObjects[index].style.transform = `translate(${movableObjects[index].dataset.x}px, ${movableObjects[index].dataset.y}px) scaleX(${flipStatus}) rotate(${rotateStatus})`;
+                    movableObjects[index].dataset.transform = `translate(${movableObjects[index].dataset.x}px, ${movableObjects[index].dataset.y}px) scaleX(${flipStatus})  rotate(${rotateStatus})`;
+                    movableObjects[index].dataset.flipStatus = flipStatus;
+                    if(logs){
+                      console.log(flipStatus);
+                      console.log(rotateStatus);
+                      console.log('changeFlip: '+movableObjects[index].style.transform);
+                    }
+                    document.getElementById('flipLabel').innerHTML = "Flip: "+flipStatus;
+
+              });
+
+
+              // EXAMPLE STEP 1 - NEXT STEP ON SERVER
+              function blurObject() {
+                if (lastSelectedObject) {
+                  index = lastSelectedObject.dataset.index;
+                  sliderBlur = document.getElementById('blurSlider');
+                  sliderBlur = parseInt(sliderBlur.value);
+                  //console.log(sliderBlur);
+                  socket.emit('blurChanged', { index, blurIs: sliderBlur, roomName });
+                  
+                }
+              }
+              // EXAMPLE STEP 3
+              socket.on('changeBlur', (data) => {
+
+                if(logs){
+                  console.log('Object filter event received:', data);
+                }
+                  index = data.index;
+                  blurStatus = data.blurIs;
+                  //checkthisFilter = movableObjects[index].style.filter;
+                  movableObjects[index].dataset.blur = blurStatus;
+                  if(movableObjects[index].dataset.brightness >= 0){brightnessStatus = movableObjects[index].dataset.brightness;}else{brightnessStatus = 100;}
+                  if(movableObjects[index].dataset.grayscale >= 0){grayscaleStatus = movableObjects[index].dataset.grayscale;}else{grayscaleStatus = 0;}
+                  if(movableObjects[index].dataset.hue >= 0){hueStatus = movableObjects[index].dataset.hue;}else{hueStatus = 0;}
+                  if(movableObjects[index].dataset.sepia >= 0){sepiaStatus = movableObjects[index].dataset.sepia;}else{sepiaStatus = 0;}
+                  if(movableObjects[index].dataset.invert >= 0){invertStatus = movableObjects[index].dataset.invert;}else{invertStatus = 0;}
+                  if(movableObjects[index].dataset.saturate >= 0){saturateStatus = movableObjects[index].dataset.saturate;}else{saturateStatus = 0;}
+                  if(movableObjects[index].dataset.contrast >= 0){contrastStatus = movableObjects[index].dataset.contrast;}else{contrastStatus = 100;}
+
+                  setthisFilter = `contrast(${contrastStatus}%) sepia(${sepiaStatus}%) hue-rotate(${hueStatus}deg) saturate(${saturateStatus}%) blur(${blurStatus}px) brightness(${brightnessStatus}%) grayscale(${grayscaleStatus}%) invert(${invertStatus}%)`;
+                 
+                    if(logs){
+                      console.log(index);
+                      console.log(blurStatus);
+                      console.log(`blur(${blurStatus}%)`);
+                    }
+                    movableObjects[index].style.filter = setthisFilter;
+
+              });
+
+              // EXAMPLE STEP 1 - NEXT STEP ON SERVER
+              function brightnessObject() {
+                if (lastSelectedObject) {
+                  index = lastSelectedObject.dataset.index;
+                  sliderBrightness = document.getElementById('brightnessSlider');
+                  sliderBrightness = parseInt(sliderBrightness.value);
+                  //console.log(sliderBrightness);
+                  socket.emit('brightnessChanged', { index, brightnessIs: sliderBrightness, roomName });
+                  if(logs){
+                    console.log(`function brightnessObject: ${sliderBrightness}`);
+                  }
+                }
+              }
+              // EXAMPLE STEP 3
+              socket.on('changeBrightness', (data) => {
+
+                if(logs){
+                  console.log('Object filter event received:', data);
+                }
+                  index = data.index;
+                  brightnessStatus = data.brightnessIs;
+                  //checkthisFilter = movableObjects[index].style.filter;
+                  movableObjects[index].dataset.brightness = brightnessStatus;
+                  if(movableObjects[index].dataset.blur >= 0){blurStatus = movableObjects[index].dataset.blur;}else{blurStatus = 0;}
+                  if(movableObjects[index].dataset.grayscale >= 0){grayscaleStatus = movableObjects[index].dataset.grayscale;}else{grayscaleStatus = 0;}
+                  if(movableObjects[index].dataset.hue >= 0){hueStatus = movableObjects[index].dataset.hue;}else{hueStatus = 0;}
+                  if(movableObjects[index].dataset.sepia >= 0){sepiaStatus = movableObjects[index].dataset.sepia;}else{sepiaStatus = 0;}
+                  if(movableObjects[index].dataset.invert >= 0){invertStatus = movableObjects[index].dataset.invert;}else{invertStatus = 0;}
+                  if(movableObjects[index].dataset.saturate >= 0){saturateStatus = movableObjects[index].dataset.saturate;}else{saturateStatus = 0;}
+                  if(movableObjects[index].dataset.contrast >= 0){contrastStatus = movableObjects[index].dataset.contrast;}else{contrastStatus = 100;}
+
+                  setthisFilter = `contrast(${contrastStatus}%) sepia(${sepiaStatus}%) hue-rotate(${hueStatus}deg) saturate(${saturateStatus}%) blur(${blurStatus}px) brightness(${brightnessStatus}%) grayscale(${grayscaleStatus}%) invert(${invertStatus}%)`;
+                    
+                    if(logs){
+                      console.log(index);
+                      console.log(brightnessStatus);
+                      console.log(`brightness(${brightnessStatus}%)`);
+                    }
+                    movableObjects[index].style.filter = setthisFilter;
+
+              });
+
+
+              // EXAMPLE STEP 1 - NEXT STEP ON SERVER
+              function grayscaleObject() {
+                if (lastSelectedObject) {
+                  index = lastSelectedObject.dataset.index;
+                  slidergrayscale = document.getElementById('grayscaleSlider');
+                  slidergrayscale = parseInt(slidergrayscale.value);
+                  //console.log(slidergrayscale);
+                  socket.emit('grayscaleChanged', { index, grayscaleIs: slidergrayscale, roomName });
+                  if(logs){
+                    console.log(`function grayscaleObject: ${slidergrayscale}`);
+                  }
+                }
+              }
+              // EXAMPLE STEP 3
+              socket.on('changeGrayscale', (data) => {
+                if(logs){
+                  console.log('Object filter event received:', data);
+                }
+                  index = data.index;
+                  grayscaleStatus = data.grayscaleIs;
+                  movableObjects[index].dataset.grayscale = grayscaleStatus;
+                  if(movableObjects[index].dataset.blur >= 0){blurStatus = movableObjects[index].dataset.blur;}else{blurStatus = 0;}
+                  if(movableObjects[index].dataset.brightness >= 0){brightnessStatus = movableObjects[index].dataset.brightness;}else{brightnessStatus = 100;}
+                  if(movableObjects[index].dataset.hue >= 0){hueStatus = movableObjects[index].dataset.hue;}else{hueStatus = 0;}
+                  if(movableObjects[index].dataset.sepia >= 0){sepiaStatus = movableObjects[index].dataset.sepia;}else{sepiaStatus = 0;}
+                  if(movableObjects[index].dataset.invert >= 0){invertStatus = movableObjects[index].dataset.invert;}else{invertStatus = 0;}
+                  if(movableObjects[index].dataset.saturate >= 0){saturateStatus = movableObjects[index].dataset.saturate;}else{saturateStatus = 0;}
+                  if(movableObjects[index].dataset.contrast >= 0){contrastStatus = movableObjects[index].dataset.contrast;}else{contrastStatus = 100;}
+
+                  setthisFilter = `contrast(${contrastStatus}%) sepia(${sepiaStatus}%) hue-rotate(${hueStatus}deg) saturate(${saturateStatus}%) blur(${blurStatus}px) brightness(${brightnessStatus}%) grayscale(${grayscaleStatus}%) invert(${invertStatus}%)`;
+                    
+                    if(logs){
+                      console.log(index);
+                      console.log(grayscaleStatus);
+                      console.log(`grayscale(${grayscaleStatus}%)`);
+                    }
+                    movableObjects[index].style.filter = setthisFilter;
+
+              });
+
+              // EXAMPLE STEP 1 - NEXT STEP ON SERVER
+              function hueObject() {
+                if (lastSelectedObject) {
+                  index = lastSelectedObject.dataset.index;
+                  sliderhue = document.getElementById('hueSlider');
+                  sliderhue = parseInt(sliderhue.value);
+                  //console.log(sliderhue);
+                  socket.emit('hueChanged', { index, hueIs: sliderhue, roomName });
+                  if(logs){
+                    console.log(`function hueObject: ${sliderhue}`);
+                  }
+                }
+              }
+              // EXAMPLE STEP 3
+              socket.on('changeHue', (data) => {
+                if(logs){
+                  console.log('Object filter event received:', data);
+                }
+                  index = data.index;
+                  hueStatus = data.hueIs;
+                  movableObjects[index].dataset.hue = hueStatus;
+                  if(movableObjects[index].dataset.blur >= 0){blurStatus = movableObjects[index].dataset.blur;}else{blurStatus = 0;}
+                  if(movableObjects[index].dataset.brightness >= 0){brightnessStatus = movableObjects[index].dataset.brightness;}else{brightnessStatus = 100;}
+                  if(movableObjects[index].dataset.grayscale >= 0){grayscaleStatus = movableObjects[index].dataset.grayscale;}else{grayscaleStatus = 0;}
+                  if(movableObjects[index].dataset.sepia >= 0){sepiaStatus = movableObjects[index].dataset.sepia;}else{sepiaStatus = 0;}
+                  if(movableObjects[index].dataset.invert >= 0){invertStatus = movableObjects[index].dataset.invert;}else{invertStatus = 0;}
+                  if(movableObjects[index].dataset.saturate >= 0){saturateStatus = movableObjects[index].dataset.saturate;}else{saturateStatus = 0;}
+                  if(movableObjects[index].dataset.contrast >= 0){contrastStatus = movableObjects[index].dataset.contrast;}else{contrastStatus = 100;}
+
+                  setthisFilter = `contrast(${contrastStatus}%) sepia(${sepiaStatus}%) hue-rotate(${hueStatus}deg) saturate(${saturateStatus}%) blur(${blurStatus}px) brightness(${brightnessStatus}%) grayscale(${grayscaleStatus}%) invert(${invertStatus}%)`;
+                    
+                    if(logs){
+                      console.log(index);
+                      console.log(hueStatus);
+                      console.log(`hue-rotate(${hueStatus}deg)`);
+                    }
+                    movableObjects[index].style.filter = setthisFilter;
+
+              });
+
+              // EXAMPLE STEP 1 - NEXT STEP ON SERVER
+              function sepiaObject() {
+                if (lastSelectedObject) {
+                  index = lastSelectedObject.dataset.index;
+                  slidersepia = document.getElementById('sepiaSlider');
+                  slidersepia = parseInt(slidersepia.value);
+                  //console.log(slidersepia);
+                  socket.emit('sepiaChanged', { index, sepiaIs: slidersepia, roomName });
+                  if(logs){
+                    console.log(`function sepiaObject: ${slidersepia}`);
+                  }
+                }
+              }
+              // EXAMPLE STEP 3
+              socket.on('changeSepia', (data) => {
+                if(logs){
+                  console.log('Object filter event received:', data);
+                }
+                  index = data.index;
+                  sepiaStatus = data.sepiaIs;
+                  movableObjects[index].dataset.sepia = sepiaStatus;
+                  if(movableObjects[index].dataset.blur >= 0){blurStatus = movableObjects[index].dataset.blur;}else{blurStatus = 0;}
+                  if(movableObjects[index].dataset.brightness >= 0){brightnessStatus = movableObjects[index].dataset.brightness;}else{brightnessStatus = 100;}
+                  if(movableObjects[index].dataset.grayscale >= 0){grayscaleStatus = movableObjects[index].dataset.grayscale;}else{grayscaleStatus = 0;}
+                  if(movableObjects[index].dataset.hue >= 0){hueStatus = movableObjects[index].dataset.hue;}else{hueStatus = 0;}
+                  if(movableObjects[index].dataset.invert >= 0){invertStatus = movableObjects[index].dataset.invert;}else{invertStatus = 0;}
+                  if(movableObjects[index].dataset.saturate >= 0){saturateStatus = movableObjects[index].dataset.saturate;}else{saturateStatus = 0;}
+                  if(movableObjects[index].dataset.contrast >= 0){contrastStatus = movableObjects[index].dataset.contrast;}else{contrastStatus = 100;}
+
+                  setthisFilter = `contrast(${contrastStatus}%) sepia(${sepiaStatus}%) hue-rotate(${hueStatus}deg) saturate(${saturateStatus}%) blur(${blurStatus}px) brightness(${brightnessStatus}%) grayscale(${grayscaleStatus}%) invert(${invertStatus}%)`;
+                    
+                    if(logs){
+                      console.log(index);
+                      console.log(sepiaStatus);
+                      console.log(`sepia(${sepiaStatus}deg)`);
+                    }
+                    movableObjects[index].style.filter = setthisFilter;
+
+              });
+
+               // EXAMPLE STEP 1 - NEXT STEP ON SERVER
+              function invertObject() {
+                if (lastSelectedObject) {
+                  index = lastSelectedObject.dataset.index;
+                  sliderinvert = document.getElementById('invertSlider');
+                  sliderinvert = parseInt(sliderinvert.value);
+                  //console.log(sliderinvert);
+                  socket.emit('invertChanged', { index, invertIs: sliderinvert, roomName });
+                  if(logs){
+                    console.log(`function invertObject: ${sliderinvert}`);
+                  }
+                }
+              }
+              // EXAMPLE STEP 3
+              socket.on('changeInvert', (data) => {
+                if(logs){
+                  console.log('Object filter event received:', data);
+                }
+                  index = data.index;
+                invertStatus = data.invertIs;
+                  movableObjects[index].dataset.invert = invertStatus;
+                  if(movableObjects[index].dataset.blur >= 0){blurStatus = movableObjects[index].dataset.blur;}else{blurStatus = 0;}
+                  if(movableObjects[index].dataset.brightness >= 0){brightnessStatus = movableObjects[index].dataset.brightness;}else{brightnessStatus = 100;}
+                  if(movableObjects[index].dataset.grayscale >= 0){grayscaleStatus = movableObjects[index].dataset.grayscale;}else{grayscaleStatus = 0;}
+                  if(movableObjects[index].dataset.hue >= 0){hueStatus = movableObjects[index].dataset.hue;}else{hueStatus = 0;}
+                  if(movableObjects[index].dataset.sepia >= 0){sepiaStatus = movableObjects[index].dataset.sepia;}else{sepiaStatus = 0;}
+                  if(movableObjects[index].dataset.saturate >= 0){saturateStatus = movableObjects[index].dataset.saturate;}else{saturateStatus = 0;}
+                  if(movableObjects[index].dataset.contrast >= 0){contrastStatus = movableObjects[index].dataset.contrast;}else{contrastStatus = 100;}
+
+                  setthisFilter = `contrast(${contrastStatus}%) sepia(${sepiaStatus}%) hue-rotate(${hueStatus}deg) saturate(${saturateStatus}%) blur(${blurStatus}px) brightness(${brightnessStatus}%) grayscale(${grayscaleStatus}%) invert(${invertStatus}%)`;
+                    
+                    if(logs){
+                      console.log(index);
+                      console.log(invertStatus);
+                      console.log(`invert(${invertStatus}deg)`);
+                    }
+                    movableObjects[index].style.filter = setthisFilter;
+
+              });
+
+              // EXAMPLE STEP 1 - NEXT STEP ON SERVER
+              function saturateObject() {
+                if (lastSelectedObject) {
+                  index = lastSelectedObject.dataset.index;
+                  slidersaturate = document.getElementById('saturateSlider');
+                  slidersaturate = parseInt(slidersaturate.value);
+                  //console.log(slidersaturate);
+                  socket.emit('saturateChanged', { index, saturateIs: slidersaturate, roomName });
+                  if(logs){
+                    console.log(`function saturateObject: ${slidersaturate}`);
+                  }
+                }
+              }
+              // EXAMPLE STEP 3
+              socket.on('changeSaturate', (data) => {
+                if(logs){
+                  console.log('Object filter event received:', data);
+                }
+                  index = data.index;
+                  saturateStatus = data.saturateIs;
+                  movableObjects[index].dataset.saturate = saturateStatus;
+                  if(movableObjects[index].dataset.blur >= 0){blurStatus = movableObjects[index].dataset.blur;}else{blurStatus = 0;}
+                  if(movableObjects[index].dataset.brightness >= 0){brightnessStatus = movableObjects[index].dataset.brightness;}else{brightnessStatus = 100;}
+                  if(movableObjects[index].dataset.grayscale >= 0){grayscaleStatus = movableObjects[index].dataset.grayscale;}else{grayscaleStatus = 0;}
+                  if(movableObjects[index].dataset.hue >= 0){hueStatus = movableObjects[index].dataset.hue;}else{hueStatus = 0;}
+                  if(movableObjects[index].dataset.sepia >= 0){sepiaStatus = movableObjects[index].dataset.sepia;}else{sepiaStatus = 0;}
+                  if(movableObjects[index].dataset.invert >= 0){invertStatus = movableObjects[index].dataset.invert;}else{invertStatus = 0;}
+                  if(movableObjects[index].dataset.contrast >= 0){contrastStatus = movableObjects[index].dataset.contrast;}else{contrastStatus = 100;}
+
+                  setthisFilter = `contrast(${contrastStatus}%) sepia(${sepiaStatus}%) hue-rotate(${hueStatus}deg) saturate(${saturateStatus}%) blur(${blurStatus}px) brightness(${brightnessStatus}%) grayscale(${grayscaleStatus}%) invert(${invertStatus}%)`;
+                    
+                    if(logs){
+                      console.log(index);
+                      console.log(saturateStatus);
+                      console.log(`saturate(${saturateStatus}deg)`);
+                    }
+                    movableObjects[index].style.filter = setthisFilter;
+
+              });
+
+              // EXAMPLE STEP 1 - NEXT STEP ON SERVER
+              function contrastObject() {
+                if (lastSelectedObject) {
+                  index = lastSelectedObject.dataset.index;
+                  slidercontrast = document.getElementById('contrastSlider');
+                  slidercontrast = parseInt(slidercontrast.value);
+                  //console.log(slidercontrast);
+                  socket.emit('contrastChanged', { index, contrastIs: slidercontrast, roomName });
+                  if(logs){
+                    console.log(`function contrastObject: ${slidercontrast}`);
+                  }
+                }
+              }
+              // EXAMPLE STEP 3
+              socket.on('changeContrast', (data) => {
+                if(logs){
+                  console.log('Object filter event received:', data);
+                }
+                  index = data.index;
+                  contrastStatus = data.contrastIs;
+                  movableObjects[index].dataset.contrast = contrastStatus;
+                  if(movableObjects[index].dataset.blur >= 0){blurStatus = movableObjects[index].dataset.blur;}else{blurStatus = 0;}
+                  if(movableObjects[index].dataset.brightness >= 0){brightnessStatus = movableObjects[index].dataset.brightness;}else{brightnessStatus = 100;}
+                  if(movableObjects[index].dataset.grayscale >= 0){grayscaleStatus = movableObjects[index].dataset.grayscale;}else{grayscaleStatus = 0;}
+                  if(movableObjects[index].dataset.hue >= 0){hueStatus = movableObjects[index].dataset.hue;}else{hueStatus = 0;}
+                  if(movableObjects[index].dataset.sepia >= 0){sepiaStatus = movableObjects[index].dataset.sepia;}else{sepiaStatus = 0;}
+                  if(movableObjects[index].dataset.invert >= 0){invertStatus = movableObjects[index].dataset.invert;}else{invertStatus = 0;}
+                  if(movableObjects[index].dataset.saturate >= 0){saturateStatus = movableObjects[index].dataset.saturate;}else{saturateStatus = 0;}
+
+                  setthisFilter = `contrast(${contrastStatus}%) sepia(${sepiaStatus}%) hue-rotate(${hueStatus}deg) saturate(${saturateStatus}%) blur(${blurStatus}px) brightness(${brightnessStatus}%) grayscale(${grayscaleStatus}%) invert(${invertStatus}%)`;
+                    
+                    if(logs){
+                      console.log(index);
+                      console.log(contrastStatus);
+                      console.log(`contrast(${contrastStatus}deg)`);
+                    }
+                    movableObjects[index].style.filter = setthisFilter;
+
+              });
+
+              
+
+              // EXAMPLE STEP 1 - NEXT STEP ON SERVER
+              function refreshThis() {
+
+                  socket.emit('refreshPage', { roomName });
+                  if(logs){
+                    console.log(`function refreshPage`);
+                  }
+                
+              }
+              // EXAMPLE STEP 3
+              socket.on('refreshPageNow', (data) => {
+                if(logs){
+                  console.log('Refreshpagenow:', data);
+                }
+                location.reload();               
+
+              });
+
+              
+
+
+      ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      //#1
+      function playvideoObject() {
+          if (lastSelectedObject) {
+            index = lastSelectedObject.dataset.index;
+            vidindex = lastSelectedObject.firstElementChild.id;
+            socket.emit('playObject', { index, vidindex: vidindex, roomName });
+            if(logs){console.log("playObject");}
+          }
+      }
+      //#3
+      socket.on('playthisObject', (data) => {
+          if(logs){console.log("playingObject");}
+          vidindex = data.vidindex;
+          duhvidya = document.getElementById(vidindex);
+          duhvidya.play();
+          if(logs){console.log(vidindex);}
+      });
+
+      //#1
+      function pausevideoObject() {
+          if (lastSelectedObject) {
+            index = lastSelectedObject.dataset.index;
+            vidindex = lastSelectedObject.firstElementChild.id;
+            socket.emit('pauseObject', { index, vidindex: vidindex, roomName });
+            if(logs){console.log("pauseObject");}
+          }
+      }
+      //#3
+      socket.on('pausethisObject', (data) => {
+          if(logs){console.log("pausingObject");}
+          if(logs){console.log(data.vidindex);}
+          vidindex = data.vidindex;
+          duhvidya = document.getElementById(vidindex);
+          duhvidya.pause();
+      });
+
+      //#1
+      function stopvideoObject() {
+          if (lastSelectedObject) {
+            index = lastSelectedObject.dataset.index;
+            vidindex = lastSelectedObject.firstElementChild.id;
+            socket.emit('stopObject', { index, vidindex: vidindex, roomName });
+            if(logs){console.log("stoppingObject");}
+          }
+      }
+      //#3
+      socket.on('stopthisObject', (data) => {
+          if(logs){console.log("stoppingObject");}
+          if(logs){console.log(data.vidindex);}
+          vidindex = data.vidindex;
+          duhvidya = document.getElementById(vidindex);
+          duhvidya.pause();
+          duhvidya.currentTime = 0;
+      });
+      //#1
+      function volumevideoObject() {
+          if (lastSelectedObject) {
+            index = lastSelectedObject.dataset.index;
+            vidindex = lastSelectedObject.firstElementChild.id;
+            newVolume = document.getElementById('volumeSlider').value;
+            socket.emit('volumeObject', { index, vidindex: vidindex, sliderVolume: newVolume, roomName });
+            if(logs){console.log("volumingObject");}
+          }
+        }
+      //#3
+      socket.on('volumethisObject', (data) => {
+          if(logs){console.log("volumingObject");}
+          if(logs){console.log(data.vidindex);}
+          vidindex = data.vidindex;
+          duhvidya = document.getElementById(vidindex);
+          duhvidya.volume = data.sliderVolume;
+      });
+      /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+      // EXAMPLE STEP 1 - NEXT STEP ON SERVER
+      function increaseOpacityObject() {
+          if (lastSelectedObject) {
+            upordown = 'up';
+            const index = lastSelectedObject.dataset.index;
+            const opacityCurrently = Number(movableObjects[index].style.opacity);
+
+            socket.emit('opacityChanged', { index, opacityStatus: opacityCurrently, UpOrDown: upordown, roomName });
+            if(logs){
+              console.log(upordown);
+              console.log("increaseOpacityObject lastSelectedObject on next line");
+              console.log(lastSelectedObject);
+              console.log("movableObjects index style opacity is below:");
+              console.log(Number(movableObjects[index].style.opacity));
+            }
+          }
+      }
+      function decreaseOpacityObject() {
+          if (lastSelectedObject) {
+            upordown = 'down';
+            const index = lastSelectedObject.dataset.index;
+            const opacityCurrently = Number(movableObjects[index].style.opacity);
+
+            socket.emit('opacityChanged', { index, opacityStatus: opacityCurrently, UpOrDown: upordown, roomName });
+            if(logs){
+              console.log(upordown);
+              console.log("increaseOpacityObject lastSelectedObject on next line");
+              console.log(lastSelectedObject);
+              console.log("movableObjects index style opacity is below:");
+              console.log(Number(movableObjects[index].style.opacity));
+            }
+          }
+      }
+      // EXAMPLE STEP 3 - NOW SET THAT SHIT
+      function setOpacity() {
+          if (lastSelectedObject) {
+
+            const index = lastSelectedObject.dataset.index;
+            duhOpacity = document.getElementById('opacitySlider').value;
+            socket.emit('opacityChanged', { index, opacityStatus: duhOpacity, UpOrDown: "slider", roomName });
+            if(logs){
+
+            }
+          }
+      }
+
+      // EXAMPLE STEP 3
+      socket.on('changeOpacity', (data) => {
+        if(logs){
+          console.log('Object opacity changed event received:', data);
+          console.log(Number(data.opacityStatus));
+        }
+          const index = data.index;
+          const opacityStatus = Number(data.opacityStatus);
+          const upOrDown = data.UpOrDown;
+          if (logs){
+            console.log("opacityStatus is, stage 1 of example step 3 changeOpacity");
+            console.log(movableObjects[index].dataset.opacityStatus);
+          }
+
+          if(upOrDown == "slider"){
+            opacityIS = opacityStatus;
+          }else{
+              if (opacityStatus >= 1 && upOrDown == "up") {
+                opacityIS = 1;
+              } else if (opacityStatus <= 0 && upOrDown == "down") {
+                opacityIS = 0;
+              } else {
+                opacityIS = opacityStatus + (upOrDown == "up" ? 0.1 : -0.1);
+              }
+          }
+
+          movableObjects[index].style.opacity = opacityIS;
+          movableObjects[index].dataset.opacityStatus = opacityIS;
+
+          if(logs){
+            console.log(upOrDown);
+            console.log("opacityStatus: "+opacityStatus);
+            console.log("data on next line");
+            console.log(JSON.stringify(data));
+          }
+
+      });
+
+      //part 1 of #1
+      function bringtoFrontObject() {
+        if (lastSelectedObject) {
+          const indexy = lastSelectedObject.dataset.index;
+          currZindex = movableObjects[indexy].style.zIndex;
+          newZindex = Number(currZindex)+1;
+          setzindexNOW(indexy, newZindex);
+          
+        }
+      }
+      function sendtoBackObject() {
+        if (lastSelectedObject) {
+          indexy = lastSelectedObject.dataset.index;
+          currZindex = movableObjects[indexy].style.zIndex;
+          newZindex = Number(currZindex)-1;
+          if(currZindex == 1){newZindex = 1;}
+            setzindexNOW(indexy, newZindex);
+        }
+      }
+      // part 2 of #1
+      function setzindexNOW(indexy, newZindex) {
+            socket.emit('zindexChanged', { index: indexy, zIndex: newZindex, roomName });
+      }
+      // #3
+      socket.on('changezIndex', (data) => {
+          index = data.index;
+          zindex = data.zIndex;
+          movableObjects[index].style.zIndex = zindex;
+            console.log('changezIndex: '+movableObjects[index].style.zIndex);
+            document.getElementById('zIndexLabel').innerHTML = "Z: "+newZindex;
+      });
+
+      function checkOverlap() {
+          const rectangle = document.querySelector('.rectangle');
+          const rect = rectangle.getBoundingClientRect();
+          const LIVErectangle = document.querySelector('.LIVErectangle');
+          let isOverlapping = false;
+
+          movableObjects.forEach((obj) => {
+            const objRect = obj.getBoundingClientRect();
+
+            if (
+              objRect.left < rect.right &&
+              objRect.right > rect.left &&
+              objRect.top < rect.bottom &&
+              objRect.bottom > rect.top
+            ) {
+              isOverlapping = true;
+            }
+          });
+
+          if (isOverlapping) {
+            rectangle.style.borderColor = '#331111';
+          } else {
+            rectangle.style.borderColor = '#123';
+          }
+        }
+
+
+        
+
+      // EMOTE shit
+
+      let broodlesE = 'https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_7560c1b512bd4541817a3a138b984a87/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_290466e3d3904b48905f46d8ff08db44/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_b6f529965685453da9d0549ad47afd14/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_6c64d83994e5450b9032520b27280f66/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_24ea26adb00d4b128838b954059977d3/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_5edd3f8ba4ac4a05b8530f731e23ab2b/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_ac792dd373584474bd9af3537778508d/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_5478d99c7fea4507a3f51ee9f0376f01/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/307152621/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_42d1731d018d4e03b49cc312a87773fa/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_6df93666d1e44552a9117b056db93ddf/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_9838c1be4cb9498db6971be8f58cd8fc/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_fb209a0998c44bac98e2cbdc7a289b00/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/307152636/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_57c7b65c584b406f9aa5e71f6974e524/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_559a07b35d0549caaf8a6aec65c7ebb9/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_758812ffaf884fb0ae3de88af16c0179/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_2e347435aac046ec8534c81bc4481bf5/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_0b9c57f7618f4f349929eef6e17ba94c/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_ad9ec16fa1db425e8958d06724fc72a2/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_c7d132f3a62246a1b441c3fa04fff248/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_0d3651f4402944e38eee1ae43f2e1c11/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_a9b01c2b5fe343adb98c9e4450334b02/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_f859cd2e3c8b4708a1d522048c1f0ee8/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_e420a65befd34a45a559015107d4b15b/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/305422118/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_d7821806ed2d4ba183c84b64f5d38b0e/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_312899cda8d24273897dbcfa8be3b26f/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_dec5252464d54f18b6b0b269ec3d232f/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_2e546b562ef9441594aa5f9c6cfa9382/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_b6f9e73a2cf04b5da57906d4c64e8c12/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_9900d35dd9af40bf8bd108cfaa031609/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_4b32bced7a414fcfb1433147a7d254cc/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_875a851700174633bb13d971d94055c9/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_b0b8d3e3f81d498fb9a4795e61ab8645/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_778ceee16e1e43539e6aa7b6a61f7043/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_65deb634fe594ad39152e53bd83659f5/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_5586ab9192f6448ab9e665ab54cb4016/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_541d70a24c0f4dd09af0a0e9ae3a97d1/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_06c11851d5824be1a56051ac01cfeef5/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_792713a9ad234f6c9e98b5598b7442af/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_c2d2e49e528a440e8ebd9df07390d221/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_a9e8f47c1eb64a98afdccd9a6acd3b2d/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_c46782ecdc444f78bda08ad39d0efb40/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_8851c6ea173f4d06aa4fcec96f75b766/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/307152609/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_d526513f748544829e77be80c282aad7/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_30655cb9293a4578a3c4aa09ae053d27/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_7f4ee96ac9164a04b8ba57cd12dd803d/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_7ddbb84efe4b484584063081c7c9f754/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_8d1bc39d06a142628d7b444e1be65715/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_3c37aba63d584995a61af13eb09b6bdc/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_1283e62e94004f349226632863752acf/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_28921a25c7574e33a6a0dfbd5cdc54f2/default/dark/3.0,https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_2b257bb5b3fe4bd8998911aa635126b4/default/dark/3.0';
+
+      let danceE = 'https://cdn.7tv.app/emote/60af0d7984a2b8e65590787e/4x.webp,https://cdn.7tv.app/emote/60ae63c49627f9aff4dd2d2a/4x.webp,https://cdn.7tv.app/emote/6040aa2dcf6746000db1034d/4x.webp,https://cdn.7tv.app/emote/63dff7951d40a5212f9a8796/4x.webp,https://cdn.7tv.app/emote/621640fc78f6e57762f9bc88/4x.webp,https://cdn.7tv.app/emote/60b27a4a6fa46cea3c8772ab/4x.webp,https://cdn.7tv.app/emote/6106495162ceea408a681afd/4x.webp,https://cdn.7tv.app/emote/60af0476a564afa26e5a5f7b/4x.webp,https://cdn.7tv.app/emote/60b1dbb1fdd2d7d7bdf6e0c3/4x.webp,https://cdn.7tv.app/emote/658a8ea783833b99670ec30e/4x.webp,https://cdn.7tv.app/emote/63bd0a8d285e5bbfc2aa3f39/4x.webp';
+
+      let lookingsE = 'https://cdn.7tv.app/emote/619fffbbffa9aba101bb1bfc/4x.webp,https://cdn.7tv.app/emote/619fffbbffa9aba101bb1bfc/4x.webp,https://cdn.7tv.app/emote/619fffbbffa9aba101bb1bfc/4x.webp,https://cdn.7tv.app/emote/619fffbbffa9aba101bb1bfc/4x.webp,https://cdn.7tv.app/emote/619fffbbffa9aba101bb1bfc/4x.webp,https://cdn.7tv.app/emote/6209228eb015a89311a7d899/4x.webp,https://cdn.7tv.app/emote/6209228eb015a89311a7d899/4x.webp,https://cdn.7tv.app/emote/6209228eb015a89311a7d899/4x.webp,https://cdn.7tv.app/emote/6209228eb015a89311a7d899/4x.webp,https://cdn.7tv.app/emote/6209228eb015a89311a7d899/4x.webp';
+
+      let randomE = 'https://cdn.7tv.app/emote/619fffbbffa9aba101bb1bfc/4x.webp,https://cdn.7tv.app/emote/6209228eb015a89311a7d899/4x.webp,https://cdn.7tv.app/emote/6143ec367b14fdf700b93294/4x.webp,https://cdn.7tv.app/emote/6143ebfb962a60904864c7cb/4x.webp,https://cdn.7tv.app/emote/6346e1b78cb0dce8e422b05a/4x.webp,https://cdn.7tv.app/emote/646b6fec6989b9b0d46ba14a/4x.webp,https://cdn.7tv.app/emote/63c56fc3dedcfdd2e2b5d85a/4x.webp,https://cdn.7tv.app/emote/63a3087be323a72ad0c9415f/4x.webp,https://cdn.7tv.app/emote/64674a7358d599a0419f49d7/3x.webp,https://cdn.7tv.app/emote/60b2cfd6a1a6ec32fad4e92b/4x.webp,https://cdn.7tv.app/emote/60dfd3536a1ba0df21931b15/4x.webp,https://cdn.7tv.app/emote/6100b8ce979b8461475fcb0d/4x.webp,https://cdn.7tv.app/emote/6120591750b2c0a24705f1b9/4x.webp,https://cdn.7tv.app/emote/63c51e5ed98b878bc84c4766/4x.webp,https://cdn.betterttv.net/emote/65051e8b582767c9127b6a06/3x.webp,https://cdn.7tv.app/emote/63630f7d073aadd0e3811365/4x.webp,https://cdn.7tv.app/emote/619e250deecae7a725bcb696/4x.webp,https://cdn.7tv.app/emote/60bf85105b60d5b73f716cdd/4x.webp,https://cdn.betterttv.net/emote/5fbe79480d141d6f06d83d24/3x.webp,https://cdn.7tv.app/emote/60df66a650830d688a1e6f88/4x.webp,https://cdn.7tv.app/emote/613002b7a77c17adb447928f/4x.webp,https://cdn.7tv.app/emote/60a9cfe96daf811370b0b640/4x.webp,https://cdn.7tv.app/emote/60afcb1812f90fadd6e9dea5/4x.webp,https://cdn.7tv.app/emote/60ae4bc55d3fdae583d93f34/4x.webp,https://cdn.7tv.app/emote/60ae4bb30e35477634610fda/4x.webp,https://cdn.7tv.app/emote/645921edd3b4256e12d8339a/4x.webp,https://cdn.7tv.app/emote/60af957299923bbe7ff61a37/4x.webp,https://cdn.7tv.app/emote/612fc78b9a14cebbb339b113/4x.webp,https://cdn.7tv.app/emote/621912840e9f003c89709b0c/4x.webp,https://cdn.7tv.app/emote/60ae2440aee2aa553892c5f5/4x.webp,https://static.wikia.nocookie.net/finalfantasy/images/4/49/Cloud-ffvii-sword.png,https://cdn.7tv.app/emote/641e4b95268d3cdbcb8208e6/4x.webp,https://cdn.7tv.app/emote/60b27a4a6fa46cea3c8772ab/4x.webp,https://cdn.7tv.app/emote/62dc43a7b98f078c8a422e41/4x.webp,https://cdn.7tv.app/emote/6128ed55a50c52b1429e09dc/4x.webp,https://i.imgur.com/XZzeHXL.png,https://cdn.7tv.app/emote/6154c7d620eaf897465ae2dc/4x.webp,https://cdn.7tv.app/emote/623c29a61aeb248de8494e7c/4x.webp,https://cdn.7tv.app/emote/6579a6e0e41be396ec8069a3/4x.webp,https://cdn.7tv.app/emote/60a9cfe96daf811370b0b640/4x.webp,https://cdn.betterttv.net/emote/65051e8b582767c9127b6a06/3x.webp,https://cdn.7tv.app/emote/60b2cfd6a1a6ec32fad4e92b/4x.webp,https://cdn.7tv.app/emote/621912840e9f003c89709b0c/3x.webp,https://cdn.7tv.app/emote/6218ad877cc2d4e1953802e9/4x.webp,https://cdn.7tv.app/emote/603caea243b9e100141caf4f/4x.webp,https://cdn.7tv.app/emote/64674a7358d599a0419f49d7/4x.webp,https://cdn.7tv.app/emote/63bd0a8d285e5bbfc2aa3f39/4x.webp,https://cdn.7tv.app/emote/60d6e5b693acf4cdf0ecebd8/4x.webp,https://cdn.7tv.app/emote/60afcb1812f90fadd6e9dea5/4x.webp,https://cdn.7tv.app/emote/60ae8d9ff39a7552b658b60d/4x.webp,https://cdn.7tv.app/emote/60e857ca401af27eed2f6a4e/4x.webp,https://cdn.7tv.app/emote/6105de63a32b8c587a52a21f/4x.webp,https://cdn.7tv.app/emote/618865078d50b5f26ee84398/4x.webp,https://cdn.7tv.app/emote/60aecb385174a619dbc175be/4x.webp,https://cdn.7tv.app/emote/60b06197aecc11e86c17c012/4x.webp,https://cdn.7tv.app/emote/60411e5bcf6746000db10353/4x.webp,https://cdn.7tv.app/emote/62f1f34b1de84f086742bbf4/4x.webp,https://cdn.7tv.app/emote/60b0d286726e10b664ec6082/4x.webp,https://cdn.7tv.app/emote/60b67d10f698a0aaa0b3edc3/4x.webp,https://cdn.7tv.app/emote/6042521e77137b000de9e6ae/4x.webp,https://cdn.7tv.app/emote/624c1d4f19cc1e81db884235/4x.webp,https://cdn.7tv.app/emote/60ae8908ea50f43c9eddb8f1/4x.webp,https://cdn.7tv.app/emote/60afc6e512f90fadd6cda2ca/4x.webp,https://cdn.7tv.app/emote/60ffc47377fe844726ddcca6/4x.webp,https://cdn.7tv.app/emote/60aeaf8b98f4291470c8e64b/4x.webp,https://cdn.7tv.app/emote/612695557606e65e4f68b1ab/4x.webp,https://cdn.7tv.app/emote/60ca23af2ba45e98f05ba95f/4x.webp,https://cdn.7tv.app/emote/60420e5a77137b000de9e676/4x.webp,https://cdn.7tv.app/emote/60af9e3b52a13d1adb78e15e/4x.webp,https://cdn.7tv.app/emote/60b20f102641b8fa98e353d7/4x.webp,https://cdn.7tv.app/emote/63a8d3d9c05f5803112d8218/4x.webp,https://cdn.7tv.app/emote/62c02c2cc2b63d1e2f3d8782/4x.webp,https://cdn.7tv.app/emote/60845a505e01df61570a6f1d/4x.webp,https://cdn.7tv.app/emote/639ae69c6364fad576b0ea0d/4x.webp,https://cdn.7tv.app/emote/624a0c4ffba06b9273b2eaec/4x.webp,https://cdn.7tv.app/emote/63882e9d346422503a288b5e/4x.webp,https://cdn.7tv.app/emote/63cb2423dedb49b24383cf6f/4x.webp,https://cdn.7tv.app/emote/634edc456901e36f253a7d0d/4x.webp,https://cdn.7tv.app/emote/643d3c98f59feae94a925701/4x.webp,https://cdn.7tv.app/emote/64d4f479f33f4a0a09314416/4x.webp,https://cdn.7tv.app/emote/64d50050507a9267faee3454/4x.webp,https://cdn.7tv.app/emote/6175d52effc7244d797d15bf/4x.webp,https://cdn.7tv.app/emote/61be2073804fba4ebdc7cc3a/4x.webp,https://cdn.7tv.app/emote/603eaaa9115b55000d7282d8/4x.webp,https://cdn.7tv.app/emote/60ae4bc55d3fdae583d93f34/4x.webp,https://cdn.7tv.app/emote/60ae4bb30e35477634610fda/4x.webp,https://cdn.7tv.app/emote/63c9a12c3d2332c1835a9dd1/4x.webp,https://cdn.7tv.app/emote/60b03e2e74d234a969fe9b94/4x.webp,https://cdn.7tv.app/emote/645921edd3b4256e12d8339a/4x.webp,https://cdn.betterttv.net/frankerfacez_emote/607961/2,https://cdn.7tv.app/emote/60aeeb53a564afa26ee82323/4x.webp,https://cdn.7tv.app/emote/612fc78b9a14cebbb339b113/4x.webp,https://cdn.7tv.app/emote/60ae2440aee2aa553892c5f5/4x.webp,https://cdn.7tv.app/emote/6106d503e1f0b0767ef7855e/4x.webp,https://cdn.7tv.app/emote/618302fe8d50b5f26ee7b9bc/4x.webp';
+
+      let campfireE = 'https://cdn.7tv.app/emote/613c04abbe977eb5b436c9fc/2x.webp,https://cdn.7tv.app/emote/605388ef9d9e96000d244f84/2x.webp,https://cdn.7tv.app/emote/61f3da4b4f8c353cf9fb9396/2x.webp,https://cdn.7tv.app/emote/63c9d38dfc866ebbc80b29ef/2x.webp,https://cdn.7tv.app/emote/61ce4f68f26fb13bf046b96c/2x.webp,https://cdn.7tv.app/emote/62943c0af75a73adfdc2aa58/2x.webp,https://cdn.7tv.app/emote/62638a71a456cdaf745f95c4/2x.webp,https://cdn.7tv.app/emote/6139a5937ba3a541db422232/2x.webp,https://cdn.7tv.app/emote/60e82b7a3c5b87437aa0423d/2x.webp,https://cdn.7tv.app/emote/60de97b26ef5a66f41baa604/4x.webp';
+
+      let ryuE = 'https://cdn.7tv.app/emote/611d0a28ca726e2a0fddbaaa/4x.webp,https://cdn.7tv.app/emote/628aa0670679dd10acc27e9c/4x.webp,https://cdn.7tv.app/emote/61a442c8e9684edbbc37576f/4x.webp';
+     
+      let whosthatffE = 'https://static.wikia.nocookie.net/finalfantasy/images/9/90/FFIX_CG_Render_Eiko.png,https://static.wikia.nocookie.net/finalfantasy/images/d/df/Quina_Quen_from_Final_Fantasy_IX_render.png,https://static.wikia.nocookie.net/finalfantasy/images/0/06/Beatrix-battle.png,https://static.wikia.nocookie.net/finalfantasy/images/7/7c/Lani_battle-FFIX.PNG,https://static.wikia.nocookie.net/finalfantasy/images/d/d8/Rikku_White_Mage.png,https://static.wikia.nocookie.net/finalfantasy/images/9/94/Tifa-FFVIIArt.png,https://static.wikia.nocookie.net/finalfantasy/images/e/e5/Vaan.PNG,https://static.wikia.nocookie.net/finalfantasy/images/d/d3/Fran.png,https://static.wikia.nocookie.net/finalfantasy/images/2/2c/ShantottoDissidia.PNG,https://static.wikia.nocookie.net/finalfantasy/images/e/e8/FFX_Kimahri_Art.png,https://static.wikia.nocookie.net/finalfantasy/images/1/11/Chocobo_Ninja.png,https://static.wikia.nocookie.net/finalfantasy/images/c/c6/Lightning_XIII-2_Action_Render.png,https://static.wikia.nocookie.net/finalfantasy/images/0/0b/Yuna-DissidiaRender.png,https://static.wikia.nocookie.net/finalfantasy/images/d/dd/Tifa-d012ff-artwork.png,https://static.wikia.nocookie.net/finalfantasy/images/8/89/Lightning_-_012_CG.png,https://static.wikia.nocookie.net/finalfantasy/images/d/df/Vincent-FFVIIArt.png,https://static.wikia.nocookie.net/finalfantasy/images/5/53/Lightning_%28Dissidia_012%29.png,https://static.wikia.nocookie.net/finalfantasy/images/6/68/Vanille.png,https://static.wikia.nocookie.net/finalfantasy/images/a/ad/FFX_Wakka_Art.png,https://static.wikia.nocookie.net/finalfantasy/images/9/97/FF8_Jumbo_Cactuar.png,https://static.wikia.nocookie.net/finalfantasy/images/e/e0/ZackCGModel-CrisisCore2.png,https://static.wikia.nocookie.net/finalfantasy/images/1/1a/Cloud-FFVIIArt.png,https://static.wikia.nocookie.net/finalfantasy/images/c/c6/Quistis-ffviii-battle.png,https://static.wikia.nocookie.net/finalfantasy/images/1/11/Dissidia_Zidane.png,https://static.wikia.nocookie.net/finalfantasy/images/f/ff/Amarant-ffix-battle.png,https://static.wikia.nocookie.net/finalfantasy/images/1/15/ZackCGModel-CrisisCore.png,https://static.wikia.nocookie.net/finalfantasy/images/d/d9/Zenogais.png,https://static.wikia.nocookie.net/finalfantasy/images/f/f9/FFX_Artwork_Yuna.png,https://static.wikia.nocookie.net/finalfantasy/images/b/b0/CidHighwind-FFVIIArt.png,https://static.wikia.nocookie.net/finalfantasy/images/9/9b/UltimeciaDissidiaRender.PNG,https://static.wikia.nocookie.net/finalfantasy/images/a/ae/FFX_Seymour_Art.png,https://static.wikia.nocookie.net/finalfantasy/images/4/4e/Snow.png,https://static.wikia.nocookie.net/finalfantasy/images/c/cd/DaggerMirror-FFIX.PNG,https://static.wikia.nocookie.net/finalfantasy/images/5/55/FFX_Artwork_Rikku.png,https://static.wikia.nocookie.net/finalfantasy/images/8/80/Ifrit_FFX_Render.png,https://static.wikia.nocookie.net/finalfantasy/images/3/3f/Adelbert_Steiner_from_Final_Fantasy_IX_render.png,https://static.wikia.nocookie.net/finalfantasy/images/6/6f/FFIX_CG_Render_Freya.png,https://static.wikia.nocookie.net/finalfantasy/images/b/b5/Vivi_Ornitier_from_Final_Fantasy_IX_render.png,https://static.wikia.nocookie.net/finalfantasy/images/8/88/FFIX_CG_Render_Garnet.png,https://static.wikia.nocookie.net/finalfantasy/images/1/11/Zidane_Tribal_character.png,https://www.finalfantasykingdom.net/8/squall.png,https://www.finalfantasykingdom.net/8/rinoa.png,https://www.finalfantasykingdom.net/8/zell.png,https://www.finalfantasykingdom.net/8/quistis.png,https://www.finalfantasykingdom.net/8/selphie.png,https://www.finalfantasykingdom.net/8/irvine.png,https://www.finalfantasykingdom.net/8/seifer.png,https://www.finalfantasykingdom.net/8/edea.png,https://www.finalfantasykingdom.net/8/laguna.png,https://static.wikia.nocookie.net/finalfantasy/images/c/cd/DaggerMirror-FFIX.PNG,https://www.finalfantasykingdom.net/8/kiros.png,https://www.finalfantasykingdom.net/8/ward.png,https://static.wikia.nocookie.net/finalfantasy/images/a/af/Sephiroth_from_FFVII_Rebirth_promo_render.png,https://upload.wikimedia.org/wikipedia/en/6/6a/Yuffie_Kisaragi.png,https://upload.wikimedia.org/wikipedia/en/c/cd/Ff7-barret.png,https://static.wikia.nocookie.net/finalfantasy/images/6/65/CaitSith-FFVIIArt.png,https://static.wikia.nocookie.net/finalfantasy/images/1/1f/RedXIII-FFVIIArt.png,https://static.wikia.nocookie.net/finalfantasy/images/6/69/Red_XIII_from_FFVII_Rebirth_promo_render.png,https://upload.wikimedia.org/wikipedia/en/2/2f/Aerith_Gainsborough.png';
+
+
+      socket.emit('joinRoom', roomName);
+    
+      
+    </script>
+
+    <!-- TEXT BOX -->
+    <script>
+      // Get the saturate element
+      var saturateElement = document.getElementById('saturateElement');
+
+      // Define variables to keep track of drag state
+      var isDragging = false;
+      var offsetX, offsetY;
+
+      // Event listener for mouse down event
+      saturateElement.addEventListener('mousedown', function (e) {
+          isDragging = true;
+
+          // Calculate the offset
+          offsetX = e.clientX - saturateElement.getBoundingClientRect().left;
+          offsetY = e.clientY - saturateElement.getBoundingClientRect().top;
+      });
+
+      // Event listener for mouse move event
+      document.addEventListener('mousemove', function (e) {
+          if (isDragging) {
+              // Calculate new position
+              var posX = e.clientX - offsetX;
+              var posY = e.clientY - offsetY;
+              socket.emit('moveTextBox_TONODE', { x: posX, y: posY, roomName });
+              // Set the new position
+              
+          }
+      });
+
+      socket.on('moveTextBox_FROMNODE', (data) => {
+        
+        saturateElement.style.left = data.x + 'px';
+        saturateElement.style.top = data.y + 'px';
+
+      });
+
+      // Event listener for mouse up event
+      document.addEventListener('mouseup', function () {
+          isDragging = false;
+      });
+    </script>
+
+</body>
+
+</html>
