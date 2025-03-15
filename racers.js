@@ -3,7 +3,7 @@
 */
 
 // don't change me - required to not produce errors in console
-version = 14;
+version = 150325;
 racersInRace = [];
 racerOutcomesLOSERS = [];
 racerOutcomesWINNERS = [];
@@ -170,7 +170,7 @@ function animateSomething(duhCommandis, duhimgDiv, duhimgID, duhimgLocation, him
 	if(imageReverse == 'flip'){whichWay = '-1';}else{whichWay = '1';}
 
 	if(duhCommandis == '!race'){
-		duhimgDiv.innerHTML = '<div class="'+duhAnimation+'" style="z-index: '+counter+'; position:fixed; box-sizing: border-box;"><img height="auto" width="'+raceImageSize+'" src="'+duhimgLocation+'" style="transform: scaleX('+whichWay+')";></div>';
+		duhimgDiv.innerHTML = '<div class="'+duhAnimation+'" style="z-index: '+counter+'; position:fixed; box-sizing: border-box;"><img height="auto" width="'+raceImageSize+'" src="'+duhimgLocation+'" ></div>';
 	}else if(duhCommandis == 'chocoRace_START'){
 		duhimgDiv.innerHTML = '<div class="'+duhAnimation+'" style="z-index: '+counter+'; position:fixed; box-sizing: border-box;"><img height="auto" width="'+raceImageMultiSize+'" src="'+duhimgLocation+'"></div>';
 	}else if(duhCommandis == '!heist'){
@@ -370,7 +370,7 @@ client.on('message', (channel, tags, message, self) => {
 
 
 
-
+/*
 	// post stuff on screen! <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 	if(superUsers.includes(nameofPlayer)  || adminUsers.includes(nameofPlayer)){
 
@@ -502,7 +502,7 @@ client.on('message', (channel, tags, message, self) => {
 
 		}
 
-
+	
 		// post anything if an admin
 		if(adminUsers.includes(nameofPlayer)){
 			if(debugon){console.log('adminUser detected');}
@@ -536,8 +536,8 @@ client.on('message', (channel, tags, message, self) => {
 			}else{
 				defaultETO = 8000;
 			}
-
-//!show https://cdn.7tv.app/emote/63da116254caa117064ebcd3/3x.webp custom 5 1800 0 0
+	
+			//!show https://cdn.7tv.app/emote/63da116254caa117064ebcd3/3x.webp custom 5 1800 0 0
 
 			if(getEmotePosition.length >= 3){
 				if(getEmotePositionC == customShowCommand || getEmotePositionC == customTestShowCommand && debugon){
@@ -600,10 +600,13 @@ client.on('message', (channel, tags, message, self) => {
 
 					//}
 				}
+	
 			}
+	
 		}
 
 	} // end of the hidden channel emote lookup
+*/
 // end of post stuff on screen!<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 
