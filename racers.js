@@ -167,8 +167,10 @@ function animateSomething(duhCommandis, duhimgDiv, duhimgID, duhimgLocation, him
 	duhimgDiv = document.createElement('div');
 	duhimgDiv.style = 'position:absolute; width:1920px; height:1080px';
 	duhimgDiv.className = duhimgID;
+	
+
 	if(duhCommandis == '!race'){
-		duhimgDiv.innerHTML = '<div class="'+duhAnimation+'" style="z-index: '+counter+'; position:fixed; box-sizing: border-box;"><img height="auto" width="'+raceImageSize+'" src="'+duhimgLocation+'"></div>';
+		duhimgDiv.innerHTML = '<div class="'+duhAnimation+'" style="z-index: '+counter+'; position:fixed; box-sizing: border-box;"><img height="auto" style="transform: scaleX('+duhimgSize+');" width="'+raceImageSize+'" src="'+duhimgLocation+'"></div>';
 	}else if(duhCommandis == 'chocoRace_START'){
 		duhimgDiv.innerHTML = '<div class="'+duhAnimation+'" style="z-index: '+counter+'; position:fixed; box-sizing: border-box;"><img height="auto" width="'+raceImageMultiSize+'" src="'+duhimgLocation+'"></div>';
 	}else if(duhCommandis == '!heist'){
@@ -263,7 +265,7 @@ function addHeister(nameofPlayer, heisterID){
 setInterval(addHeister, 5720);
 
 // this is step one for adding a racer - checking if standard or custom and setting the correct image, which then passes it off to the animateSomething function, setting custom if needed
-function racerOutcomesCustom(whoAmI, chosenAnim, racePosition, chosenIMG, duhMessage, duhDELAY){
+function racerOutcomesCustom(whoAmI, chosenAnim, racePosition, chosenIMG, duhMessage, duhDELAY, duhFlip){
 	if(debugon){console.log("Starting racerOutcomesCustom function...")}
 	if(debugon){console.log('whoAmI: '+whoAmI)}
 	if(debugon){console.log('chosenAnim: '+chosenAnim)}
@@ -282,11 +284,11 @@ function racerOutcomesCustom(whoAmI, chosenAnim, racePosition, chosenIMG, duhMes
 	switch (seasonalChanges) {
 		case 'custom':
 		if(debugon){console.log("---------------------custom animation spit -------------------");}
-				animateSomething('!race', racerID, racerID, chosenIMG, whoAmI, 20000, chosenAnim+'Custom', duhDELAY);
+				animateSomething('!race', racerID, racerID, chosenIMG, whoAmI, 20000, chosenAnim+'Custom', duhDELAY, duhFlip);
 		break;
 		case 'standard':
 		if(debugon){console.log("---------------------standard animation spit -------------------");}
-				animateSomething('!race', racerID, racerID, chosenIMG, whoAmI, 20000, chosenAnim, duhDELAY);
+				animateSomething('!race', racerID, racerID, chosenIMG, whoAmI, 20000, chosenAnim, duhDELAY, duhFlip);
 		break;
 	};
 	seasonalChanges = 'custom'
@@ -784,8 +786,15 @@ client.on('message', (channel, tags, message, self) => {
 			racerN2S = racerCount.toString();
 			racerID = 'RACER_'+racerN2S;
 
+			getEmotePositionFlip = getEmotePositionB[2];
 			getEmotePositionURL = getEmotePositionB[1];
 			getEmotePositionC = getEmotePositionB[0];
+
+			if(getEmotePositionFlip == 'flip'){
+				flipIt = "-1";
+			}else{
+				flipIt = "1";
+			}
 
 			if(htmlMessagePls.includes('https://')){}else{
 				if(matchesinStrNAME.includes(getEmotePositionURL)){
@@ -795,7 +804,8 @@ client.on('message', (channel, tags, message, self) => {
 					getEmotePositionURL = raceImage;
 				}
 			}
-			racersInRace.push([nameofPlayer,'runRight',99,getEmotePositionURL,'',100]);
+			racersInRace.push([nameofPlayer,'runRight',99,getEmotePositionURL,'',100,flipIt]);
+			
 			//call function to spit out a racer on screen
 
 			animateSomething('!race', racerID, racerID, getEmotePositionURL, nameofPlayer, 20000, 'runLeft', 100);
@@ -825,7 +835,7 @@ client.on('message', (channel, tags, message, self) => {
 								// spit out a standard finishing racer
 								switch (racersInRace[i][2]) {
 									case 99:
-											racerOutcomesCustom(racersInRace[i][0], 'runRight', 99, racersInRace[i][3],'',disDELAY);
+											racerOutcomesCustom(racersInRace[i][0], 'runRight', 99, racersInRace[i][3], '', disDELAY, racersInRace[i][6]);
 											if(debugon){console.log("END OF RACE Adding normal racer: "+racersInRace[i][0]+"  i: "+i);}
 											if(debugon){console.log("END OF RACE Added racer IMG: "+racersInRace[i][3]);}
 									break;
@@ -844,7 +854,7 @@ client.on('message', (channel, tags, message, self) => {
 							if(debugwinlose){console.log("Adding winning racer #1 "+racersInRace[j][0]);}
 
 							// spit out the winner
-							racerOutcomesCustom(racersInRace[j][0], 'runRightWINNER_1', 1, racersInRace[j][3],'',50);
+							racerOutcomesCustom(racersInRace[j][0], 'runRightWINNER_1', 1, racersInRace[j][3],'',50, racersInRace[i][6]);
 
 							break;
 							case 2:
@@ -853,17 +863,17 @@ client.on('message', (channel, tags, message, self) => {
 								if(racersInRace[j][4].includes(raceOutcomeMessage_DETOUR)){
 
 										if(debugwinlose){console.log("Adding winning racer #2 as  "+raceOutcomeMessage_DETOUR);}
-										racerOutcomesCustom(racersInRace[j][0], 'runRightDetour', 2, racersInRace[j][3],'',50);
+										racerOutcomesCustom(racersInRace[j][0], 'runRightDetour', 2, racersInRace[j][3],'',50, racersInRace[i][6]);
 								}else{
 										if(debugwinlose){console.log("Adding winning racer #2 DEFAULT");}
-										racerOutcomesCustom(racersInRace[j][0], 'runRightWINNER_2', 2, racersInRace[j][3],'',50);
+										racerOutcomesCustom(racersInRace[j][0], 'runRightWINNER_2', 2, racersInRace[j][3],'',50, racersInRace[i][6]);
 
 								}
 							break;
 							case 3:
 
 								if(debugwinlose){console.log("Adding winning racer #3 "+racersInRace[j][0]);}
-								racerOutcomesCustom(racersInRace[j][0], 'runRightWINNER_3', 3, racersInRace[j][3],'',50);
+								racerOutcomesCustom(racersInRace[j][0], 'runRightWINNER_3', 3, racersInRace[j][3],'',50, racersInRace[i][6]);
 
 							break;
 						};
@@ -875,24 +885,24 @@ client.on('message', (channel, tags, message, self) => {
 							case 101:
 
 								if(debugwinlose){console.log("Adding fallenRacer racer raceOutcomeMessage_CHEERSIDELINES");}
-								racerOutcomesCustom(racersInRace[j][0], 'runCheerSidlines', 101, racersInRace[j][3],'',50);
+								racerOutcomesCustom(racersInRace[j][0], 'runCheerSidlines', 101, racersInRace[j][3],'',50, racersInRace[i][6]);
 
 							break;
 							case 102:
 
 								if(debugwinlose){console.log("Adding loser racer raceOutcomeMessage_EXHAUSTED");}
-								racerOutcomesCustom(racersInRace[j][0], 'runRightExhausted', 102, racersInRace[j][3],'',50);
+								racerOutcomesCustom(racersInRace[j][0], 'runRightExhausted', 102, racersInRace[j][3],'',50, racersInRace[i][6]);
 
 							break;
 							case 103:
 
 								if(debugwinlose){console.log("Adding loser racer raceOutcomeMessage_INJURY");}
-								racerOutcomesCustom(racersInRace[j][0], 'runRightInjury', 103, racersInRace[j][3],'',50);
+								racerOutcomesCustom(racersInRace[j][0], 'runRightInjury', 103, racersInRace[j][3],'',50, racersInRace[i][6]);
 
 							break;
 							case 104:
 								if(debugwinlose){console.log("Adding fallenRacer racer raceOutcomeMessage_BANANA");}
-								racerOutcomesCustom(racersInRace[j][0], 'runRightBanana', 103, racersInRace[j][3],'',50);
+								racerOutcomesCustom(racersInRace[j][0], 'runRightBanana', 103, racersInRace[j][3],'',50, racersInRace[i][6]);
 								animateSomething('custom', 'custom', 'custom', 'https://cdn.7tv.app/emote/63f6b4d617478c0c59fc20a6/4x.webp', nameofPlayer, 20000, 'bananapeel', 100, '30px', 0, 0);
 								//animateSomething('custom', 'custom', 'custom', 'https://cdn.7tv.app/emote/63f6b4d617478c0c59fc20a6/4x.webp', nameofPlayer, 20500, 'runRightBanana', 100, '100px', 0, 0);
 								//raceOutcomeMessage_BANANA
