@@ -3,7 +3,7 @@
 */
 
 // don't change me - required to not produce errors in console
-version = 20032025;
+version = 22032025;
 racersInRace = [];
 racerOutcomesLOSERS = [];
 racerOutcomesWINNERS = [];
@@ -32,8 +32,11 @@ debugwinlose = false;
 /////////////////////////// Editables from here ////////////////////
 
 CHANNEL = ['thebroodles','brdlbot']; // The channel to listen to chat
+//CHANNEL = ['squidgeebusiness','brdlbot']; // The channel to listen to chat
 raceOrganiser = 'brdlbot'; // this is the user that sends the messages about the race starting and ending - we monitor this to start and end the race etc
 hiddenChannel = '#brdlbot'; // for admins to post emotes and stuff to screen
+//raceOrganiser = 'squidgeebusiness'; // this is the user that sends the messages about the race starting and ending - we monitor this to start and end the race etc
+//hiddenChannel = '#squidgeebusiness'; // for admins to post emotes and stuff to screen
 adminUsers = ['squidgeebusiness','thebroodles', 'killerubberducky', 'elliotornitier', 'abbi', 'brdlbot']; // admin user can post twitch, 7tv and custom pictures
 superUsers = ['','']; // super users can post twitch and 7tv emotes
 racersCommandUsers = ['squidgeebusiness','thebroodles','salty__sal','killerubberducky','hamfuritcake','amigofunk','khaegar','morningcraft_','thechefpmt','peteswanson','thegreatjecht','awesomewaves','elliotornitier','dylwingo','steth427']; // these users can use !racers which posts an amount of racers in race on screen
@@ -170,6 +173,11 @@ function animateSomething(duhCommandis, duhimgDiv, duhimgID, duhimgLocation, him
 	
 
 	if(duhCommandis == '!race'){
+		if(duhimgSize == "-1"){
+			duhimgDiv.innerHTML = '<div class="'+duhAnimation+'Flip" style="z-index: '+counter+'; position:fixed; box-sizing: border-box;"><img height="auto" style="transform: scaleX(-1);" width="'+raceImageSize+'" src="'+duhimgLocation+'"></div>';
+		}else{
+			duhimgDiv.innerHTML = '<div class="'+duhAnimation+'" style="z-index: '+counter+'; position:fixed; box-sizing: border-box;"><img height="auto" width="'+raceImageSize+'" src="'+duhimgLocation+'"></div>';
+		}
 		duhimgDiv.innerHTML = '<div class="'+duhAnimation+'" style="z-index: '+counter+'; position:fixed; box-sizing: border-box;"><img height="auto" style="transform: scaleX('+duhimgSize+');" width="'+raceImageSize+'" src="'+duhimgLocation+'"></div>';
 	}else if(duhCommandis == 'chocoRace_START'){
 		duhimgDiv.innerHTML = '<div class="'+duhAnimation+'" style="z-index: '+counter+'; position:fixed; box-sizing: border-box;"><img height="auto" width="'+raceImageMultiSize+'" src="'+duhimgLocation+'"></div>';
@@ -361,247 +369,6 @@ client.on('message', (channel, tags, message, self) => {
 			console.log('htmlMessagePls: '+htmlMessagePls);
 	}
 
-
-
-
-	// post stuff on screen! <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-	if(superUsers.includes(nameofPlayer)  || adminUsers.includes(nameofPlayer)){
-
-	if (channel == hiddenChannel){
-
-			//reloads the web page
-			if(message == '!reloadracers'){
-				if(debugon){console.log('RELOADING');}
-				location.reload();
-			}
-
-			getEmotePosition = htmlMessagePls.split(' ');
-
-			// display gamba if seen
-			if (message == '!gambagamba'){
-				animateSomething('custom', 'custom', 'custom', 'https://cdn.7tv.app/emote/652b059124565c1d0e386928/4x.webp', nameofPlayer, 120000, 'static', 100, '100px', 0, 0);
-				animateSomething('custom', 'custom', 'custom', 'https://cdn.7tv.app/emote/652b059124565c1d0e386928/4x.webp', nameofPlayer, 120000, 'static', 100, '100px', 95, 91);
-				animateSomething('custom', 'custom', 'custom', 'https://cdn.7tv.app/emote/652b059124565c1d0e386928/4x.webp', nameofPlayer, 120000, 'static', 100, '100px', 95, 0);
-				animateSomething('custom', 'custom', 'custom', 'https://cdn.7tv.app/emote/652b059124565c1d0e386928/4x.webp', nameofPlayer, 120000, 'static', 100, '100px', 0, 91);
-				animateSomething('custom', 'custom', 'custom', './gambaactive.png', nameofPlayer, 120000, 'gamba', 100, '1920px', 0, 0);
-			}
-			if (getEmotePosition[0] == '!looking' || testit == 1 && getEmotePosition[0] == '!testlooking'){
-				if (getEmotePosition.length == 2){setImage = getEmotePosition[1];}else{setImage = 'https://cdn.7tv.app/emote/619fffbbffa9aba101bb1bfc/4x.webp';}
-				animateSomething('custom', 'custom', 'custom', setImage, nameofPlayer, 15000, 'looking', 100, '300px', 0, 0);
-			}
-			if (getEmotePosition[0] == '!falling' || testit == 1 && getEmotePosition[0] == '!testfalling'){
-				if (getEmotePosition.length == 2){setImage = getEmotePosition[1];}else{setImage = 'https://cdn.7tv.app/emote/621694c7aff1c45709b482fc/4x.webp';}
-				animateSomething('custom', 'custom', 'custom', setImage, nameofPlayer, 3000, 'falling', 100, '300px', 0, 0);
-			}
-			if (getEmotePosition[0] == '!rinoainspace' || testit == 1 && getEmotePosition[0] == '!testrionainspace'){
-				if (getEmotePosition.length == 2){setImage = getEmotePosition[1];}else{setImage = 'https://cdn.7tv.app/emote/63c51e5ed98b878bc84c4766/4x.webp';}
-				animateSomething('custom', 'custom', 'custom', setImage, nameofPlayer, 44000, 'rinoainspace', 100, '300px', 0, 0);
-			}
-			if (getEmotePosition[0] == '!caught' || testit == 1 && getEmotePosition[0] == '!testcaught'){
-				if (getEmotePosition.length == 2){setImage = getEmotePosition[1];}else{setImage = 'https://cdn.7tv.app/emote/64674a7358d599a0419f49d7/4x.webp';}
-				animateSomething('custom', 'custom', 'custom', setImage, nameofPlayer, 1200, 'caught', 100, '300px', 0, 0);
-			}
-
-			if(debugon){console.log('superuser/admin detected');}
-
-			if(getEmotePosition.length == 2 || getEmotePosition.length  == 3){
-				getEmotePositionLC = getEmotePosition[1];
-				getEmotePositionURL = getEmotePosition[0];
-				getEmoteTimeout = Number(getEmotePosition[2]);
-
-  
-        if(Number(getEmoteTimeout) >= 10){
-          getEmoteTimeout = 10;
-        }
-
-				// if 7tv, change to 7tv emote finder
-				if(matchesinStrNAME.includes(getEmotePositionURL)){
-					indexOfEmote = matchesinStrNAME.indexOf(getEmotePositionURL);
-					getEmotePositionURL = 'https://cdn.7tv.app/emote/' + matchesinStrIMG[indexOfEmote] +'/3x.webp';
-				}else{}
-
-				if(getEmoteTimeout > 1){
-          defaultETO = getEmoteTimeout*1000;
-          if (defaultETO >= 10000){defaultETO = 8000;}
-        }else{
-          defaultETO = 8000;
-        }
-
-				// set up custom on screen images
-				if(getEmotePosition[0].includes('https://') || indexOfEmote != null){
-						if (getEmotePositionLC == 'tl' || getEmotePositionLC == 'tr' || getEmotePositionLC == 'bl' || getEmotePositionLC == 'br' || getEmotePositionLC == 'tm' || getEmotePositionLC == 'bm' || getEmotePositionLC == 't1' || getEmotePositionLC == 'b1'){
-							if(debugon){console.log('emote poistion LC: '+getEmotePositionLC);}
-
-								switch (getEmotePositionLC){
-									case 'tl':
-									//duhCommandis, duhimgDiv, duhimgID, duhimgLocation, himynameis, duhEndTime, duhAnimation, duhDelay, duhIMGLoc, duhimgSize
-										animateSomething('twitchemote', 'TL', 'TL', getEmotePositionURL, nameofPlayer, defaultETO, 'emoteTL', 100);
-										if(debugon){console.log('emote  anim  tl');}
-									break;
-									case 'tr':
-										animateSomething('twitchemote', 'TR', 'TR', getEmotePositionURL, nameofPlayer, defaultETO, 'emoteTR', 100);
-										if(debugon){console.log('emote  anim  tr');}
-									break;
-									case 'br':
-										animateSomething('twitchemote', 'BR', 'BR', getEmotePositionURL, nameofPlayer, defaultETO, 'emoteBR', 100);
-										if(debugon){console.log('emote  anim  br');}
-									break;
-									case 'bl':
-										animateSomething('twitchemote', 'BL', 'BL', getEmotePositionURL, nameofPlayer, defaultETO, 'emoteBL', 100);
-										if(debugon){console.log('emote  anim  bl');}
-									break;
-									case 'tm':
-										animateSomething('twitchemote', 'TM', 'TM', getEmotePositionURL, nameofPlayer, defaultETO, 'emoteTM', 100);
-										if(debugon){console.log('emote  anim  tm');}
-									break;
-									case 'bm':
-										animateSomething('twitchemote', 'BM', 'BM', getEmotePositionURL, nameofPlayer, defaultETO, 'emoteBM', 100);
-										if(debugon){console.log('emote  anim  bm');}
-									break;
-									case 't1':
-										animateSomething('twitchemote', 'T1', 'T1', getEmotePositionURL, nameofPlayer, defaultETO, 'emoteT1', 100);
-										if(debugon){console.log('emote  anim  tm');}
-									break;
-									case 'b1':
-										animateSomething('twitchemote', 'B1', 'B1', getEmotePositionURL, nameofPlayer, defaultETO, 'emoteB1', 100);
-										if(debugon){console.log('emote  anim  bm');}
-									break;
-
-								}
-
-						}
-				}
-			}
-			indexOfEmote = null;
-      //
-			// admin only commands
-			if(message.includes("!losingmymind")){
-				timeOutCHECK = message.split(' ');
-				if(timeOutCHECK.length == 2){
-					timeOutVidCHECK = timeOutCHECK[1];
-					timeOutVidCHECK = (timeOutVidCHECK*1000);
-					if(timeOutVidCHECK >= 10001){
-						timeOutVidCHECK = 10000;
-					}
-				}else{
-					timeOutVidCHECK = 10000;
-				}
-			//	spitaVideo('aVideo','aVideoID','./im_losing_my_mind.mp4', 0.8, timeOutVidCHECK, 'videoTL');
-			}
-
-			if(message.includes("!gun")){
-			//	spitaVideo('aVideo','aVideoID','./ivegotagun.webm', 0.4, 2700, 'videoBR');
-			}
-
-		}
-
-
-		// post anything if an admin
-		if(adminUsers.includes(nameofPlayer)){
-			if(debugon){console.log('adminUser detected');}
-			getEmotePosition = message.split(' ');
-
-
-			if(getEmotePosition.length >= 3){
-
-				getEmoteY = getEmotePosition[6];
-				getEmoteX = getEmotePosition[5];
-				getEmoteSize = getEmotePosition[4];
-				getEmoteTimeout = Number(getEmotePosition[3]);
-				getEmotePositionLC = getEmotePosition[2];
-				getEmotePositionURL = getEmotePosition[1];
-				getEmotePositionC = getEmotePosition[0];
-				getEmoteAnim=getEmotePositionLC;
-				if(debugon){console.log(getEmotePosition);}
-			}
-
-      if(Number(getEmoteSize) >= 600){
-        getEmoteSize = 600;
-      }
-
-      if(Number(getEmoteTimeout) >= 10){
-        getEmoteTimeout = 10;
-      }
-
-			if(getEmoteTimeout > 1){
-				defaultETO = getEmoteTimeout*1000;
-        if (defaultETO >= 10000){defaultETO = 8000;}
-			}else{
-				defaultETO = 8000;
-			}
-
-//!show https://cdn.7tv.app/emote/63da116254caa117064ebcd3/3x.webp custom 5 1800 0 0
-
-			if(getEmotePosition.length >= 3){
-				if(getEmotePositionC == customShowCommand || getEmotePositionC == customTestShowCommand && debugon){
-					//if (getEmotePositionLC == 'tl' || getEmotePositionLC == 'tr' || getEmotePositionLC == 'bl' || getEmotePositionLC == 'br' || getEmotePositionLC == 'tm' || getEmotePositionLC == 'bm' || getEmotePositionLC == 't1' || getEmotePositionLC == 'b1' || getEmotePositionLC == 'custom' || getEmotePositionLC == 'rinoainspace'){
-						if(debugon){console.log('emote poistion LC: '+getEmotePositionLC);}
-
-							switch (getEmotePositionLC){
-								case 'tl':
-									animateSomething('twitchemote', 'TL', 'TL', getEmotePositionURL, nameofPlayer, defaultETO, 'emoteTL', 100, getEmoteSize+'px', getEmoteX, getEmoteY);
-									if(debugon){console.log('emote  anim  tl emotesize:'+getEmoteSize);}
-								break;
-								case 'tr':
-									animateSomething('twitchemote', 'TR', 'TR', getEmotePositionURL, nameofPlayer, defaultETO, 'emoteTR', 100, getEmoteSize+'px', getEmoteX, getEmoteY);
-									if(debugon){console.log('emote  anim  tr emotesize:'+getEmoteSize);}
-								break;
-								case 'br':
-									animateSomething('twitchemote', 'BR', 'BR', getEmotePositionURL, nameofPlayer, defaultETO, 'emoteBR', 100, getEmoteSize+'px', getEmoteX, getEmoteY);
-									if(debugon){console.log('emote  anim  br emotesize:'+getEmoteSize);}
-								break;
-								case 'bl':
-									animateSomething('twitchemote', 'BL', 'BL', getEmotePositionURL, nameofPlayer, defaultETO, 'emoteBL', 100, getEmoteSize+'px', getEmoteX, getEmoteY);
-									if(debugon){console.log('emote  anim  bl emotesize:'+getEmoteSize);}
-								break;
-								case 'tm':
-									animateSomething('twitchemote', 'TM', 'TM', getEmotePositionURL, nameofPlayer, defaultETO, 'emoteTM', 100, getEmoteSize+'px', getEmoteX, getEmoteY);
-									if(debugon){console.log('emote  anim  tm emotesize:'+getEmoteSize);}
-								break;
-								case 'bm':
-									animateSomething('twitchemote', 'BM', 'BM', getEmotePositionURL, nameofPlayer, defaultETO, 'emoteBM', 100, getEmoteSize+'px', getEmoteX, getEmoteY);
-									if(debugon){console.log('emote  anim  bm emotesize:'+getEmoteSize);}
-								break;
-								case 't1':
-									animateSomething('twitchemote', 'T1', 'T1', getEmotePositionURL, nameofPlayer, defaultETO, 'emoteT1', 100, getEmoteSize+'px', getEmoteX, getEmoteY);
-									if(debugon){console.log('emote  anim  tm emotesize:'+getEmoteSize);}
-								break;
-								case 'b1':
-									animateSomething('twitchemote', 'B1', 'B1', getEmotePositionURL, nameofPlayer, defaultETO, 'emoteB1', 100, getEmoteSize+'px', getEmoteX, getEmoteY);
-									if(debugon){console.log('emote  anim  bm emotesize:'+getEmoteSize);}
-								break;
-								case 'custom':
-									if(getEmotePosition.length == 7){
-										animateSomething('custom', 'custom', 'custom', getEmotePositionURL, nameofPlayer, defaultETO, 'static', 100, getEmoteSize+'px', getEmoteX, getEmoteY);
-										if(debugon){console.log('emote  custom:'+getEmotePositionURL);}
-									}
-								break;
-								case 'ezsend':
-									if(getEmotePosition.length == 7){
-										animateSomething('ezsend', 'ezsend', 'ezsend', getEmotePositionURL, nameofPlayer, defaultETO, 'static', 100, getEmoteSize+'px', getEmoteX, getEmoteY);
-										if(debugon){console.log('emote  custom:'+getEmotePositionURL);}
-									}
-									break;
-
-							}
-							if(getEmotePosition.length == 5 && getEmotePositionLC != 'custom'){
-												animateSomething('custom', 'custom', 'custom', getEmotePositionURL, nameofPlayer, defaultETO, getEmoteAnim, 100, getEmoteSize+'px', 0, 0);
-												if(debugon){console.log('emote  custom:'+getEmotePositionURL);}
-												getEmoteAnim = '';
-							}
-
-
-					//}
-				}
-			}
-		}
-
-	} // end of the hidden channel emote lookup
-// end of post stuff on screen!<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-
-
-
-
 	/////////////////////////////////////////////////////////// ****** START OF RACE SCRIPTING ****** ///////////////////////////////////////////////////////////
 	//race not started
 	if (raceStarted == 0 && message == raceMessageTrigger){
@@ -769,7 +536,7 @@ client.on('message', (channel, tags, message, self) => {
     }
   }
 
-
+  // when someone types !race - this is what starts putting the racers on screen
 	// spit out a racer when the race is available to enter a racer into the race
 	checkMessageisRace = bypassMessage.split(' ');
 	getEmotePositionB = htmlMessagePls.split(' ');
@@ -804,9 +571,11 @@ client.on('message', (channel, tags, message, self) => {
 					getEmotePositionURL = raceImage;
 				}
 			}
+
+			// add to the racers array
 			racersInRace.push([nameofPlayer,'runRight',99,getEmotePositionURL,'',100,flipIt]);
 			
-			//call function to spit out a racer on screen
+			//call function to spit out a new racer on screen
 
 			animateSomething('!race', racerID, racerID, getEmotePositionURL, nameofPlayer, 20000, 'runLeft', 100);
 
@@ -832,29 +601,34 @@ client.on('message', (channel, tags, message, self) => {
 					disDELAY=300;
 					// add racers that finished the race with no additional message
 					for (i=0; i<racersInRace.length; i++) {
-								// spit out a standard finishing racer
-								switch (racersInRace[i][2]) {
-									case 99:
-											racerOutcomesCustom(racersInRace[i][0], 'runRight', 99, racersInRace[i][3], '', disDELAY, racersInRace[i][6]);
-											if(debugon){console.log("END OF RACE Adding normal racer: "+racersInRace[i][0]+"  i: "+i);}
-											if(debugon){console.log("END OF RACE Added racer IMG: "+racersInRace[i][3]);}
-									break;
-								}
-								disDELAY = disDELAY+700;
-								//disDELAY = (disDELAY+600);
-							//console.log("DELAY: "+disDELAY);
+					if (racersInRace[i][6] == null || racersInRace[i][6] == undefined || racersInRace[i][6] == ''){
+						flippa = "";
+					}else {
+						flippa = racersInRace[i][6];
+					}
+					// spit out a standard finishing racer
+					switch (racersInRace[i][2]) {
+						case 99:
+								racerOutcomesCustom(racersInRace[i][0], 'runRight', 99, racersInRace[i][3], '', disDELAY, flippa);
+								if(debugon){console.log("END OF RACE Adding normal racer: "+racersInRace[i][0]+"  i: "+i);}
+								if(debugon){console.log("END OF RACE Added racer IMG: "+racersInRace[i][3]);}
+						break;
+					}
+					disDELAY = disDELAY+700;
+					//disDELAY = (disDELAY+600);
+					//console.log("DELAY: "+disDELAY);
 					}
 
 					if(debugwinlose){console.log("---------------------START OF WINNERS racerOutcomesCustom-------------------");}
 					// WINNERS // add racers that won racerOutcomesWINNERS place numbers are in racerOutcomesWINNERS[j][2]
 					for (j=0; j<racersInRace.length; j++) {
-
+						
 						switch (racersInRace[j][2]) {
 							case 1:
 							if(debugwinlose){console.log("Adding winning racer #1 "+racersInRace[j][0]);}
 
 							// spit out the winner
-							racerOutcomesCustom(racersInRace[j][0], 'runRightWINNER_1', 1, racersInRace[j][3],'',50, racersInRace[i][6]);
+							racerOutcomesCustom(racersInRace[j][0], 'runRightWINNER_1', 1, racersInRace[j][3], '', 50, flippa);
 
 							break;
 							case 2:
@@ -863,17 +637,17 @@ client.on('message', (channel, tags, message, self) => {
 								if(racersInRace[j][4].includes(raceOutcomeMessage_DETOUR)){
 
 										if(debugwinlose){console.log("Adding winning racer #2 as  "+raceOutcomeMessage_DETOUR);}
-										racerOutcomesCustom(racersInRace[j][0], 'runRightDetour', 2, racersInRace[j][3],'',50, racersInRace[i][6]);
+										racerOutcomesCustom(racersInRace[j][0], 'runRightDetour', 2, racersInRace[j][3],'',50, flippa);
 								}else{
 										if(debugwinlose){console.log("Adding winning racer #2 DEFAULT");}
-										racerOutcomesCustom(racersInRace[j][0], 'runRightWINNER_2', 2, racersInRace[j][3],'',50, racersInRace[i][6]);
+										racerOutcomesCustom(racersInRace[j][0], 'runRightWINNER_2', 2, racersInRace[j][3],'',50, flippa);
 
 								}
 							break;
 							case 3:
 
 								if(debugwinlose){console.log("Adding winning racer #3 "+racersInRace[j][0]);}
-								racerOutcomesCustom(racersInRace[j][0], 'runRightWINNER_3', 3, racersInRace[j][3],'',50, racersInRace[i][6]);
+								racerOutcomesCustom(racersInRace[j][0], 'runRightWINNER_3', 3, racersInRace[j][3],'',50, flippa);
 
 							break;
 						};
@@ -885,24 +659,24 @@ client.on('message', (channel, tags, message, self) => {
 							case 101:
 
 								if(debugwinlose){console.log("Adding fallenRacer racer raceOutcomeMessage_CHEERSIDELINES");}
-								racerOutcomesCustom(racersInRace[j][0], 'runCheerSidlines', 101, racersInRace[j][3],'',50, racersInRace[i][6]);
+								racerOutcomesCustom(racersInRace[j][0], 'runCheerSidlines', 101, racersInRace[j][3],'',50, flippa);
 
 							break;
 							case 102:
 
 								if(debugwinlose){console.log("Adding loser racer raceOutcomeMessage_EXHAUSTED");}
-								racerOutcomesCustom(racersInRace[j][0], 'runRightExhausted', 102, racersInRace[j][3],'',50, racersInRace[i][6]);
+								racerOutcomesCustom(racersInRace[j][0], 'runRightExhausted', 102, racersInRace[j][3],'',50, flippa);
 
 							break;
 							case 103:
 
 								if(debugwinlose){console.log("Adding loser racer raceOutcomeMessage_INJURY");}
-								racerOutcomesCustom(racersInRace[j][0], 'runRightInjury', 103, racersInRace[j][3],'',50, racersInRace[i][6]);
+								racerOutcomesCustom(racersInRace[j][0], 'runRightInjury', 103, racersInRace[j][3],'',50, flippa);
 
 							break;
 							case 104:
 								if(debugwinlose){console.log("Adding fallenRacer racer raceOutcomeMessage_BANANA");}
-								racerOutcomesCustom(racersInRace[j][0], 'runRightBanana', 103, racersInRace[j][3],'',50, racersInRace[i][6]);
+								racerOutcomesCustom(racersInRace[j][0], 'runRightBanana', 103, racersInRace[j][3],'',50, flippa);
 								animateSomething('custom', 'custom', 'custom', 'https://cdn.7tv.app/emote/63f6b4d617478c0c59fc20a6/4x.webp', nameofPlayer, 20000, 'bananapeel', 100, '30px', 0, 0);
 								//animateSomething('custom', 'custom', 'custom', 'https://cdn.7tv.app/emote/63f6b4d617478c0c59fc20a6/4x.webp', nameofPlayer, 20500, 'runRightBanana', 100, '100px', 0, 0);
 								//raceOutcomeMessage_BANANA
