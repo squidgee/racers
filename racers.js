@@ -557,9 +557,11 @@ client.on('message', (channel, tags, message, self) => {
 			getEmotePositionURL = getEmotePositionB[1];
 			getEmotePositionC = getEmotePositionB[0];
 
-			if(getEmotePositionFlip == 'flip'){
+			getemotepositionflip = getemotepositionflip.toLowerCase();
+
+			if (getemotepositionflip.includes('flip')) {
 				flipIt = "-1";
-			}else{
+			} else {
 				flipIt = "1";
 			}
 
