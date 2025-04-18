@@ -3,7 +3,7 @@
 */
 
 // don't change me - required to not produce errors in console
-version = 1804202501;
+version = 1804202503;
 racersInRace = [];
 racerOutcomesLOSERS = [];
 racerOutcomesWINNERS = [];
@@ -509,7 +509,7 @@ client.on('message', (channel, tags, message, self) => {
 
 // Is it a racer?
 		if (message.includes(raceMessageTrigger) && nameofPlayer != raceOrganiser){
-			message = '!race';
+			racerCheck = '!race';
 			if(debugon){
 	        console.log('Message contained !race, truncating to !race to pass to next step: '+message);
 	    }
@@ -552,20 +552,31 @@ client.on('message', (channel, tags, message, self) => {
 			nameofPlayer = tags.username;
 			racerN2S = racerCount.toString();
 			racerID = 'RACER_'+racerN2S;
-
+			getEmotePositionC = checkMessageisRace[0];
+			flipIt = "1";
+			if(checkMessageisRace[1] != null || checkMessageisRace[1] != undefined || checkMessageisRace[1] != ''  || checkMessageisRace[1] != ' '){
+				getEmotePositionURL = getEmotePositionB[1];
+				if(debugon){
+					console.log('htmlMessagePls: '+htmlMessagePls);
+				}
+			}
 			
-			getEmotePositionURL = getEmotePositionB[1];
-			getEmotePositionC = getEmotePositionB[0];
-			if(getEmotePositionB[2] != null || getEmotePositionB[2] != undefined || getEmotePositionB[2] != ''  || getEmotePositionB[2] != ' '){
-				getEmotePositionFlip = getEmotePositionB[2];
-				getEmotePositionFlip = getEmotePositionFlip.toLowerCase();
-				if (getEmotePositionFlip.includes('flip')) {
-					flipIt = "-1";
-				} else {
+			if(checkMessageisRace.length == "3"){
+				if(checkMessageisRace[2] != null || checkMessageisRace[2] != undefined || checkMessageisRace[2] != ''  || checkMessageisRace[2] != ' '){
+					getEmotePositionFlip = checkMessageisRace[2];
+					if (getEmotePositionFlip == "flip") {
+						flipIt = "-1";
+					} else {
+						flipIt = "1";
+					}
+				}else{
 					flipIt = "1";
 				}
-			}else{
-				flipIt = "1";
+			}
+			if(debugon){
+				console.log('getEmotePositionB: '+getEmotePositionB);
+				console.log('getEmotePositionC: '+getEmotePositionC);
+				console.log('getEmotePositionURL: '+getEmotePositionURL);
 			}
 
 			if(htmlMessagePls.includes('https://')){}else{
@@ -592,12 +603,12 @@ client.on('message', (channel, tags, message, self) => {
     }
 		alreadyInRace=0;
   }
-
+  endRaceTest = 0;
 
 	// END RACE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 
-	  if (nameofPlayer == raceOrganiser && message == raceFinishedMessage0){
+	  if (nameofPlayer == raceOrganiser && message == raceFinishedMessage0 || endRaceTest == 1){
 			setTimeout(function(){
 		//	setTimeout(function(){}, 3000);
 					if(debugon){console.log("racersInRace: "+racersInRace);}
@@ -723,7 +734,7 @@ client.on('message', (channel, tags, message, self) => {
 
 // START OF HEIST ---------------------------------------
 if (message.includes('!heist') && nameofPlayer != raceOrganiser || message.includes('!hesit') && nameofPlayer != raceOrganiser){
-	message = '!heist';
+	//message = '!heist';
 	helpermessage = '!heist'
 	if(debugon){
 			console.log('Message contained !heist, truncating to !heist to pass to next step: '+message);
