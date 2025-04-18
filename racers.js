@@ -3,7 +3,7 @@
 */
 
 // don't change me - required to not produce errors in console
-version = 18042025;
+version = 1804202501;
 racersInRace = [];
 racerOutcomesLOSERS = [];
 racerOutcomesWINNERS = [];
@@ -556,9 +556,10 @@ client.on('message', (channel, tags, message, self) => {
 			
 			getEmotePositionURL = getEmotePositionB[1];
 			getEmotePositionC = getEmotePositionB[0];
-			if(getEmotePositionB[2] !== null){
+			if(getEmotePositionB[2] != null || getEmotePositionB[2] != undefined || getEmotePositionB[2] != ''  || getEmotePositionB[2] != ' '){
 				getEmotePositionFlip = getEmotePositionB[2];
-				if (getEmotePositionFlip.toLowerCase().includes('flip')) {
+				getEmotePositionFlip = getEmotePositionFlip.toLowerCase();
+				if (getEmotePositionFlip.includes('flip')) {
 					flipIt = "-1";
 				} else {
 					flipIt = "1";
