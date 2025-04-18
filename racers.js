@@ -3,7 +3,7 @@
 */
 
 // don't change me - required to not produce errors in console
-version = 17042025;
+version = 18042025;
 racersInRace = [];
 racerOutcomesLOSERS = [];
 racerOutcomesWINNERS = [];
