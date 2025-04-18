@@ -25,6 +25,7 @@ getEmoteTimeout = 8000;
 firstPlace='';
 indexOfEmote = '';
 getEmoteAnim = '';
+endRaceTest = 0;
 // end of don't change me
 debugon = false; // logs
 debugonMSG = false;
@@ -281,12 +282,12 @@ function racerOutcomesCustom(whoAmI, chosenAnim, racePosition, chosenIMG, duhMes
 	if(debugon){console.log('chosenIMG: '+chosenIMG)}
 	if(chosenIMG.includes(raceImage) && seasonalChanges == 'custom'){
 		chosenIMG = raceImage;
-		seasonalChanges = 'standard'
+		seasonalChanges = 'standard';
 	}else if(seasonalChanges == 'standard'){
 
 	}else{
 		//chosenIMG = raceImageCustom[getRandomInt(raceImageCustom.length)];
-		seasonalChanges = 'custom'
+		seasonalChanges = 'custom';
 	}
 	racerID = counter;
 	switch (seasonalChanges) {
@@ -299,7 +300,7 @@ function racerOutcomesCustom(whoAmI, chosenAnim, racePosition, chosenIMG, duhMes
 				animateSomething('!race', racerID, racerID, chosenIMG, whoAmI, 20000, chosenAnim, duhDELAY, duhFlip);
 		break;
 	};
-	seasonalChanges = 'custom'
+	seasonalChanges = 'custom';
 }
 
 // this twitch emote stripper rips emotes from the raw message from tmi. It finds the ID's as they're saved separately in the tmi output with their position in the message sent.
@@ -460,25 +461,28 @@ client.on('message', (channel, tags, message, self) => {
 
 			if(bypassMessage.includes(raceOutcomeMessage_CHEERSIDELINES) || bypassMessage.includes(raceOutcomeMessage_EXHAUSTED) || bypassMessage.includes(raceOutcomeMessage_INJURY)){
 									racerName = msgCheck[0].replace('!','').toLowerCase();
-
+									// FIRST PLACE
 									if(bypassMessage.includes(raceOutcomeMessage_CHEERSIDELINES)){
 										setOutcomeMessage = raceOutcomeMessage_CHEERSIDELINES;
 										setOutcomeAnim = 101;
 										if(debugwinlose){
 											console.log(101);
 										}
+										// SECOND PLACE
 									}else if(bypassMessage.includes(raceOutcomeMessage_EXHAUSTED)){
 										setOutcomeMessage = raceOutcomeMessage_EXHAUSTED;
 										setOutcomeAnim = 102;
 										if(debugwinlose){
 											console.log(102);
 										}
+										// THIRD PLACE
 									}else if(bypassMessage.includes(raceOutcomeMessage_INJURY)){
 										setOutcomeMessage = raceOutcomeMessage_INJURY;
 										setOutcomeAnim = 103;
 										if(debugwinlose){
 												console.log(103);
 										}
+										// BANANA ATTACK
 									}else if(bypassMessage.includes(raceOutcomeMessage_BANANA)){
 										setOutcomeMessage = raceOutcomeMessage_BANANA;
 										setOutcomeAnim = 104;
@@ -561,10 +565,10 @@ client.on('message', (channel, tags, message, self) => {
 				}
 			}
 			
-			if(checkMessageisRace.length == "3"){
+			if(checkMessageisRace.length >= "3"){
 				if(checkMessageisRace[2] != null || checkMessageisRace[2] != undefined || checkMessageisRace[2] != ''  || checkMessageisRace[2] != ' '){
 					getEmotePositionFlip = checkMessageisRace[2];
-					if (getEmotePositionFlip == "flip") {
+					if (getEmotePositionFlip.includes("flip")) {
 						flipIt = "-1";
 					} else {
 						flipIt = "1";
@@ -603,7 +607,7 @@ client.on('message', (channel, tags, message, self) => {
     }
 		alreadyInRace=0;
   }
-  endRaceTest = 0;
+  
 
 	// END RACE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -692,7 +696,7 @@ client.on('message', (channel, tags, message, self) => {
 							break;
 							case 104:
 								if(debugwinlose){console.log("Adding fallenRacer racer raceOutcomeMessage_BANANA");}
-								racerOutcomesCustom(racersInRace[j][0], 'runRightBanana', 103, racersInRace[j][3],'',50, flippa);
+								racerOutcomesCustom(racersInRace[j][0], 'runRightBanana', 104, racersInRace[j][3],'',50, flippa);
 								animateSomething('custom', 'custom', 'custom', 'https://cdn.7tv.app/emote/63f6b4d617478c0c59fc20a6/4x.webp', nameofPlayer, 20000, 'bananapeel', 100, '30px', 0, 0);
 								//animateSomething('custom', 'custom', 'custom', 'https://cdn.7tv.app/emote/63f6b4d617478c0c59fc20a6/4x.webp', nameofPlayer, 20500, 'runRightBanana', 100, '100px', 0, 0);
 								//raceOutcomeMessage_BANANA
