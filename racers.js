@@ -553,13 +553,17 @@ client.on('message', (channel, tags, message, self) => {
 			racerN2S = racerCount.toString();
 			racerID = 'RACER_'+racerN2S;
 
-			getEmotePositionFlip = getEmotePositionB[2];
+			
 			getEmotePositionURL = getEmotePositionB[1];
 			getEmotePositionC = getEmotePositionB[0];
-
-			if (getEmotePositionFlip.toLowerCase().includes('flip')) {
-				flipIt = "-1";
-			} else {
+			if(getEmotePositionB[2] !== null){
+				getEmotePositionFlip = getEmotePositionB[2];
+				if (getEmotePositionFlip.toLowerCase().includes('flip')) {
+					flipIt = "-1";
+				} else {
+					flipIt = "1";
+				}
+			}else{
 				flipIt = "1";
 			}
 
