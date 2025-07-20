@@ -12,8 +12,36 @@
   </head>
   <body>
     <script>
-      const matchesinStrIMG = emotedataFile.match(/(?<=<a href="\/emotes\/\s*).*?(?=\s*" class="unstyled-link".)/gs);
-      const matchesinStrNAME = emotedataFile.match(/(?<=<div class="title-banner" data-v-952f9cbc=""><span data-v-952f9cbc="">\s*).*?(?=\s*<\/span>)/gs);
+      // old way to get emotes
+      //const matchesinStrIMG = emotedataFile.match(/(?<=<a href="\/emotes\/\s*).*?(?=\s*" class="unstyled-link".)/gs);
+      //const matchesinStrNAME = emotedataFile.match(/(?<=<div class="title-banner" data-v-952f9cbc=""><span data-v-952f9cbc="">\s*).*?(?=\s*<\/span>)/gs);
+
+
+      // Regular expression to find IDNUMBER
+// Regular expression to find IDNUMBER
+      const idRegex = /href="\/emotes\/([^"]+)"/g;
+      // Regular expression to find EMOTENAME
+      const nameRegex = /draggable="true" title="([^"]+)/g;
+      //const nameRegex = /title="([^"]+) by/g;
+
+      let matchesinStrIMG = [];
+      let matchesinStrNAME = [];
+
+      let match;
+
+      // Extract IDNUMBERs
+      while ((match = idRegex.exec(emotedataFile)) !== null) {
+        matchesinStrIMG.push(match[1]);
+      }
+
+      // Extract EMOTENAMEs
+      while ((match = nameRegex.exec(emotedataFile)) !== null) {
+        match[1] = match[1].replace(/ by .*/, ''); // Remove " by Creator" if it exists
+        matchesinStrNAME.push(match[1]);
+      }
+
+      console.log("matchesinStrIMG:", matchesinStrIMG);
+      console.log("matchesinStrNAME:", matchesinStrNAME);
       console.log (matchesinStrIMG);
       console.log (matchesinStrNAME);
     </script>
