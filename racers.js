@@ -3,7 +3,7 @@
 */
 
 // don't change me - required to not produce errors in console
-version = 1804202503;
+version = 0.51;
 racersInRace = [];
 racerOutcomesLOSERS = [];
 racerOutcomesWINNERS = [];
@@ -81,7 +81,7 @@ raceFinishedMessage0 = 'Thank you to all racers! The race will return soon...';
 raceOutcomeMessage_CHEERSIDELINES = 'decided to cheer on the sidelines instead of racing...?'; // message.includes('raceOutcomeMessage_CHEERSIDELINES');
 raceOutcomeMessage_EXHAUSTED = 'raced too hard and exhausted their chocobo!'; // message.includes('raceOutcomeMessage_EXHAUSTED');
 raceOutcomeMessage_INJURY = "had to pull out of the race due to their chocobo's injury!"; // message.includes('raceOutcomeMessage_INJURY');
-raceOutcomeMessage_BANANA = "threw a banana";
+raceOutcomeMessage_BANANA = "threw a banana"; // message.includes('raceOutcomeMessage_BANANA');
 
 
 // tiggers for first second and third to check against
@@ -303,6 +303,9 @@ function racerOutcomesCustom(whoAmI, chosenAnim, racePosition, chosenIMG, duhMes
 	seasonalChanges = 'custom';
 }
 
+
+
+
 // this twitch emote stripper rips emotes from the raw message from tmi. It finds the ID's as they're saved separately in the tmi output with their position in the message sent.
 // I get lost in this function, but I have edited it to work in a way that suits what I need.
 // It basically takes the ID's and replaces the plain text from the message with the html required to post the image of the emote. Giving you messageHTML
@@ -345,7 +348,23 @@ function getemoteOnly(message, emotes) {
 	return messageHTML;
 } // stop getting funky
 
-
+// updates an emote for a player in the racersInRace array
+function updateEmoteForRacer(playerNameToCheck, newEmoteURL, flipEmote) {
+		for (let i = 0; i < racersInRace.length; i++) {
+			// Check if the first element (nameofPlayer) matches
+			if (racersInRace[i][0] === playerNameToCheck) {
+				// If it matches, update the fourth element (getEmotePositionURL)
+				racersInRace[i][3] = newEmoteURL;
+				if (flipEmote){
+					racersInRace[i][6] = '-1';
+				}else{
+					racersInRace[i][6] = '1';
+				}
+				console.log(`Updated emote for ${playerNameToCheck} to ${newEmoteURL}. Flip: ${flipEmote}`);
+				break;
+			}
+		}
+}
 
 // start of client.on message - runs through everything on every message, but only triggers on certain words from certain people
 client.on('message', (channel, tags, message, self) => {
@@ -424,7 +443,7 @@ client.on('message', (channel, tags, message, self) => {
 									setOutcomeMessage = '';
 								}
 
-								// In second place, thisguy took a detour but still managed to win 40000 broodlebits!
+								// In second place, this guy took a detour but still managed to win 40000 broodlebits!
 								for(i=0; i<racersInRace.length; i++){
 									index = racersInRace[i][0].indexOf(racerName);
 									//console.log('INDEX: '+index);
@@ -458,24 +477,24 @@ client.on('message', (channel, tags, message, self) => {
 								}
 
 						}else{}
-
+						// animate all the failed runners
 			if(bypassMessage.includes(raceOutcomeMessage_CHEERSIDELINES) || bypassMessage.includes(raceOutcomeMessage_EXHAUSTED) || bypassMessage.includes(raceOutcomeMessage_INJURY)){
 									racerName = msgCheck[0].replace('!','').toLowerCase();
-									// FIRST PLACE
+									// CHEER
 									if(bypassMessage.includes(raceOutcomeMessage_CHEERSIDELINES)){
 										setOutcomeMessage = raceOutcomeMessage_CHEERSIDELINES;
 										setOutcomeAnim = 101;
 										if(debugwinlose){
 											console.log(101);
 										}
-										// SECOND PLACE
+										// EXHAUSTED
 									}else if(bypassMessage.includes(raceOutcomeMessage_EXHAUSTED)){
 										setOutcomeMessage = raceOutcomeMessage_EXHAUSTED;
 										setOutcomeAnim = 102;
 										if(debugwinlose){
 											console.log(102);
 										}
-										// THIRD PLACE
+										// INJURY
 									}else if(bypassMessage.includes(raceOutcomeMessage_INJURY)){
 										setOutcomeMessage = raceOutcomeMessage_INJURY;
 										setOutcomeAnim = 103;
@@ -528,6 +547,7 @@ client.on('message', (channel, tags, message, self) => {
 		}
 
 
+
 	// START RACE --------------------------------------------------------------------------------
   if (nameofPlayer == raceOrganiser && message == raceStartingMessage0){
 		racerOutcomesLOSERS = [];
@@ -544,54 +564,57 @@ client.on('message', (channel, tags, message, self) => {
 	// spit out a racer when the race is available to enter a racer into the race
 	checkMessageisRace = bypassMessage.split(' ');
 	getEmotePositionB = htmlMessagePls.split(' ');
-  if (raceStarted == 1 && checkMessageisRace[0] == raceMessageTrigger && nameofPlayer != raceOrganiser || checkMessageisRace[0] == raceMessageTrigger && testoneracer == 1 ){
+  	if (raceStarted == 1 && checkMessageisRace[0] == raceMessageTrigger && nameofPlayer != raceOrganiser || checkMessageisRace[0] == raceMessageTrigger && testoneracer == 1 ){
+		nameofPlayer = tags.username;
+		racerN2S = racerCount.toString();
+		racerID = 'RACER_'+racerN2S;
+		getEmotePositionC = checkMessageisRace[0];
+		flipIt = "1";
+		if(checkMessageisRace[1] != null || checkMessageisRace[1] != undefined || checkMessageisRace[1] != ''  || checkMessageisRace[1] != ' '){
+			getEmotePositionURL = getEmotePositionB[1];
+			if(debugon){
+				console.log('htmlMessagePls: '+htmlMessagePls);
+			}
+		}
+		if(checkMessageisRace.length >= 3){
+			if(checkMessageisRace[2] != null || checkMessageisRace[2] != undefined || checkMessageisRace[2] != ''  || checkMessageisRace[2] != ' '){
+				getEmotePositionFlip = checkMessageisRace[2];
+				if (getEmotePositionFlip.includes("flip")) {
+					flipIt = "-1";
+				} else {
+					flipIt = "1";
+				}
+			}else{
+				flipIt = "1";
+			}
+		}
+		if(debugon){
+			console.log('getEmotePositionB: '+getEmotePositionB);
+			console.log('getEmotePositionC: '+getEmotePositionC);
+			console.log('getEmotePositionURL: '+getEmotePositionURL);
+		}
 		for(i=0; i<racersInRace.length; i++){
 			if (nameofPlayer.includes(racersInRace[i][0])){
 				alreadyInRace=1;
 			}
 		}
+		if(htmlMessagePls.includes('https://')){}else{
+			if(matchesinStrNAME.includes(getEmotePositionURL)){
+				indexOfEmote = matchesinStrNAME.indexOf(getEmotePositionURL);
+				getEmotePositionURL = 'https://cdn.7tv.app/emote/' + matchesinStrIMG[indexOfEmote] +'/3x.webp';
+			}else{
+				getEmotePositionURL = raceImage;
+			}
+		}
+
 		if (alreadyInRace == 1){
-      if(debugon){console.log('Racer: '+nameofPlayer+' already exists in the race.');}
-    }else{
-			nameofPlayer = tags.username;
-			racerN2S = racerCount.toString();
-			racerID = 'RACER_'+racerN2S;
-			getEmotePositionC = checkMessageisRace[0];
-			flipIt = "1";
-			if(checkMessageisRace[1] != null || checkMessageisRace[1] != undefined || checkMessageisRace[1] != ''  || checkMessageisRace[1] != ' '){
-				getEmotePositionURL = getEmotePositionB[1];
-				if(debugon){
-					console.log('htmlMessagePls: '+htmlMessagePls);
-				}
+      		if(debugon){console.log('Racer: '+nameofPlayer+' already exists in the race.');}
+			// check if we need to update the emote for a player
+			if (checkMessageisRace[0] == raceMessageTrigger && checkMessageisRace[1]){
+				updateEmoteForRacer(nameofPlayer, getEmotePositionURL, flipIt);
 			}
+   		}else{
 			
-			if(checkMessageisRace.length >= "3"){
-				if(checkMessageisRace[2] != null || checkMessageisRace[2] != undefined || checkMessageisRace[2] != ''  || checkMessageisRace[2] != ' '){
-					getEmotePositionFlip = checkMessageisRace[2];
-					if (getEmotePositionFlip.includes("flip")) {
-						flipIt = "-1";
-					} else {
-						flipIt = "1";
-					}
-				}else{
-					flipIt = "1";
-				}
-			}
-			if(debugon){
-				console.log('getEmotePositionB: '+getEmotePositionB);
-				console.log('getEmotePositionC: '+getEmotePositionC);
-				console.log('getEmotePositionURL: '+getEmotePositionURL);
-			}
-
-			if(htmlMessagePls.includes('https://')){}else{
-				if(matchesinStrNAME.includes(getEmotePositionURL)){
-					indexOfEmote = matchesinStrNAME.indexOf(getEmotePositionURL);
-					getEmotePositionURL = 'https://cdn.7tv.app/emote/' + matchesinStrIMG[indexOfEmote] +'/3x.webp';
-				}else{
-					getEmotePositionURL = raceImage;
-				}
-			}
-
 			// add to the racers array
 			racersInRace.push([nameofPlayer,'runRight',99,getEmotePositionURL,'',100,flipIt]);
 			
@@ -604,9 +627,9 @@ client.on('message', (channel, tags, message, self) => {
 				console.log("NEW RACER Image: "+getEmotePositionURL);
 				console.log("Player Name: "+nameofPlayer);
 			}
-    }
+    	}
 		alreadyInRace=0;
-  }
+  	}
   
 
 	// END RACE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -679,7 +702,7 @@ client.on('message', (channel, tags, message, self) => {
 							case 101:
 
 								if(debugwinlose){console.log("Adding fallenRacer racer raceOutcomeMessage_CHEERSIDELINES");}
-								racerOutcomesCustom(racersInRace[j][0], 'runCheerSidlines', 101, racersInRace[j][3],'',50, flippa);
+								racerOutcomesCustom(racersInRace[j][0], 'runCheerSidelines', 101, racersInRace[j][3],'',50, flippa);
 
 							break;
 							case 102:
@@ -793,23 +816,138 @@ if(showWinnerName || testwords == 1){
 
 	// spit out a racer every chat message
 	if (racerOnMessageTest){
-    nameofPlayer = tags.username;
-    racerN2S = racerCount.toString();
-    racerID = 'RACER_'+racerN2S;
+		nameofPlayer = tags.username;
+		racerN2S = racerCount.toString();
+		racerID = 'RACER_'+racerN2S;
 		racersInRace.push(nameofPlayer);
 		animateSomething('!race', racerID, racerID, raceImage, nameofPlayer, 20000, 'runRight', 100);
-    if(debugon){
-      console.log("Racer ID: "+racerID);
-      console.log("Image: "+raceImage);
-      console.log("Player Name: "+nameofPlayer);
+		if(debugon){
+		console.log("Racer ID: "+racerID);
+		console.log("Image: "+raceImage);
+		console.log("Player Name: "+nameofPlayer);
+		}
   	}
-  }
 	if(debugon){
 		console.log(racersInRace);
 	}
+
+
+	// test racers to see what they look like 
+	testracers = 0;
+	racersInRaceTest = [];
+	if (nameofPlayer == "squidgeebusiness" && message.includes('!testracers')){
+		splitmessage = message.split(' ');
+		splitmessagecount = splitmessage.length;
+		chosenIMG = "https://cdn.7tv.app/emote/01GY7K9CE0000FB7ZAX5594NR1/3x.webp";
+		if(splitmessagecount == 2){
+			chosenIMG = splitmessage[1];
+		}else{
+			chosenIMG = "https://cdn.7tv.app/emote/01GY7K9CE0000FB7ZAX5594NR1/3x.webp";
+		}
+		if(splitmessagecount == 3){
+			flip = "-1";
+		}else{
+			flip = "1";
+		}
+		// racers test all in one
+		
+			// RUN TO LEFT
+			setTimeout(() => {
+				racersInRaceTest.push(["testaddracer",'runRight',99,chosenIMG,'',100,flip]);
+				animateSomething('!race', "testaddracer1", "testaddracer1",chosenIMG,"testaddracer1", 20000, 'runLeft', 100, flip, '30px', 0, 0);
+			}, "1000");
+			setTimeout(() => {
+				racersInRaceTest.push(["testaddracer",'runRight',99,chosenIMG,'',100,flip]);
+				animateSomething('!race', "testaddracer2", "testaddracer2",chosenIMG,"testaddracer2", 20000, 'runLeft', 100, flip, '30px', 0, 0);
+			}, "2000");
+			setTimeout(() => {
+				racersInRaceTest.push(["testaddracer",'runRight',99,chosenIMG,'',100,flip]);
+				animateSomething('!race', "testaddracer3", "testaddracer3",chosenIMG,"testaddracer3", 20000, 'runLeft', 100, flip, '30px', 0, 0);
+			}, "3000");
+			setTimeout(() => {
+				racersInRaceTest.push(["testaddracer",'runRight',99,chosenIMG,'',100,flip]);
+				animateSomething('!race', "testaddracer4", "testaddracer4",chosenIMG,"testaddracer4", 20000, 'runLeft', 100, flip, '30px', 0, 0);
+			}, "4000");
+			setTimeout(() => {
+				racersInRaceTest.push(["testaddracer",'runRight',99,chosenIMG,'',100,flip]);
+				animateSomething('!race', "testaddracer5", "testaddracer5",chosenIMG,"testaddracer5", 20000, 'runLeft', 100, flip, '30px', 0, 0);
+			}, "5000");
+			setTimeout(() => {
+				racersInRaceTest.push(["testaddracer",'runRight',99,chosenIMG,'',100,flip]);
+				animateSomething('!race', "testaddracer6", "testaddracer6",chosenIMG,"testaddracer6", 20000, 'runLeft', 100, flip, '30px', 0, 0);
+			}, "6000");
+		
+
+			// RUN TO RIGHT
+			setTimeout(() => {
+				racersInRaceTest.push(["testaddracer",'runRight',99,chosenIMG,'',100,flip]);
+				animateSomething('!race', "testaddracer1", "testaddracer1",chosenIMG,"testaddracer1", 20000, 'runRightWINNER_1', 100, flip,'30px', 0, 0);
+			}, "15000");
+			setTimeout(() => {
+				racersInRaceTest.push(["testaddracer",'runRight',99,chosenIMG,'',100,flip]);
+				animateSomething('!race', "testaddracer2", "testaddracer2",chosenIMG,"testaddracer2", 20000, 'runRightWINNER_2', 100, flip, '30px', 0, 0);
+			}, "16000");
+			setTimeout(() => {
+				racersInRaceTest.push(["testaddracer",'runRight',99,chosenIMG,'',100,flip]);
+				animateSomething('!race', "testaddracer3", "testaddracer3",chosenIMG,"testaddracer3", 20000, 'runRightWINNER_3', 100, flip, '30px', 0, 0);
+			}, "17000");
+			setTimeout(() => {
+				racersInRaceTest.push(["testaddracer",'runRight',99,chosenIMG,'',100,flip]);
+				animateSomething('!race', "testaddracer4", "testaddracer4",chosenIMG,"testaddracer4", 20000, 'runCheerSidelines', 100, flip, '30px', 0, 0);
+			}, "18000");
+			setTimeout(() => {
+				racersInRaceTest.push(["testaddracer",'runRight',99,chosenIMG,'',100,flip]);
+				animateSomething('!race', "testaddracer5", "testaddracer5",chosenIMG,"testaddracer5", 20000, 'runRightExhausted', 100, flip, '30px', 0, 0);
+			}, "19000");
+			setTimeout(() => {
+				racersInRaceTest.push(["testaddracer",'runRight',99,chosenIMG,'',100,flip]);
+				animateSomething('!race', "testaddracer6", "testaddracer6",chosenIMG,"testaddracer6", 20000, 'runRightInjury', 100, flip, '30px', 0, 0);
+			}, "20000");
+			setTimeout(() => {
+				animateSomething('custom', 'custom', 'custom', 'https://cdn.7tv.app/emote/63f6b4d617478c0c59fc20a6/4x.webp', nameofPlayer, 20000, 'bananapeel', 100, '30px', 0, 0);
+				racersInRaceTest.push(["testaddracer",'runRight',99,chosenIMG,'',100,flip]);
+				animateSomething('!race', "testaddracer7", "testaddracer7",chosenIMG,"testaddracer7", 20000, 'runRightBanana', 100, flip, '30px', 0, 0);
+			}, "21000");
+
+		
+
+
+		/* // test banana peel and racer in console
+		flip = "-1"
+		animateSomething('custom', 'custom', 'custom', 'https://cdn.7tv.app/emote/63f6b4d617478c0c59fc20a6/4x.webp', nameofPlayer, 20000, 'bananapeel', 100, '30px', 0, 0);
+		animateSomething('!race', "testaddracer7", "testaddracer7","https://cdn.7tv.app/emote/01GY7K9CE0000FB7ZAX5594NR1/3x.webp","testaddracer7", 20000, 'runRightBanana', 100, "-1");
+		*/
+
+
+		// customised version, sort later, too much faffing
+		/*if (splitmessage[0] == "!testaddracer"){
+				if (splitmessage.length == 1){
+					chosenIMG = "https://cdn.7tv.app/emote/63f6b4d617478c0c59fc20a6/4x.webp";
+				}else if (splitmessage.length == 2){
+					chosenIMG = splitmessage[1];
+				}else if (splitmessage.length == 3){
+					chosenIMG = splitmessage[1];
+					flip = "flip";
+				}
+				// add to the racers array
+				racersInRaceTest.push(["testaddracer",'runRight',99,getEmotePositionURL,'',100,flipIt]);
+				animateSomething('!race', "testaddracer", "testaddracer",chosenIMG,"testaddracer", 20000, 'runLeft', 100, flip);
+			
+
+			//animateSomething('!race', racerID, racerID, getEmotePositionURL, nameofPlayer, 20000, 'runLeft', 100);
+			//animateSomething('!race', racerID, racerID, chosenIMG, whoAmI, 20000, chosenAnim+'Custom', duhDELAY, duhFlip);
+		}*/
+
+		// reset testracers to 0
+		testracers = 0;
+
+	}
+
 });
 
 //spitaVideo('video','video','./ivegotagun.mp4', 0.02, 3000);
 
 
-animateSomething('custom', 'custom', 'custom', 'https://cdn.7tv.app/emote/622f82622cbc7e45d4cac28f/4x.webp', nameofPlayer, 2, 'static', 100, '100px', 0, 91);
+animateSomething('custom', 'custom', 'custom', 'https://cdn.7tv.app/emote/622f82622cbc7e45d4cac28f/4x.webp', nameofPlayer, 2, 'runRightCustom', 100, '100px', 0, 91);
+
+

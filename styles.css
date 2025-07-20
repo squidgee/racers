@@ -367,7 +367,7 @@ body {
   animation: KFRunRightExhausted alternate 21s;
   animation-timing-function: ease-in-out;
 }
-.runCheerSidlines {
+.runCheerSidelines {
   animation: KFRunCheerSidelines 21s, bounceCheerSidelines 0.6s infinite;
 }
 .runRightInjury {
@@ -380,11 +380,11 @@ body {
 }
 @keyframes KFRunRightBanana {
   0%   {top:990px; left:-200px; opacity:100%; transform: scaleX(1);}
-  20%  {top:990px; left:700px; opacity:100%; transform: scaleX(1);}
-  21%  {top:940px; left:750px; opacity:100%; transform: scaleX(1) rotate(180deg);}
-  22%  {top:1200px; left:800px; opacity:100%; transform: scaleX(1) rotate(360deg);}
-  23%  {top:1200px; left:850px; opacity:100%; transform: scaleX(1) rotate(360deg);}
-  100%  {top:1200px; left:900px; opacity:100%; transform: scaleX(1) rotate(360deg);}
+  18%  {top:990px; left:666px; opacity:100%; transform: scaleX(1);}
+  19%  {top:940px; left:750px; opacity:100%; transform: scaleX(1) rotate(-180deg);}
+  23%  {top:1200px; left:850px; opacity:100%; transform: scaleX(1) rotate(-360deg);}
+  25%  {top:1200px; left:900px; opacity:100%; transform: scaleX(1) rotate(-360deg);}
+  100%  {top:1200px; left:900px; opacity:100%; transform: scaleX(1) rotate(-360deg);}
 }
 
 
@@ -539,7 +539,7 @@ animation-timing-function: ease-in;
 animation: KFRunRightExhaustedCustom alternate 21s;
 animation-timing-function: ease-in-out;
 }
-.runCheerSidlinesCustom {
+.runCheerSidelinesCustom {
 animation: KFRunCheerSidelinesCustom 21s, bounceCheerSidelines 0.6s infinite;
 }
 .runRightInjuryCustom {
@@ -567,7 +567,7 @@ animation-timing-function: ease-in;
   animation: KFRunRightExhaustedCustomFlip alternate 21s;
   animation-timing-function: ease-in-out;
   }
-  .runCheerSidlinesCustomFlip {
+  .runCheerSidelinesCustomFlip {
   animation: KFRunCheerSidelinesCustomFlip 21s, bounceCheerSidelines 0.6s infinite;
   }
   .runRightInjuryCustomFlip {
