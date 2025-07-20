@@ -61,11 +61,11 @@ showWinnerName = false; // not working too good, pretty borked
 
 
 // more shit you can change
-//raceImageCustom = ['https://cdn.7tv.app/emote/6163464e18f0c6373068fdf3/4x.webp','https://cdn.7tv.app/emote/616ea69ab6d21adaffbe8a68/4x.webp','https://cdn.7tv.app/emote/6355845301cecbb4e5428b13/4x.webp','https://cdn.7tv.app/emote/62004b0da1ff29b7a4ad0f6d/4x.webp'];
-raceImageCustom = ['https://cdn.7tv.app/emote/61db4fa057c70f633ebd64b0/4x.webp','https://cdn.7tv.app/emote/648f490dbef4002c8df2bc4a/4x.webp','https://cdn.7tv.app/emote/60aeeb53a564afa26ee82323/4x.webp','https://cdn.7tv.app/emote/65466470d4c66f065550ad10/4x.webp','https://cdn.7tv.app/emote/6469489358d599a0419faf0d/4x.webp','https://cdn.7tv.app/emote/64c5937b1eeb05cd3b616737/4x.webp','https://cdn.7tv.app/emote/6238a95e84b15be7f5e54252/4x.webp','https://cdn.7tv.app/emote/6148ff063d8c2d23697ac6ed/4x.webp','https://cdn.7tv.app/emote/6413ad7312ae2f4792c715c7/4x.webp','https://cdn.7tv.app/emote/64387aa5e06ecb731b2375d2/4x.webp','https://cdn.7tv.app/emote/6435d5fd7bd689356b665f81/4x.webp','https://cdn.7tv.app/emote/646c55216989b9b0d46bd63c/4x.webp'];
-raceImage = 'https://cdn.7tv.app/emote/643d3c98f59feae94a925701/4x.webp'; // the racer image must be an image jpg gif webp etc
+//raceImageCustom = ['https://cdn.7tv.app/emote/6163464e18f0c6373068fdf3/4x','https://cdn.7tv.app/emote/616ea69ab6d21adaffbe8a68/4x','https://cdn.7tv.app/emote/6355845301cecbb4e5428b13/4x','https://cdn.7tv.app/emote/62004b0da1ff29b7a4ad0f6d/4x'];
+raceImageCustom = ['https://cdn.7tv.app/emote/61db4fa057c70f633ebd64b0/4x','https://cdn.7tv.app/emote/648f490dbef4002c8df2bc4a/4x','https://cdn.7tv.app/emote/60aeeb53a564afa26ee82323/4x','https://cdn.7tv.app/emote/65466470d4c66f065550ad10/4x','https://cdn.7tv.app/emote/6469489358d599a0419faf0d/4x','https://cdn.7tv.app/emote/64c5937b1eeb05cd3b616737/4x','https://cdn.7tv.app/emote/6238a95e84b15be7f5e54252/4x','https://cdn.7tv.app/emote/6148ff063d8c2d23697ac6ed/4x','https://cdn.7tv.app/emote/6413ad7312ae2f4792c715c7/4x','https://cdn.7tv.app/emote/64387aa5e06ecb731b2375d2/4x','https://cdn.7tv.app/emote/6435d5fd7bd689356b665f81/4x','https://cdn.7tv.app/emote/646c55216989b9b0d46bd63c/4x'];
+raceImage = 'https://cdn.7tv.app/emote/643d3c98f59feae94a925701/4x'; // the racer image must be an image jpg gif webp etc
 raceImageSize = '100px'; // The size of the racer image on screen. This is modified by the animation
-raceImageMulti = 'https://cdn.7tv.app/emote/64428f13a9f9fb7c5f27c47a/4x.webp';
+raceImageMulti = 'https://cdn.7tv.app/emote/64428f13a9f9fb7c5f27c47a/4x';
 
 raceImageMultiSize = '300px'; // The size of the racer image on screen. This is modified by the animation
 raceMessageTrigger = '!race'; // The message to add a racer
@@ -97,7 +97,7 @@ raceOutcomemessages_WINNERS = [raceOutcomeMessage_FIRST, raceOutcomeMessage_SECO
 raceOutcomemessages_LOSERS = [raceOutcomeMessage_CHEERSIDELINES, raceOutcomeMessage_EXHAUSTED, raceOutcomeMessage_INJURY];
 
 // heisters
-heistImage = 'https://cdn.7tv.app/emote/64d50050507a9267faee3454/4x.webp';
+heistImage = 'https://cdn.7tv.app/emote/64d50050507a9267faee3454/4x';
 heistImageSize = '100px'; // The size of the racer image on screen. This is modified by the animation
 heistMessageTrigger = '!heist'; // The message to add a racer
 heistStartMessage0 = 'is getting a team together to perform a heist'; // the check message to start a heist
@@ -411,7 +411,7 @@ client.on('message', (channel, tags, message, self) => {
 
 
 // get winners and losers and put them in their own arrays so we can call animations for them straight after we see the race ended message
-// get winners and losers and put them in their own arrays so we can call animations for them later
+
 		if(nameofPlayer == raceOrganiser && raceStarted == 1 || testit == 1){
 
 				msgCheck = bypassMessage.split(' ');
@@ -478,53 +478,56 @@ client.on('message', (channel, tags, message, self) => {
 
 						}else{}
 						// animate all the failed runners
-			if(bypassMessage.includes(raceOutcomeMessage_CHEERSIDELINES) || bypassMessage.includes(raceOutcomeMessage_EXHAUSTED) || bypassMessage.includes(raceOutcomeMessage_INJURY)){
-									racerName = msgCheck[0].replace('!','').toLowerCase();
-									// CHEER
-									if(bypassMessage.includes(raceOutcomeMessage_CHEERSIDELINES)){
-										setOutcomeMessage = raceOutcomeMessage_CHEERSIDELINES;
-										setOutcomeAnim = 101;
-										if(debugwinlose){
-											console.log(101);
-										}
-										// EXHAUSTED
-									}else if(bypassMessage.includes(raceOutcomeMessage_EXHAUSTED)){
-										setOutcomeMessage = raceOutcomeMessage_EXHAUSTED;
-										setOutcomeAnim = 102;
-										if(debugwinlose){
-											console.log(102);
-										}
-										// INJURY
-									}else if(bypassMessage.includes(raceOutcomeMessage_INJURY)){
-										setOutcomeMessage = raceOutcomeMessage_INJURY;
-										setOutcomeAnim = 103;
-										if(debugwinlose){
-												console.log(103);
-										}
-										// BANANA ATTACK
-									}else if(bypassMessage.includes(raceOutcomeMessage_BANANA)){
-										setOutcomeMessage = raceOutcomeMessage_BANANA;
-										setOutcomeAnim = 104;
-										if(debugwinlose){
-												console.log(104);
-										}
-									}else{
-										setOutcomeMessage = 'idkwtfhappened. HELP!';
-										setOutcomeAnim = 102;
-									}
-									if(debugon){console.log(racersInRace);}
-									for(i=0; i<racersInRace.length; i++){
-										index = racersInRace[i][0].indexOf(racerName);
-										if (index == 0) {
-												racersInRace[i][2]=setOutcomeAnim;
-												racersInRace[i][4]=setOutcomeMessage;
-												if(debugwinlose){
-													console.log('LOSER: '+racerName);
-													console.log('FOUND: '+racersInRace[i]);
-													console.log('POSITION SET: '+racersInRace[i][2]);
-												}
-										}
-									}
+			if (bypassMessage.includes(raceOutcomeMessage_CHEERSIDELINES) || bypassMessage.includes(raceOutcomeMessage_EXHAUSTED) || bypassMessage.includes(raceOutcomeMessage_INJURY) || bypassMessage.includes(raceOutcomeMessage_BANANA)){
+				// Get the racer name. Most start with the name of the racer at the start of the message		
+				racerName = msgCheck[0].replace('!','').toLowerCase();
+				// CHEER
+				if(bypassMessage.includes(raceOutcomeMessage_CHEERSIDELINES)){
+					setOutcomeMessage = raceOutcomeMessage_CHEERSIDELINES;
+					setOutcomeAnim = 101;
+					if(debugwinlose){
+						console.log(101);
+					}
+					// EXHAUSTED
+				}else if(bypassMessage.includes(raceOutcomeMessage_EXHAUSTED)){
+					setOutcomeMessage = raceOutcomeMessage_EXHAUSTED;
+					setOutcomeAnim = 102;
+					if(debugwinlose){
+						console.log(102);
+					}
+					// INJURY
+				}else if(bypassMessage.includes(raceOutcomeMessage_INJURY)){
+					setOutcomeMessage = raceOutcomeMessage_INJURY;
+					setOutcomeAnim = 103;
+					if(debugwinlose){
+							console.log(103);
+					}
+					// BANANA ATTACK
+				}else if(bypassMessage.includes(raceOutcomeMessage_BANANA)){
+					// get the name of the racer that had the banana thrown at them
+					racerName = msgCheck[9].replace('!','').toLowerCase();
+					setOutcomeMessage = raceOutcomeMessage_BANANA;
+					setOutcomeAnim = 104;
+					if(debugwinlose){
+							console.log(104);
+					}
+				}else{
+					setOutcomeMessage = 'idkwtfhappened. HELP!';
+					setOutcomeAnim = 102;
+				}
+				if(debugon){console.log(racersInRace);}
+				for(i=0; i<racersInRace.length; i++){
+					index = racersInRace[i][0].indexOf(racerName);
+					if (index == 0) {
+							racersInRace[i][2]=setOutcomeAnim;
+							racersInRace[i][4]=setOutcomeMessage;
+							if(debugwinlose){
+								console.log('LOSER: '+racerName);
+								console.log('FOUND: '+racersInRace[i]);
+								console.log('POSITION SET: '+racersInRace[i][2]);
+							}
+					}
+				}
 			}
 
 		}
@@ -601,7 +604,7 @@ client.on('message', (channel, tags, message, self) => {
 		if(htmlMessagePls.includes('https://')){}else{
 			if(matchesinStrNAME.includes(getEmotePositionURL)){
 				indexOfEmote = matchesinStrNAME.indexOf(getEmotePositionURL);
-				getEmotePositionURL = 'https://cdn.7tv.app/emote/' + matchesinStrIMG[indexOfEmote] +'/3x.webp';
+				getEmotePositionURL = 'https://cdn.7tv.app/emote/' + matchesinStrIMG[indexOfEmote] +'/3x';
 			}else{
 				getEmotePositionURL = raceImage;
 			}
@@ -720,8 +723,8 @@ client.on('message', (channel, tags, message, self) => {
 							case 104:
 								if(debugwinlose){console.log("Adding fallenRacer racer raceOutcomeMessage_BANANA");}
 								racerOutcomesCustom(racersInRace[j][0], 'runRightBanana', 104, racersInRace[j][3],'',50, flippa);
-								animateSomething('custom', 'custom', 'custom', 'https://cdn.7tv.app/emote/63f6b4d617478c0c59fc20a6/4x.webp', nameofPlayer, 20000, 'bananapeel', 100, '30px', 0, 0);
-								//animateSomething('custom', 'custom', 'custom', 'https://cdn.7tv.app/emote/63f6b4d617478c0c59fc20a6/4x.webp', nameofPlayer, 20500, 'runRightBanana', 100, '100px', 0, 0);
+								animateSomething('custom', 'custom', 'custom', 'https://cdn.7tv.app/emote/63f6b4d617478c0c59fc20a6/4x', nameofPlayer, 20000, 'bananapeel', 100, '30px', 0, 0);
+								//animateSomething('custom', 'custom', 'custom', 'https://cdn.7tv.app/emote/63f6b4d617478c0c59fc20a6/4x', nameofPlayer, 20500, 'runRightBanana', 100, '100px', 0, 0);
 								//raceOutcomeMessage_BANANA
 							break;
 
@@ -838,11 +841,11 @@ if(showWinnerName || testwords == 1){
 	if (nameofPlayer == "squidgeebusiness" && message.includes('!testracers')){
 		splitmessage = message.split(' ');
 		splitmessagecount = splitmessage.length;
-		chosenIMG = "https://cdn.7tv.app/emote/01GY7K9CE0000FB7ZAX5594NR1/3x.webp";
+		chosenIMG = "https://cdn.7tv.app/emote/01GY7K9CE0000FB7ZAX5594NR1/3x";
 		if(splitmessagecount == 2){
 			chosenIMG = splitmessage[1];
 		}else{
-			chosenIMG = "https://cdn.7tv.app/emote/01GY7K9CE0000FB7ZAX5594NR1/3x.webp";
+			chosenIMG = "https://cdn.7tv.app/emote/01GY7K9CE0000FB7ZAX5594NR1/3x";
 		}
 		if(splitmessagecount == 3){
 			flip = "-1";
@@ -856,7 +859,7 @@ if(showWinnerName || testwords == 1){
 				racersInRaceTest.push(["testaddracer",'runRight',99,chosenIMG,'',100,flip]);
 				animateSomething('!race', "testaddracer1", "testaddracer1",chosenIMG,"testaddracer1", 20000, 'runLeft', 100, flip, '30px', 0, 0);
 			}, "1000");
-			setTimeout(() => {
+			/*setTimeout(() => {
 				racersInRaceTest.push(["testaddracer",'runRight',99,chosenIMG,'',100,flip]);
 				animateSomething('!race', "testaddracer2", "testaddracer2",chosenIMG,"testaddracer2", 20000, 'runLeft', 100, flip, '30px', 0, 0);
 			}, "2000");
@@ -875,54 +878,54 @@ if(showWinnerName || testwords == 1){
 			setTimeout(() => {
 				racersInRaceTest.push(["testaddracer",'runRight',99,chosenIMG,'',100,flip]);
 				animateSomething('!race', "testaddracer6", "testaddracer6",chosenIMG,"testaddracer6", 20000, 'runLeft', 100, flip, '30px', 0, 0);
-			}, "6000");
+			}, "6000");*/
 		
 
 			// RUN TO RIGHT
 			setTimeout(() => {
 				racersInRaceTest.push(["testaddracer",'runRight',99,chosenIMG,'',100,flip]);
 				animateSomething('!race', "testaddracer1", "testaddracer1",chosenIMG,"testaddracer1", 20000, 'runRightWINNER_1', 100, flip,'30px', 0, 0);
-			}, "15000");
+			}, "100");
 			setTimeout(() => {
 				racersInRaceTest.push(["testaddracer",'runRight',99,chosenIMG,'',100,flip]);
 				animateSomething('!race', "testaddracer2", "testaddracer2",chosenIMG,"testaddracer2", 20000, 'runRightWINNER_2', 100, flip, '30px', 0, 0);
-			}, "16000");
+			}, "100");
 			setTimeout(() => {
 				racersInRaceTest.push(["testaddracer",'runRight',99,chosenIMG,'',100,flip]);
 				animateSomething('!race', "testaddracer3", "testaddracer3",chosenIMG,"testaddracer3", 20000, 'runRightWINNER_3', 100, flip, '30px', 0, 0);
-			}, "17000");
+			}, "100");
 			setTimeout(() => {
 				racersInRaceTest.push(["testaddracer",'runRight',99,chosenIMG,'',100,flip]);
 				animateSomething('!race', "testaddracer4", "testaddracer4",chosenIMG,"testaddracer4", 20000, 'runCheerSidelines', 100, flip, '30px', 0, 0);
-			}, "18000");
+			}, "100");
 			setTimeout(() => {
 				racersInRaceTest.push(["testaddracer",'runRight',99,chosenIMG,'',100,flip]);
 				animateSomething('!race', "testaddracer5", "testaddracer5",chosenIMG,"testaddracer5", 20000, 'runRightExhausted', 100, flip, '30px', 0, 0);
-			}, "19000");
+			}, "100");
 			setTimeout(() => {
 				racersInRaceTest.push(["testaddracer",'runRight',99,chosenIMG,'',100,flip]);
 				animateSomething('!race', "testaddracer6", "testaddracer6",chosenIMG,"testaddracer6", 20000, 'runRightInjury', 100, flip, '30px', 0, 0);
-			}, "20000");
+			}, "100");
 			setTimeout(() => {
-				animateSomething('custom', 'custom', 'custom', 'https://cdn.7tv.app/emote/63f6b4d617478c0c59fc20a6/4x.webp', nameofPlayer, 20000, 'bananapeel', 100, '30px', 0, 0);
+				animateSomething('custom', 'custom', 'custom', 'https://cdn.7tv.app/emote/63f6b4d617478c0c59fc20a6/4x', nameofPlayer, 20000, 'bananapeel', 100, '30px', 0, 0);
 				racersInRaceTest.push(["testaddracer",'runRight',99,chosenIMG,'',100,flip]);
-				animateSomething('!race', "testaddracer7", "testaddracer7",chosenIMG,"testaddracer7", 20000, 'runRightBanana', 100, flip, '30px', 0, 0);
-			}, "21000");
+				animateSomething('!race', "testaddracer7", "testaddracer7",chosenIMG,"testaddracer7", 20000, 'runRightBanana', 100, "-1", '30px', 0, 0);
+			}, "100");
 
 		
 
 
 		/* // test banana peel and racer in console
 		flip = "-1"
-		animateSomething('custom', 'custom', 'custom', 'https://cdn.7tv.app/emote/63f6b4d617478c0c59fc20a6/4x.webp', nameofPlayer, 20000, 'bananapeel', 100, '30px', 0, 0);
-		animateSomething('!race', "testaddracer7", "testaddracer7","https://cdn.7tv.app/emote/01GY7K9CE0000FB7ZAX5594NR1/3x.webp","testaddracer7", 20000, 'runRightBanana', 100, "-1");
+		animateSomething('custom', 'custom', 'custom', 'https://cdn.7tv.app/emote/63f6b4d617478c0c59fc20a6/4x', nameofPlayer, 20000, 'bananapeel', 100, '30px', 0, 0);
+		animateSomething('!race', "testaddracer7", "testaddracer7","https://cdn.7tv.app/emote/01GY7K9CE0000FB7ZAX5594NR1/3x","testaddracer7", 20000, 'runRightBanana', 100, "-1");
 		*/
 
 
 		// customised version, sort later, too much faffing
 		/*if (splitmessage[0] == "!testaddracer"){
 				if (splitmessage.length == 1){
-					chosenIMG = "https://cdn.7tv.app/emote/63f6b4d617478c0c59fc20a6/4x.webp";
+					chosenIMG = "https://cdn.7tv.app/emote/63f6b4d617478c0c59fc20a6/4x";
 				}else if (splitmessage.length == 2){
 					chosenIMG = splitmessage[1];
 				}else if (splitmessage.length == 3){
@@ -948,6 +951,6 @@ if(showWinnerName || testwords == 1){
 //spitaVideo('video','video','./ivegotagun.mp4', 0.02, 3000);
 
 
-animateSomething('custom', 'custom', 'custom', 'https://cdn.7tv.app/emote/622f82622cbc7e45d4cac28f/4x.webp', nameofPlayer, 2, 'runRightCustom', 100, '100px', 0, 91);
+animateSomething('custom', 'custom', 'custom', 'https://cdn.7tv.app/emote/622f82622cbc7e45d4cac28f/4x', nameofPlayer, 2, 'runRightCustom', 100, '100px', 0, 91);
 
 
