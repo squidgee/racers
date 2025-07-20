@@ -843,7 +843,12 @@ if(showWinnerName || testwords == 1){
 		splitmessagecount = splitmessage.length;
 		chosenIMG = "https://cdn.7tv.app/emote/01GY7K9CE0000FB7ZAX5594NR1/3x";
 		if(splitmessagecount == 2){
-			chosenIMG = splitmessage[1];
+			if(splitmessage[1].includes('https://cdn.7tv.app/emote/') || splitmessage[1].includes('https://static-cdn.jtvnw.net/emoticons/')){
+				chosenIMG = splitmessage[1];
+			}else{
+				chosenIMG = "https://cdn.7tv.app/emote/01GY7K9CE0000FB7ZAX5594NR1/3x";
+			}
+			
 		}else{
 			chosenIMG = "https://cdn.7tv.app/emote/01GY7K9CE0000FB7ZAX5594NR1/3x";
 		}
