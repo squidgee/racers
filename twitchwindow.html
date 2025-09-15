@@ -1,0 +1,38 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Twitch Embed Example</title>
+    <style>
+      body, html {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: black;
+      }
+      #rectangle {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="rectangle"></div>
+        <script src= "https://player.twitch.tv/js/embed/v1.js"></script>
+            <script type="text/javascript">
+                var options = {
+                width: 1920,
+                height: 1080,
+                channel: "thebroodles",
+                referrer: "https://raw.githack.com/Squidgee/sockettest/main/public/twitchwindow.html",
+                // only needed if your site is also embedded on embed.example.com and othersite.example.com
+                parent: ["raw.githack.com"]
+                };
+                var player = new Twitch.Player("rectangle", options);
+                player.setVolume(0.5);
+        </script>
+    </div>
+  </body>
+</html>
