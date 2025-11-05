@@ -3,7 +3,7 @@
 */
 
 // don't change me - required to not produce errors in console
-version = 0.51;
+version = 0.6;
 racersInRace = [];
 racerOutcomesLOSERS = [];
 racerOutcomesWINNERS = [];
@@ -350,11 +350,25 @@ function getemoteOnly(message, emotes) {
 
 // updates an emote for a player in the racersInRace array
 function updateEmoteForRacer(playerNameToCheck, newEmoteURL, flipEmote) {
+		
 		for (let i = 0; i < racersInRace.length; i++) {
 			// Check if the first element (nameofPlayer) matches
-			if (racersInRace[i][0] === playerNameToCheck) {
+			if (racersInRace[i][0] == playerNameToCheck) {
 				// If it matches, update the fourth element (getEmotePositionURL)
-				racersInRace[i][3] = newEmoteURL;
+
+				if (newEmoteURL == "onlyflip"){
+					if (flipEmote){
+							racersInRace[i][6] = '-1';
+						}else{
+							racersInRace[i][6] = '1';
+						}
+					return;
+				}
+
+				if(newEmoteURL){
+					console.log(`Found racer ${playerNameToCheck} in racersInRace array. Updating emote...`);
+					racersInRace[i][3] = newEmoteURL;
+				}
 				if (flipEmote){
 					racersInRace[i][6] = '-1';
 				}else{
@@ -543,7 +557,7 @@ client.on('message', (channel, tags, message, self) => {
 
 // check on how many racers are in the race
 		if (raceStarted == 1 && racersCommandUsers.includes(nameofPlayer) && bypassMessage == '!racers'){
-			animateSomething('!racers', 'racers', 'racers', racersInRace.length, nameofPlayer, 8000, 'racersinraceSTROKE', 0, '300'+'px', 0, 0);
+			animateSomething('!racers', 'racers', 'racers', racersInRace.length, nameofPlayer, 8000, 'racersinraceSTROKE', 0, '300px', 0, 0);
 			if(debugon){
 	        console.log('!racers: '+message);
 	    }
@@ -591,6 +605,7 @@ client.on('message', (channel, tags, message, self) => {
 				flipIt = "1";
 			}
 		}
+		
 		if(debugon){
 			console.log('getEmotePositionB: '+getEmotePositionB);
 			console.log('getEmotePositionC: '+getEmotePositionC);
@@ -624,6 +639,7 @@ client.on('message', (channel, tags, message, self) => {
 			//call function to spit out a new racer on screen
 
 			animateSomething('!race', racerID, racerID, getEmotePositionURL, nameofPlayer, 20000, 'runLeft', 100);
+			updateEmoteForRacer(nameofPlayer, "onlyflip", flipIt);
 
 			if(debugon){
 				console.log("NEW Racer ID: "+racerID);
@@ -647,10 +663,10 @@ client.on('message', (channel, tags, message, self) => {
 					disDELAY=300;
 					// add racers that finished the race with no additional message
 					for (i=0; i<racersInRace.length; i++) {
-					if (racersInRace[i][6] == null || racersInRace[i][6] == undefined || racersInRace[i][6] == ''){
-						flippa = "";
-					}else {
+					if (racersInRace[i][6]){
 						flippa = racersInRace[i][6];
+					}else {
+						flipp = "1";
 					}
 					// spit out a standard finishing racer
 					switch (racersInRace[i][2]) {
@@ -859,12 +875,12 @@ if(showWinnerName || testwords == 1){
 		}
 		// racers test all in one
 		
-			// RUN TO LEFT
+			/*// RUN TO LEFT
 			setTimeout(() => {
 				racersInRaceTest.push(["testaddracer",'runRight',99,chosenIMG,'',100,flip]);
 				animateSomething('!race', "testaddracer1", "testaddracer1",chosenIMG,"testaddracer1", 20000, 'runLeft', 100, flip, '30px', 0, 0);
 			}, "1000");
-			/*setTimeout(() => {
+			setTimeout(() => {
 				racersInRaceTest.push(["testaddracer",'runRight',99,chosenIMG,'',100,flip]);
 				animateSomething('!race', "testaddracer2", "testaddracer2",chosenIMG,"testaddracer2", 20000, 'runLeft', 100, flip, '30px', 0, 0);
 			}, "2000");
