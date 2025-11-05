@@ -357,26 +357,25 @@ function updateEmoteForRacer(playerNameToCheck, newEmoteURL, flipEmote) {
 				// If it matches, update the fourth element (getEmotePositionURL)
 
 				if (newEmoteURL == "onlyflip"){
+					console.log(`Updated emote for ${playerNameToCheck} Flip: ${flipEmote}`);
 					if (flipEmote){
 							racersInRace[i][6] = '-1';
 						}else{
 							racersInRace[i][6] = '1';
 						}
-					return;
+
 				}
 
-				if(newEmoteURL){
-					console.log(`Found racer ${playerNameToCheck} in racersInRace array. Updating emote...`);
+				if(newEmoteURL != "onlyflip"){
+					console.log(`Found racer ${playerNameToCheck} in racersInRace array. Updating emote... to ${newEmoteURL}`);
 					racersInRace[i][3] = newEmoteURL;
+					console.log(`Updated emote for ${playerNameToCheck} to ${newEmoteURL}.`);
 				}
-				if (flipEmote){
-					racersInRace[i][6] = '-1';
-				}else{
-					racersInRace[i][6] = '1';
-				}
-				console.log(`Updated emote for ${playerNameToCheck} to ${newEmoteURL}. Flip: ${flipEmote}`);
+
+				
 				break;
 			}
+
 		}
 }
 
@@ -593,19 +592,13 @@ client.on('message', (channel, tags, message, self) => {
 				console.log('htmlMessagePls: '+htmlMessagePls);
 			}
 		}
-		if(checkMessageisRace.length >= 3){
-			if(checkMessageisRace[2] != null || checkMessageisRace[2] != undefined || checkMessageisRace[2] != ''  || checkMessageisRace[2] != ' '){
-				getEmotePositionFlip = checkMessageisRace[2];
-				if (getEmotePositionFlip.includes("flip")) {
-					flipIt = "-1";
-				} else {
-					flipIt = "1";
-				}
-			}else{
-				flipIt = "1";
-			}
+
+		if (htmlMessagePls.includes(" flip")) {
+			flipIt = "-1";
+		} else {
+			flipIt = "1";
 		}
-		
+
 		if(debugon){
 			console.log('getEmotePositionB: '+getEmotePositionB);
 			console.log('getEmotePositionC: '+getEmotePositionC);
@@ -626,11 +619,25 @@ client.on('message', (channel, tags, message, self) => {
 		}
 
 		if (alreadyInRace == 1){
+
       		if(debugon){console.log('Racer: '+nameofPlayer+' already exists in the race.');}
 			// check if we need to update the emote for a player
-			if (checkMessageisRace[0] == raceMessageTrigger && checkMessageisRace[1]){
-				updateEmoteForRacer(nameofPlayer, getEmotePositionURL, flipIt);
+			if (htmlMessagePls.includes(" flip")) {
+				updateEmoteForRacer(nameofPlayer, "onlyflip", flipIt);
+				console.log("Flipping emote for racer: "+nameofPlayer);
+			} else {
+				flipIt = "1";
 			}
+			if(htmlMessagePls.includes('https://')){}else{
+				if(matchesinStrNAME.includes(getEmotePositionB[1])){
+					indexOfEmote = matchesinStrNAME.indexOf(getEmotePositionB[1]);
+					getEmotePositionURL = 'https://cdn.7tv.app/emote/' + matchesinStrIMG[indexOfEmote] +'/3x';
+					updateEmoteForRacer(nameofPlayer, getEmotePositionURL, flipIt);
+				}
+			}
+
+			
+
    		}else{
 			
 			// add to the racers array
@@ -639,7 +646,7 @@ client.on('message', (channel, tags, message, self) => {
 			//call function to spit out a new racer on screen
 
 			animateSomething('!race', racerID, racerID, getEmotePositionURL, nameofPlayer, 20000, 'runLeft', 100);
-			updateEmoteForRacer(nameofPlayer, "onlyflip", flipIt);
+			
 
 			if(debugon){
 				console.log("NEW Racer ID: "+racerID);
