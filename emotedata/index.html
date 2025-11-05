@@ -11,38 +11,50 @@
 
 <script>
 
-  //const matchesinStrIMG = emotedataFile.match(/(?<=<div class="img-wrapper" censor=".*" data-v-952f9cbc=""><img src="\/\/cdn.7tv.app\/emote\/\s*).*?(?=\s*2x.)/gs);
-                                                      //615710a2dc267a344181264c"
-  // Regular expression to find IDNUMBER
-      const idRegex = /href="\/emotes\/([^"]+)"/g;
-      // Regular expression to find EMOTENAME
-      const nameRegex = /draggable="true" title="([^"]+)/g;
-      //const nameRegex = /title="([^"]+) by/g;
+matchesinStrIMG = [];
+matchesinStrNAME = [];
+// 1. Remove all <a> blocks that contain title="Unlisted" anywhere inside them.
+// This matches the entire block from the opening <a to the closing </a>
+const unlistedRemovalRegex = /<a[^>]*>(?:(?!<\/a>)[\s\S])*title="Unlisted"[\s\S]*?<\/a>/g;
 
-      let matchesinStrIMG = [];
-      let matchesinStrNAME = [];
+const emotedataFileB = emotedataFile.replace(unlistedRemovalRegex, '');
 
-      let match;
+// 2. Run the original simple extraction on the now-clean data.
+// We no longer need the complex negative lookaheads for exclusion.
+const extractionRegex = /<a href="\/emotes\/([^"]+)".*?<span class="name svelte-clww9e">([^<]+)<\/span>/gs;
 
-      // Extract IDNUMBERs
-      while ((match = idRegex.exec(emotedataFile)) !== null) {
-        matchesinStrIMG.push(match[1]);
-      }
+const extractedArray = [];
+let match;
 
-      // Extract EMOTENAMEs
-      while ((match = nameRegex.exec(emotedataFile)) !== null) {
-        match[1] = match[1].replace(/ by .*/, ''); // Remove " by Creator" if it exists
-        matchesinStrNAME.push(match[1]);
-      }
+while ((match = extractionRegex.exec(emotedataFileB)) !== null) {
+    extractedArray.push({
+        id: match[1],
+        name: match[2]
+    });
+}
 
-      console.log("matchesinStrIMG:", matchesinStrIMG);
-      console.log("matchesinStrNAME:", matchesinStrNAME);
-      console.log (matchesinStrIMG);
-      console.log (matchesinStrNAME);
-      for(let i = 0; i < matchesinStrIMG.length; i++) {
-        // append matchesinStrIMG and matchesinStrNAME to body of page
-        document.body.innerHTML += `<p>${matchesinStrNAME[i]}: <img src="https://cdn.7tv.app/emote/${matchesinStrIMG[i]}/2x" alt="${matchesinStrNAME[i]}"></p>`;        
-      }
+console.log(extractedArray);
+
+for (const item of extractedArray) {
+    // 2. Access the data using the object's keys: item.id and item.name
+    const emoteId = item.id;
+    const emoteName = item.name;
+
+    matchesinStrIMG.push(emoteId);
+    matchesinStrNAME.push(emoteName);
+
+    // 3. Construct the HTML string
+    const emoteHtml = `
+        <p>
+            **ID:** ${emoteId} | 
+            **Name:** ${emoteName}
+            <img src="https://cdn.7tv.app/emote/${emoteId}/2x" alt="${emoteName}" style="margin-left: 10px;">
+        </p>
+    `;
+
+    // 4. Append to the document body
+    document.body.innerHTML += emoteHtml;
+}
   
 </script>
 
