@@ -12,38 +12,43 @@
   </head>
   <body>
     <script>
-      // old way to get emotes
-      //const matchesinStrIMG = emotedataFile.match(/(?<=<a href="\/emotes\/\s*).*?(?=\s*" class="unstyled-link".)/gs);
-      //const matchesinStrNAME = emotedataFile.match(/(?<=<div class="title-banner" data-v-952f9cbc=""><span data-v-952f9cbc="">\s*).*?(?=\s*<\/span>)/gs);
 
+      matchesinStrIMG = [];
+      matchesinStrNAME = [];
 
-      // Regular expression to find IDNUMBER
-// Regular expression to find IDNUMBER
-      const idRegex = /href="\/emotes\/([^"]+)"/g;
-      // Regular expression to find EMOTENAME
-      const nameRegex = /draggable="true" title="([^"]+)/g;
-      //const nameRegex = /title="([^"]+) by/g;
+      const unlistedRemovalRegex = /<a[^>]*>(?:(?!<\/a>)[\s\S])*title="Unlisted"[\s\S]*?<\/a>/g;
 
-      let matchesinStrIMG = [];
-      let matchesinStrNAME = [];
+      const emotedataFileB = emotedataFile.replace(unlistedRemovalRegex, '');
 
+      // 2. Run the original simple extraction on the now-clean data.
+      // We no longer need the complex negative lookaheads for exclusion.
+      const extractionRegex = /<a href="\/emotes\/([^"]+)".*?<span class="name svelte-clww9e">([^<]+)<\/span>/gs;
+
+      const extractedArray = [];
       let match;
 
-      // Extract IDNUMBERs
-      while ((match = idRegex.exec(emotedataFile)) !== null) {
-        matchesinStrIMG.push(match[1]);
+      while ((match = extractionRegex.exec(emotedataFileB)) !== null) {
+          extractedArray.push({
+              id: match[1],
+              name: match[2]
+          });
       }
 
-      // Extract EMOTENAMEs
-      while ((match = nameRegex.exec(emotedataFile)) !== null) {
-        match[1] = match[1].replace(/ by .*/, ''); // Remove " by Creator" if it exists
-        matchesinStrNAME.push(match[1]);
-      }
+      console.log(extractedArray);
 
+      for (const item of extractedArray) {
+
+          const emoteId = item.id;
+          const emoteName = item.name;
+          matchesinStrIMG.push(emoteId);
+          matchesinStrNAME.push(emoteName);
+
+      }
       console.log("matchesinStrIMG:", matchesinStrIMG);
       console.log("matchesinStrNAME:", matchesinStrNAME);
       console.log (matchesinStrIMG);
       console.log (matchesinStrNAME);
+
     </script>
     <script type="text/javascript" src="racers.js"></script>
 
