@@ -3,7 +3,7 @@
 */
 
 // don't change me - required to not produce errors in console
-version = 0.61;
+version = 0.62;
 racersInRace = [];
 racerOutcomesLOSERS = [];
 racerOutcomesWINNERS = [];
@@ -174,12 +174,13 @@ function animateSomething(duhCommandis, duhimgDiv, duhimgID, duhimgLocation, him
 	
 
 	if(duhCommandis == '!race'){
-		if(duhimgSize == "-1"){
-			duhimgDiv.innerHTML = '<div class="'+duhAnimation+'Flip" style="z-index: '+counter+'; position:fixed; box-sizing: border-box;"><img height="auto" style="transform: scaleX(-1);" width="'+raceImageSize+'" src="'+duhimgLocation+'"></div>';
-		}else{
-			duhimgDiv.innerHTML = '<div class="'+duhAnimation+'" style="z-index: '+counter+'; position:fixed; box-sizing: border-box;"><img height="auto" width="'+raceImageSize+'" src="'+duhimgLocation+'"></div>';
-		}
-		duhimgDiv.innerHTML = '<div class="'+duhAnimation+'" style="z-index: '+counter+'; position:fixed; box-sizing: border-box;"><img height="auto" style="transform: scaleX('+duhimgSize+');" width="'+raceImageSize+'" src="'+duhimgLocation+'"></div>';
+        // Determine if we need to flip the image tag manually
+        var flipStyle = (duhimgSize == "-1") ? 'transform: scaleX(-1);' : '';
+
+        // We use 'duhAnimation' for the class (e.g., runLeft) so it moves, 
+        // and we apply the flipStyle to the <img> tag so it faces the right way.
+		duhimgDiv.innerHTML = '<div class="'+duhAnimation+'" style="z-index: '+counter+'; position:fixed; box-sizing: border-box;"><img height="auto" style="'+flipStyle+'" width="'+raceImageSize+'" src="'+duhimgLocation+'"></div>';
+        
 	}else if(duhCommandis == 'chocoRace_START'){
 		duhimgDiv.innerHTML = '<div class="'+duhAnimation+'" style="z-index: '+counter+'; position:fixed; box-sizing: border-box;"><img height="auto" width="'+raceImageMultiSize+'" src="'+duhimgLocation+'"></div>';
 	}else if(duhCommandis == '!heist'){
@@ -645,7 +646,7 @@ client.on('message', (channel, tags, message, self) => {
 			
 			//call function to spit out a new racer on screen
 
-			animateSomething('!race', racerID, racerID, getEmotePositionURL, nameofPlayer, 20000, 'runLeft', 100);
+			animateSomething('!race', racerID, racerID, getEmotePositionURL, nameofPlayer, 20000, 'runLeft', 100, flipIt);
 			
 
 			if(debugon){
