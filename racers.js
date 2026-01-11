@@ -191,7 +191,7 @@ function animateSomething(duhCommandis, duhimgDiv, duhimgID, duhimgLocation, him
 	}else if(duhCommandis == 'custom'){
 		if(duhAnimation == 'static'){animChosen='none'; setXY='top:'+yLoc+'%; left:'+xLoc+'%;'}else{animChosen = duhAnimation; setXY='';}
 		if(debugon){console.log("duhimgLocation: "+duhimgLocation);}
-		duhimgDiv.innerHTML = '<div class="'+animChosen+'" style="z-index: '+counter+'; position:fixed; box-sizing: border-box; '+setXY+';"><img height="auto" width="'+duhimgSize+'" src="'+duhimgLocation+'"></div>';
+		duhimgDiv.innerHTML = '<div class="'+animChosen+'" style="z-index: '+counter+'; position:fixed; box-sizing: border-box; '+setXY+';"><img style="'+flipStyle+'" height="auto" width="'+duhimgSize+'" src="'+duhimgLocation+'"></div>';
 	}else if(duhCommandis == 'ezsend'){
 		if(duhAnimation == 'static'){animChosen='none'; setXY='top:'+yLoc+'px; left:'+xLoc+'px;'}else{animChosen = duhAnimation; setXY='';}
 		if(debugon){console.log("duhimgLocation: "+duhimgLocation);}
@@ -275,6 +275,7 @@ function addHeister(nameofPlayer, heisterID){
 setInterval(addHeister, 5720);
 
 // this is step one for adding a racer - checking if standard or custom and setting the correct image, which then passes it off to the animateSomething function, setting custom if needed
+//finish the race: racerOutcomesCustom(racersInRace[j][0], 'runCheerSidelines', 101, racersInRace[j][3],'',50, flippa);
 function racerOutcomesCustom(whoAmI, chosenAnim, racePosition, chosenIMG, duhMessage, duhDELAY, duhFlip){
 	if(debugon){console.log("Starting racerOutcomesCustom function...")}
 	if(debugon){console.log('whoAmI: '+whoAmI)}
@@ -674,7 +675,7 @@ client.on('message', (channel, tags, message, self) => {
 					if (racersInRace[i][6]){
 						flippa = racersInRace[i][6];
 					}else {
-						flipp = "1";
+						flippa = "";
 					}
 					// spit out a standard finishing racer
 					switch (racersInRace[i][2]) {
