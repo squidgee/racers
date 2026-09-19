@@ -251,7 +251,7 @@ function endtheRace(){
 function addHeister(nameofPlayer, heisterID){
 	//if(debugon){console.log('add heist loop');}
 	if (heistStarted == 1 && heistQueue.length >= 2 && nameofPlayer != raceOrganiser){
-			//call function to spit out a racer on screen
+			//call function to spit out a heister on screen
 			animateSomething('!heist', heisterID, 'Heister_', heistImage, 'heister', 2860, 'heister', 100);
 			// remove one of the entries from the queue of heisters
 			if(debugon){console.log("heistQueue:");}
@@ -269,13 +269,14 @@ function addHeister(nameofPlayer, heisterID){
 	}
 }
 
-// this repeats the addheister function every 5720 seconds, which... hopefully is the correct math for the FPS of the heist gif so it loads correctly every time.
+// this repeats the addheister function every 5720 milliseconds, which... hopefully is the correct math for the FPS of the heist gif so it loads correctly every time.
 // when a user enters !heist into chat, that user is added to an array and the loop below will play IF there's a heister in the array
 // if not, it does nothing and waits for the next one
 setInterval(addHeister, 5720);
 
 // this is step one for adding a racer - checking if standard or custom and setting the correct image, which then passes it off to the animateSomething function, setting custom if needed
 //finish the race: racerOutcomesCustom(racersInRace[j][0], 'runCheerSidelines', 101, racersInRace[j][3],'',50, flippa);
+//my functions got sloppy... I'm sorry... it changed a lot.
 function racerOutcomesCustom(whoAmI, chosenAnim, racePosition, chosenIMG, duhMessage, duhDELAY, duhFlip){
 	if(debugon){console.log("Starting racerOutcomesCustom function...")}
 	if(debugon){console.log('whoAmI: '+whoAmI)}
@@ -320,7 +321,7 @@ function getemoteOnly(message, emotes) {
 	// the message string and replace later
 	const stringReplacements = [];
 
-	// iterate of emotes to access ids and positions
+	// iterate emotes to access ids and positions
 	Object.entries(emotes).forEach(([id, positions]) => {
 		// use only the first position to find out the emote key word
 
@@ -842,7 +843,7 @@ if(showWinnerName || testwords == 1){
 
 	/////////////////// TESTING STARTS BELOW ////////////////////////
 
-	// spit out a racer every chat message
+	// spit out a racer every chat message sent in channel
 	if (racerOnMessageTest){
 		nameofPlayer = tags.username;
 		racerN2S = racerCount.toString();
