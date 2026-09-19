@@ -10,17 +10,16 @@
 <body>
 
 <script>
-
+// <3 Squidge
 matchesinStrIMG = [];
 matchesinStrNAME = [];
-// 1. Remove all <a> blocks that contain title="Unlisted" anywhere inside them.
+// Removes all <a> blocks that contain title="Unlisted" anywhere inside them.
 // This matches the entire block from the opening <a to the closing </a>
 const unlistedRemovalRegex = /<a[^>]*>(?:(?!<\/a>)[\s\S])*title="Unlisted"[\s\S]*?<\/a>/g;
 
 const emotedataFileB = emotedataFile.replace(unlistedRemovalRegex, '');
 
-// 2. Run the original simple extraction on the now-clean data.
-// We no longer need the complex negative lookaheads for exclusion.
+// Run it
 const extractionRegex = /<a href="\/emotes\/([^"]+)".*?<span class="name svelte-clww9e">([^<]+)<\/span>/gs;
 
 const extractedArray = [];
@@ -32,18 +31,18 @@ while ((match = extractionRegex.exec(emotedataFileB)) !== null) {
         name: match[2]
     });
 }
-
+// output to console!
 console.log(extractedArray);
 
 for (const item of extractedArray) {
-    // 2. Access the data using the object's keys: item.id and item.name
+    // keys: item.id and item.name
     const emoteId = item.id;
     const emoteName = item.name;
-
+    // add em to arrays
     matchesinStrIMG.push(emoteId);
     matchesinStrNAME.push(emoteName);
 
-    // 3. Construct the HTML string
+    // Create HTML string to view them to CONFIRM they are correct
     const emoteHtml = `
         <p>
             **ID:** ${emoteId} | 
@@ -52,7 +51,7 @@ for (const item of extractedArray) {
         </p>
     `;
 
-    // 4. Append to the document body
+    // Append to HTML body
     document.body.innerHTML += emoteHtml;
 }
   
