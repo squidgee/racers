@@ -1,6 +1,7 @@
 //copy data from https://7tv.app/emote-sets/YOURAPPSETIDNUMBER
 //mine is https://7tv.app/emote-sets/62bf6ca74c5bd11b08aaccaa
 //copy the element from dev viewer: F12: from this line, copy element: <div selector="content" data-v-d014849b=""><!---->
+//paste into emotedataFile
 let emotedataFile = `
 
 
